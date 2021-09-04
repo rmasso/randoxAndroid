@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bwhite"
-    android:paddingHorizontal="@dimen/_15sdp"
+    android:paddingHorizontal="@dimen/_20sdp"
     android:paddingVertical="@dimen/_25sdp"
     tools:context=".Fragments.TesterFragment">
 
