@@ -16,8 +16,13 @@ class ScancompleteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScancompleteBinding.inflate(layoutInflater)
-
+        setclicks()
         return binding.root
     }
-
+    fun setclicks(){
+        binding.submit.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragcontainer,ScansubmitFragment())?.addToBackStack("")?.commit()
+        }
+    }
 }

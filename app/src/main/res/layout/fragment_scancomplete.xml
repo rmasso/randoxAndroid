@@ -36,15 +36,16 @@
             android:layout_height="wrap_content"
             app:cardCornerRadius="@dimen/_20sdp"
             android:padding="0dp"
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:elevation="@dimen/_4sdp"
+            android:layout_margin="@dimen/_10sdp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_180sdp"
+                android:padding="0dp"
                 android:layout_margin="0dp"
                 android:src="@drawable/testcomplete"
                 android:scaleType="centerCrop"
-
                 />
 
 
@@ -72,7 +73,6 @@
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
             android:text="Submit for Certification"
-            android:layout_marginVertical="@dimen/_10sdp"
             android:textColor="@color/white"
             android:gravity="center"/>
 
@@ -80,6 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textlight"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="Once you have submitted the scan for certification this test can no longer be used with Certifly."
             android:textSize="@dimen/_8sdp"
             />

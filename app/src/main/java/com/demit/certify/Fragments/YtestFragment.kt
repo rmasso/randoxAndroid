@@ -17,14 +17,27 @@ class YtestFragment : Fragment() {
     ): View{
         // Inflate the layout for this fragment
         binding = FragmentYtestBinding.inflate(layoutInflater)
-
         clicks()
         return binding.root
     }
 
     private fun clicks() {
+        binding.sw1.setOnClickListener {
+            if(binding.sw1.isChecked && binding.sw2.isChecked){
+                binding.ready.visibility = View.VISIBLE
+            }else{
+                binding.ready.visibility = View.GONE
+            }
+        }
+        binding.sw2.setOnClickListener {
+            if(binding.sw1.isChecked && binding.sw2.isChecked){
+                binding.ready.visibility = View.VISIBLE
+            }else{
+                binding.ready.visibility = View.GONE
+            }
+        }
         binding.ready.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragcontainer,TraveldestinationFragment())?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragcontainer,TraveldestinationFragment())?.addToBackStack("")?.commit()
         }
     }
 

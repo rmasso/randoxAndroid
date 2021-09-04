@@ -112,12 +112,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textlight"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:text="The UK regulation requires manual checking for all inbound travel, please grant us up to 20 minutes for muanlly verifying your test resulst."
             android:textSize="@dimen/_8sdp"
             />
 
         <TextView
             android:id="@+id/ready"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_bg"
@@ -125,7 +127,7 @@
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
             android:text="Ready"
-            android:layout_marginVertical="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:textColor="@color/white"
             android:gravity="center"/>
         <TextView
@@ -137,7 +139,6 @@
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
             android:text="Cancel"
-            android:layout_marginVertical="@dimen/_10sdp"
             android:textColor="@color/black"
             android:gravity="center"/>
     </LinearLayout>

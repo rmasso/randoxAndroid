@@ -16,6 +16,7 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         setContentView(binding.root)
         changefragment(HomeFragment(this))
         bnavclick()
+        click()
     }
 
     fun bnavclick(){
@@ -38,6 +39,11 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         }
     }
 
+    fun click(){
+        binding.scanb.setOnClickListener {
+            setp(2)
+        }
+    }
     fun changefragment(fragment : Fragment){
         supportFragmentManager.beginTransaction().replace(R.id.fragcontainer,fragment).commit()
     }

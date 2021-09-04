@@ -1,4 +1,4 @@
-package com.demit.certify
+package com.demit.certify.Models
 
 class ProfileModel {
     var selected: Boolean = false

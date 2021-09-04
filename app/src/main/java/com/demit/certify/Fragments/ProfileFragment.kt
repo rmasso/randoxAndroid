@@ -4,17 +4,14 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.demit.certify.ProfileModel
-import com.demit.certify.R
+import com.demit.certify.Models.ProfileModel
 import com.demit.certify.databinding.FragmentProfileBinding
 import com.demit.certify.databinding.ViewProfileBinding
 

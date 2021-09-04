@@ -23,9 +23,30 @@ class TraveldestinationFragment : Fragment() {
     }
 
     private fun clicks() {
+        binding.sw1.setOnClickListener {
+            if(binding.sw1.isChecked){
+                binding.sw2.isChecked = false
+            }
+            if(binding.sw1.isChecked || binding.sw2.isChecked){
+
+                binding.ready.visibility = View.VISIBLE
+            }else{
+                binding.ready.visibility = View.GONE
+            }
+        }
+        binding.sw2.setOnClickListener {
+            if(binding.sw2.isChecked){
+                binding.sw1.isChecked = false
+            }
+            if(binding.sw1.isChecked || binding.sw2.isChecked){
+                binding.ready.visibility = View.VISIBLE
+            }else{
+                binding.ready.visibility = View.GONE
+            }
+        }
         binding.ready.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer,TesterFragment())?.commit()
+                ?.replace(R.id.fragcontainer,TesterFragment())?.addToBackStack("")?.commit()
         }
     }
 
