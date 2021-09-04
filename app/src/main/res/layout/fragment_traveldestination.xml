@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bwhite"
+    tools:context=".Fragments.TraveldestinationFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_25sdp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Travel destination"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsbold"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/et_bg">
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sw1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_toEndOf="@id/sw1"
+                android:orientation="vertical"
+                android:paddingHorizontal="@dimen/_10sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="Inbound travel"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="You are landing in UK"
+                    android:textColor="@color/textlight"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/et_bg">
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sw2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_15sdp"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_toEndOf="@id/sw2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Outbund Travel"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppinsbold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="You are leaving the uk"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/textlight"
+                    android:fontFamily="@font/poppinsbold"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textlight"
+            android:text="The UK regulation requires manual checking for all inbound travel, please grant us up to 20 minutes for muanlly verifying your test resulst."
+            android:textSize="@dimen/_8sdp"
+            />
+
+        <TextView
+            android:id="@+id/ready"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Ready"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg2"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Cancel"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </LinearLayout>
+</ScrollView>

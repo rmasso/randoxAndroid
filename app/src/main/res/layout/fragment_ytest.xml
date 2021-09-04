@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bwhite"
+
+    tools:context=".Fragments.YtestFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_25sdp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Test"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsbold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_5sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/et_bg">
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sw1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/orange"
+                    android:fontFamily="@font/poppinsbold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm that the test has been taken by the person who will be listed on the certificate"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppinsbold"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:paddingVertical="@dimen/_15sdp"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:background="@drawable/et_bg">
+
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:id="@+id/sw2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="@dimen/_10sdp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Required"
+                    android:textSize="@dimen/_10sdp"
+                    android:textColor="@color/orange"
+                    android:fontFamily="@font/poppinsbold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirm that the test has been taken by the person who will be listed on the certificate"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/poppinsbold"/>
+            </LinearLayout>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/textlight"
+            android:text="Check both as true in order to continue. By confirming you agree to the accuracy of the submission and agree to CertiFly terms."
+            android:textSize="@dimen/_8sdp"
+            />
+
+        <TextView
+            android:id="@+id/ready"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Ready"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg2"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Cancel"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </LinearLayout>
+</ScrollView>

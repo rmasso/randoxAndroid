@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bwhite"
+    tools:context=".Fragments.ProfileFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_10sdp"
+        android:paddingVertical="@dimen/_25sdp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/logo"/>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_toStartOf="@id/add"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/view_profile" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/add"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_add_24" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firstname"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/fname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="textPersonName"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Surname"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/sname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="textPersonName"
+            />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date of Birth"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/dob"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="date"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textColor="@color/black"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:fontFamily="@font/poppinsmedium"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="textEmailAddress"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Passport number"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+        <EditText
+            android:id="@+id/pnumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="number"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Country"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg">
+
+            <Spinner
+                android:id="@+id/country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/SpinnerTheme"
+                android:entries="@array/countries"
+                />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone number"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+        <EditText
+            android:id="@+id/phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="phone"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Home Address"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="textPostalAddress"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Zip Code"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+        <EditText
+            android:id="@+id/zip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg"
+            android:inputType="textPostalAddress"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsmedium"
+            android:textSize="@dimen/_14sdp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingVertical="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:background="@drawable/et_bg">
+
+            <Spinner
+                android:id="@+id/gender"
+                style="@style/SpinnerTheme"
+                android:layout_width="@dimen/_120sdp"
+                android:layout_height="wrap_content"
+                android:pointerIcon="arrow"
+                android:entries="@array/genders"
+                android:inputType="phone"
+                />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/_10sdp">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/add"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_height="@dimen/_50sdp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/scanb"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Save"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bwhite"
+    tools:context=".Fragments.TesterFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_15sdp"
+        android:paddingVertical="@dimen/_25sdp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="@dimen/_116sdp"
+            android:layout_height="@dimen/_72sdp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/_30sdp"
+            android:src="@drawable/logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select, who took this test?"
+            android:textSize="@dimen/_18sdp"
+            android:textColor="@color/black"
+            android:fontFamily="@font/poppinsbold"
+            />
+
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/et_bg">
+
+
+                <TextView
+                    android:id="@+id/tname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:layout_toStartOf="@id/rd1"
+                    android:layout_alignParentStart="true"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:text="Josephine Johnson"/>
+
+                <RadioButton
+                    android:id="@+id/rd1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/et_bg">
+
+
+                <TextView
+                    android:id="@+id/tname2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:layout_toStartOf="@id/rd2"
+                    android:layout_alignParentStart="true"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:text="Josephine Johnson"/>
+
+                <RadioButton
+                    android:id="@+id/rd2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/et_bg">
+
+
+                <TextView
+                    android:id="@+id/tname3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:layout_toStartOf="@id/rd3"
+                    android:layout_alignParentStart="true"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:text="Josephine Johnson"/>
+
+                <RadioButton
+                    android:id="@+id/rd3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                android:background="@drawable/et_bg">
+
+
+                <TextView
+                    android:id="@+id/tname4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_14sdp"
+                    android:textColor="@color/black"
+                    android:layout_toStartOf="@id/rd4"
+                    android:layout_alignParentStart="true"
+                    android:paddingHorizontal="@dimen/_10sdp"
+                    android:layout_centerVertical="true"
+                    android:text="Josephine Johnson"/>
+
+                <RadioButton
+                    android:id="@+id/rd4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"/>
+
+            </RelativeLayout>
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/gotop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Go to profile"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg2"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="Cancel"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+    </LinearLayout>
+</ScrollView>
