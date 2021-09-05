@@ -134,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="My Profile"
                 android:textSize="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppinsbold"/>
 
@@ -160,6 +161,8 @@
                 android:layout_height="wrap_content"
                 android:text="Show me how it works"
                 android:textSize="@dimen/_14sdp"
+
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppinsbold"/>
 
@@ -186,6 +189,7 @@
                 android:layout_height="wrap_content"
                 android:text="FAQs"
                 android:textSize="@dimen/_14sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppinsbold"/>
 

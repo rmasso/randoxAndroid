@@ -43,7 +43,6 @@ class CertificatesFragment : Fragment() {
                 convertView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.view_certificates, parent, false)
             }
-//            convertView?.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             val n = l[position].toString()
 
             Log.d("aaa", n)
