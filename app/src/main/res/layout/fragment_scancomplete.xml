@@ -81,6 +81,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/textlight"
             android:layout_marginTop="@dimen/_10sdp"
+            android:fontFamily="@font/poppinsregular"
             android:text="Once you have submitted the scan for certification this test can no longer be used with Certifly."
             android:textSize="@dimen/_8sdp"
             />

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/certificate_bg"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:padding="@dimen/_10sdp"
+        >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_36sdp"
+            android:src="@drawable/logo"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/certificate_bg2"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:layout_marginVertical="@dimen/_10sdp"
+            android:orientation="vertical"
+            android:paddingVertical="@dimen/_10sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="For"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="@dimen/_10sdp"
+                android:textColor="@color/dblue"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Joseph Smith"
+                android:fontFamily="@font/poppinsbold"
+                android:textSize="@dimen/_12sdp"
+                android:textColor="@color/dblue"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:layout_toStartOf="@id/covid"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="Fit To FLy"
+                    android:textColor="@color/dblue"
+                    android:textSize="@dimen/_12sdp" />
+
+
+                <TextView
+                    android:id="@+id/covid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="Covid-19\nLateral Flow Test"
+                    android:gravity="end"
+                    android:textColor="@color/dblue"
+                    android:textSize="@dimen/_10sdp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_100sdp">
+
+            <LinearLayout
+                android:id="@+id/hline"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#979797"
+                android:layout_below="@id/dobll"
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/vline"
+                android:layout_width="1dp"
+                android:layout_height="0dp"
+                android:layout_alignTop="@id/dobll"
+                android:layout_alignBottom="@id/tdate"
+                android:layout_centerHorizontal="true"
+                android:background="#979797"
+
+                android:orientation="horizontal" />
+
+            <LinearLayout
+                android:id="@+id/dobll"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_49sdp"
+                android:layout_alignParentStart="true"
+                android:layout_toStartOf="@id/vline"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsregular"
+                    android:text="Date of Birth"
+                    android:textColor="@color/textblue"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="27/10/2012"
+                    android:textColor="@color/dblue"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/passportll"
+                android:layout_width="wrap_content"
+
+                android:layout_height="@dimen/_49sdp"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@id/vline"
+                android:gravity="center"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Passport No"
+                    android:textColor="@color/textblue"
+                    android:fontFamily="@font/poppinsregular"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12345678"
+                    android:textColor="@color/dblue"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tdate"
+                android:layout_width="wrap_content"
+
+                android:layout_height="@dimen/_49sdp"
+                android:layout_below="@id/hline"
+                android:layout_alignParentStart="true"
+                android:gravity="center"
+                android:layout_toStartOf="@id/vline"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Date"
+                    android:textColor="@color/textblue"
+                    android:fontFamily="@font/poppinsregular"
+                    android:textSize="@dimen/_10sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="27/10/2012"
+                    android:textColor="@color/dblue"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="@dimen/_10sdp" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/tresult"
+                android:layout_width="wrap_content"
+
+                android:layout_height="@dimen/_49sdp"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+
+                android:layout_toEndOf="@id/vline"
+                android:layout_below="@id/hline"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Test Result"
+                    android:textColor="@color/textblue"
+                    android:fontFamily="@font/poppinsregular"
+                    android:textSize="@dimen/_10sdp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Negative"
+                    android:textColor="@color/dblue"
+                    android:fontFamily="@font/poppinsbold"
+                    android:textSize="@dimen/_10sdp"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/black"
+            android:layout_marginHorizontal="@dimen/_20sdp"
+            android:layout_marginVertical="@dimen/_10sdp"/>
+
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Negative"
+            android:gravity="center"
+            android:textSize="@dimen/_30sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="#52B827"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/_10sdp"
+            android:text="Your coronavirus lateral flow test result is\nnegative. Its likely that you were not infectious when the test was done."
+
+            android:textSize="@dimen/_10sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:textColor="@color/black"/>
+    </LinearLayout>
+
+</ScrollView>

@@ -7,4 +7,7 @@
     <color name="bwhite">#f1f2f6</color>
     <color name="orange">#ff5916</color>
     <color name="textlight">#707070</color>
+    <color name="gray">#E9E9ED</color>
+    <color name="textblue">#4b22264C</color>
+
 </resources>

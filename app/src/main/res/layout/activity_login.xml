@@ -83,6 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_8sdp"
+                android:fontFamily="@font/poppinsregular"
                 android:text="Don't have an account yet? "/>
 
             <TextView
@@ -90,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_8sdp"
                 android:textColor="@color/sblue"
+                android:fontFamily="@font/poppinsregular"
                 android:text="Register"/>
 
         </LinearLayout>
