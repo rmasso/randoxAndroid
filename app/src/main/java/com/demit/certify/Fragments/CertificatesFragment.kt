@@ -37,8 +37,8 @@ class CertificatesFragment : Fragment() {
             return l[position]
         }
 
-        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-            var convertView = convertView
+        override fun getView(position: Int, convertview: View?, parent: ViewGroup): View {
+            var convertView = convertview
             if (convertView == null) {
                 convertView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.view_certificates, parent, false)
