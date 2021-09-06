@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Travel destination"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_15sdp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppinsbold"
             />
@@ -37,11 +37,10 @@
             android:paddingHorizontal="@dimen/_10sdp"
             android:background="@drawable/et_bg">
 
-
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/sw1"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"

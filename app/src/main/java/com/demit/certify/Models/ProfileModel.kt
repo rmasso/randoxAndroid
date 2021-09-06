@@ -7,7 +7,7 @@ class ProfileModel {
     var dob: String = ""
     var email: String = ""
     var pnumber: String = ""
-    var country: Int = 0
+    var country: String = ""
     var phone: String = ""
     var address: String = ""
     var zipcode: String = ""
@@ -22,7 +22,7 @@ class ProfileModel {
         dob: String,
         email: String,
         pnumber: String,
-        country: Int,
+        country: String,
         phone: String,
         address: String,
         zipcode: String,

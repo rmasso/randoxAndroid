@@ -15,10 +15,11 @@
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/activity_dashboard.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/activity_main.xml" value="0.12" />
+        <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/activity_scan.xml" value="0.20416666666666666" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_certificates.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_faq.xml" value="0.1" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_profile.xml" value="0.1012216404886562" />
+        <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_profile.xml" value="0.18" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_scancomplete.xml" value="0.23868312757201646" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_scansubmit.xml" value="0.22" />
         <entry key="..\:/AndroidStudioProjects/Certify/app/src/main/res/layout/fragment_tester.xml" value="0.25" />

@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your Test"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_15sdp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppinsbold"
             />
@@ -62,7 +62,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Confirm that the test has been taken by the person who will be listed on the certificate"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppinsbold"/>
             </LinearLayout>
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Confirm that the test has been taken by the person who will be listed on the certificate"
-                    android:textSize="@dimen/_14sdp"
+                    android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppinsbold"/>
             </LinearLayout>

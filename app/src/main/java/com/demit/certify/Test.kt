@@ -1,40 +1,29 @@
 package com.demit.certify
 
 import android.content.Context
-import android.util.Log
-import android.widget.ArrayAdapter
-import android.view.ViewGroup
-import android.view.LayoutInflater
+import android.hardware.Camera
 import android.view.View
+import com.demit.certify.Extras.CameraPreview
+import android.widget.FrameLayout
 import com.demit.certify.R
-import java.util.ArrayList
+import java.lang.Exception
 
-class Test(context: Context, resource: Int) : ArrayAdapter<Any?>(context, resource) {
-    var l: MutableList<Int> = ArrayList()
-    override fun getCount(): Int {
-        return l.size
+class Test {
+    private fun initialize(v: View, context: Context) {
+        val camera = cameraInstance
+        val cameraPreview = CameraPreview(context, camera)
+        val cameraview = v.findViewById<View>(R.id.camera) as FrameLayout
+        cameraview?.addView(cameraPreview)
     }
 
-    override fun getItem(position: Int): Any? {
-        return l[position]
-    }
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var convertView = convertView
-        if (convertView == null) {
-            convertView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.view_certificates, parent, false)
+    private val cameraInstance: Camera?
+        private get() {
+            var c: Camera? = null
+            try {
+                c = Camera.open()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return c
         }
-        val n = l[position].toString()
-        convertView!!.setOnClickListener { v: View? -> Log.d("aaa", n) }
-        return convertView
-    }
-
-    init {
-        l.add(1)
-        l.add(1)
-        l.add(1)
-        l.add(1)
-        l.add(1)
-    }
 }

@@ -42,7 +42,12 @@ class ProfileFragment : Fragment() {
         binding.add.setOnClickListener(){
             val p = ProfileModel();
             list.add(p)
-            adapter.notifyDataSetChanged()
+            binding.rv.getAdapter()?.itemCount?.minus(1)?.let { it1 ->
+                binding.rv.smoothScrollToPosition(
+                    it1
+                )
+            };
+            setData(list.size - 1)
         }
     }
     fun fielddata(){
@@ -162,22 +167,16 @@ class ProfileFragment : Fragment() {
 
         }
 
-        list[index].country = binding.country.selectedItemPosition
+        list[index].country = binding.country.selectedCountryNameCode
 
-        binding.country.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                list[index].country = position
-            }
-
+        binding.country.setOnCountryChangeListener {
+            list[index].country = binding.country.selectedCountryNameCode
         }
     }
     fun setData(position : Int){
-         for(i in 0 until list.size){
-             list[i].selected = false
-         }
+//         for(i in 0 until list.size){
+             list[index].selected = false
+//         }
         index = position
         list[position].selected = true
         adapter.notifyDataSetChanged()
@@ -190,8 +189,7 @@ class ProfileFragment : Fragment() {
         binding.phone.setText(list[position].phone)
         binding.address.setText(list[position].address)
         binding.zip.setText(list[position].zipcode)
-
-        binding.country.setSelection(list[position].country)
+        binding.country.setCountryForNameCode(list[position].country);
         binding.gender.setSelection(list[position].gender)
     }
     inner class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileVH>() {
