@@ -1,5 +1,6 @@
 package com.demit.certify.Fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -173,12 +174,14 @@ class ProfileFragment : Fragment() {
             list[index].country = binding.country.selectedCountryNameCode
         }
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(position : Int){
 //         for(i in 0 until list.size){
              list[index].selected = false
 //         }
         index = position
         list[position].selected = true
+
         adapter.notifyDataSetChanged()
 
         binding.fname.setText(list[position].fname)
