@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -47,5 +48,9 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
     implementation 'com.hbb20:ccp:2.5.4'
+    //BlinkId Sdk
+    implementation('com.microblink:blinkid:5.13.0@aar') {
+        transitive = true
+    }
 
 }
