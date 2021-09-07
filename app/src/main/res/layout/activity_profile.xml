@@ -216,13 +216,13 @@
                 app:ccp_showFullName="true"
                 app:ccp_showNameCode="false"
                 app:ccp_showPhoneCode="false" />
-<!--            <Spinner-->
-<!--                android:id="@+id/country"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                style="@style/SpinnerTheme"-->
-<!--                android:entries="@array/countries"-->
-<!--                />-->
+            <!--            <Spinner-->
+            <!--                android:id="@+id/country"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                style="@style/SpinnerTheme"-->
+            <!--                android:entries="@array/countries"-->
+            <!--                />-->
 
         </LinearLayout>
 
