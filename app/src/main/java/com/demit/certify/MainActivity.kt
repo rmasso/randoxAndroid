@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import com.demit.certify.Activities.DashboardActivity
 import com.demit.certify.Activities.LoginActivity
+import com.demit.certify.Extras.Shared
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,7 +16,13 @@ class MainActivity : AppCompatActivity() {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Handler().postDelayed({
-            startActivity(Intent(this, LoginActivity::class.java))
+
+            if(Shared(this).getString("token") == ""){
+                startActivity(Intent(this, LoginActivity::class.java))
+            }else{
+                startActivity(Intent(this, DashboardActivity::class.java))
+            }
+
             finish()
         }, 3000)
 
