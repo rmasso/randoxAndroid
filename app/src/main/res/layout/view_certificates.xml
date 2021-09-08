@@ -33,7 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="For"
                 android:fontFamily="@font/poppinsbold"
-                android:textSize="@dimen/_10sdp"
+                android:textSize="@dimen/_8sdp"
                 android:textColor="@color/dblue"/>
 
             <TextView
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:text="Joseph Smith"
                 android:fontFamily="@font/poppinsbold"
-                android:textSize="@dimen/_12sdp"
+                android:textSize="@dimen/_10sdp"
                 android:textColor="@color/dblue"/>
 
             <RelativeLayout
@@ -58,7 +58,7 @@
                     android:fontFamily="@font/poppinsbold"
                     android:text="Fit To FLy"
                     android:textColor="@color/dblue"
-                    android:textSize="@dimen/_12sdp" />
+                    android:textSize="@dimen/_10sdp" />
 
 
                 <TextView
@@ -67,10 +67,10 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/poppinsbold"
-                    android:text="Covid-19\nLateral Flow Test"
                     android:gravity="end"
+                    android:text="Covid-19\nLateral Flow Test"
                     android:textColor="@color/dblue"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_8sdp" />
             </RelativeLayout>
 
 
@@ -114,7 +114,7 @@
                     android:fontFamily="@font/poppinsregular"
                     android:text="Date of Birth"
                     android:textColor="@color/textblue"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_8sdp" />
 
                 <TextView
                     android:id="@+id/dob"
@@ -136,14 +136,13 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Passport No"
                     android:textColor="@color/textblue"
                     android:fontFamily="@font/poppinsregular"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_8sdp" />
 
                 <TextView
                     android:id="@+id/passport"
@@ -173,7 +172,7 @@
                     android:text="Test Date"
                     android:textColor="@color/textblue"
                     android:fontFamily="@font/poppinsregular"
-                    android:textSize="@dimen/_10sdp" />
+                    android:textSize="@dimen/_8sdp" />
 
                 <TextView
                     android:id="@+id/tdate"
@@ -203,7 +202,7 @@
                     android:text="Test Result"
                     android:textColor="@color/textblue"
                     android:fontFamily="@font/poppinsregular"
-                    android:textSize="@dimen/_10sdp"/>
+                    android:textSize="@dimen/_8sdp"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -228,7 +227,7 @@
             android:layout_height="wrap_content"
             android:text="Negative"
             android:gravity="center"
-            android:textSize="@dimen/_30sdp"
+            android:textSize="@dimen/_25sdp"
             android:fontFamily="@font/poppinsbold"
             android:textColor="#52B827"/>
 
@@ -238,7 +237,7 @@
             android:paddingHorizontal="@dimen/_10sdp"
             android:text="Your coronavirus lateral flow test result is\nnegative. Its likely that you were not infectious when the test was done."
 
-            android:textSize="@dimen/_10sdp"
+            android:textSize="@dimen/_8sdp"
             android:fontFamily="@font/poppinsbold"
             android:textColor="@color/black"/>
     </LinearLayout>
