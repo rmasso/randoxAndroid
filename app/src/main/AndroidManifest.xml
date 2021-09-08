@@ -16,10 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Certify">
         <activity
+            android:name=".Activities.DeviceScanActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.ScanActivity"
+            android:name=".Activities.ScanningActivity"
             android:exported="true" />
         <activity
             android:name=".Activities.DashboardActivity"
