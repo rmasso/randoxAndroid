@@ -14,6 +14,7 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         changefragment(HomeFragment(this))
         bnavclick()
         click()
@@ -28,7 +29,7 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
             }else if(it.itemId == R.id.certi){
                 changefragment(CertificatesFragment())
             }else if(it.itemId == R.id.scan){
-                changefragment(YtestFragment())
+                changefragment(YtestFragment(this))
             }else if(it.itemId == R.id.faq){
                 changefragment(FaqFragment())
             }

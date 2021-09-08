@@ -17,7 +17,6 @@ class TraveldestinationFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentTraveldestinationBinding.inflate(layoutInflater)
-
         clicks()
         return binding.root
     }
@@ -48,6 +47,19 @@ class TraveldestinationFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragcontainer,TesterFragment())?.addToBackStack("")?.commit()
         }
+
+        binding.cancel.setOnClickListener {
+            activity?.onBackPressed()
+        }
     }
 
+    override fun onStart() {
+        if(binding.sw1.isChecked || binding.sw2.isChecked){
+
+            binding.ready.visibility = View.VISIBLE
+        }else{
+            binding.ready.visibility = View.GONE
+        }
+        super.onStart()
+    }
 }

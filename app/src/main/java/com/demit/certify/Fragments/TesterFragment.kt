@@ -36,6 +36,9 @@ class TesterFragment : Fragment() {
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
         }
+        binding.cancel.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
     }
 
@@ -55,6 +58,7 @@ class TesterFragment : Fragment() {
             list[i].checked = false
         }
         list[positon].checked = true
+        binding.gotop.visibility = View.VISIBLE
         adapter.notifyDataSetChanged()
     }
 
@@ -88,5 +92,15 @@ class TesterFragment : Fragment() {
         }
 
         inner class TesterVH(val binding: ViewTesterBinding) : RecyclerView.ViewHolder(binding.root)
+    }
+
+    override fun onStart() {
+        binding.gotop.visibility = View.GONE
+        for(i in 0 until list.size){
+            if(list[0].checked){
+                binding.gotop.visibility = View.VISIBLE
+            }
+        }
+        super.onStart()
     }
 }
