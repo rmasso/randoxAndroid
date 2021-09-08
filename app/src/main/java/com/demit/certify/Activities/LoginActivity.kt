@@ -3,15 +3,12 @@ package com.demit.certify.Activities
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.util.Patterns
 import android.widget.Toast
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -19,12 +16,8 @@ import com.demit.certify.Extras.Constants
 import com.demit.certify.Extras.Functions
 import com.demit.certify.Extras.Shared
 import com.demit.certify.Extras.Sweet
-import com.demit.certify.R
 import com.demit.certify.databinding.ActivityLoginBinding
 import org.json.JSONObject
-import java.util.HashMap
-import java.util.jar.Manifest
-import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding :ActivityLoginBinding
