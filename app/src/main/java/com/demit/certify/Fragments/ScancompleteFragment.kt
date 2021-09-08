@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.demit.certify.Activities.DeviceScanActivity
+//import com.demit.certify.Activities.DeviceScanActivity
 import com.demit.certify.R
 import com.demit.certify.databinding.FragmentScancompleteBinding
 import java.io.File
@@ -55,7 +55,7 @@ class ScancompleteFragment : Fragment() {
     }
 
     private fun startScanning(){
-        val intent= Intent(requireContext(), DeviceScanActivity::class.java)
-        startActivityForResult(intent,SCAN_RESULT)
+//        val intent= Intent(requireContext(), DeviceScanActivity::class.java)
+//        startActivityForResult(intent,SCAN_RESULT)
     }
 }

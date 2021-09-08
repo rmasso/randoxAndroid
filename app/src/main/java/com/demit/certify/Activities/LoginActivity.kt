@@ -43,11 +43,11 @@ class LoginActivity : AppCompatActivity() {
         }
         binding.scan.setOnClickListener {
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
-                startActivity(Intent(this,ScanActivity::class.java))
+//                startActivity(Intent(this,ScanActivity::class.java))
                 return@setOnClickListener
             }
             if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
-                startActivity(Intent(this,ScanActivity::class.java))
+//                startActivity(Intent(this,ScanActivity::class.java))
             }else{
                 requestPermissions(arrayOf(android.Manifest.permission.CAMERA),1)
             }

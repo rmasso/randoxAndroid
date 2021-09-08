@@ -47,7 +47,7 @@ class ProfileFragment : Fragment() {
         adapter = ProfileAdapter()
         binding.rv.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        binding.rv.adapter = adapter;
+        binding.rv.adapter = adapter
         return binding.root
     }
 
@@ -110,7 +110,15 @@ class ProfileFragment : Fragment() {
 
     fun clicks() {
         binding.add.setOnClickListener() {
-            startScanning()
+//            startScanning()
+            val p = ProfileModel();
+            list.add(p)
+            binding.rv.getAdapter()?.itemCount?.minus(1)?.let { it1 ->
+                binding.rv.smoothScrollToPosition(
+                    it1
+                )
+            };
+            setData(list.size - 1)
         }
     }
 
