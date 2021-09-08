@@ -1,9 +1,11 @@
 package com.demit.certify.Activities
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -11,13 +13,26 @@ import androidx.core.content.ContextCompat
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.demit.certify.Extras.Constants
 import com.demit.certify.Extras.Functions
 import com.demit.certify.Extras.Shared
 import com.demit.certify.Extras.Sweet
 import com.demit.certify.databinding.ActivityLoginBinding
+import com.google.gson.Gson
+import okhttp3.MediaType
+import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding :ActivityLoginBinding
@@ -37,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
             }else if(binding.email.text.toString().isEmpty()){
                 Toast.makeText(this, "Password cant be empty", Toast.LENGTH_SHORT).show()
             }else{
-                login()
+                requestUploadSurvey(this)
             }
 
         }
@@ -57,28 +72,30 @@ class LoginActivity : AppCompatActivity() {
 
     fun login(){
         sweet.show("Loging in")
-        val obj = JSONObject();
-        obj.put("usr_email", binding.email.text.toString())
-        obj.put("usr_pwd", binding.email.text.toString())
 
-        val url = Functions.concat(Constants.url , "getLogin.php");
-        val request : JsonObjectRequest = object : JsonObjectRequest(
+//        "https://httpbin.org/post"
+
+        val url = "https://httpbin.org/post";
+//        val url = Functions.concat(Constants.url , "getLogin.php");
+        val request : StringRequest = object : StringRequest(
             Method.POST,
             url,
-            obj,
             Response.Listener{
                 sweet.dismiss()
+
+                Log.d("response" , it);
                 try{
-                    val s = it.getString("ret");
+                    val obj = JSONObject(it);
+                    val s = obj.getString("ret");
                     if(s == "100"){
                         Toast.makeText(this,"Invalid credentials",Toast.LENGTH_SHORT).show()
                     }else{
-                        Shared(this).setString("token" , s)
-                        startActivity(Intent(this,DashboardActivity::class.java))
+
                     }
                 }catch (e : Exception){
+                    e.printStackTrace()
                     sweet.dismiss()
-                    Toast.makeText(this,"Invalid credentials",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
                 }
             },
             Response.ErrorListener{
@@ -86,12 +103,97 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
 
             }
-        ){}
+        ){
+            override fun getParams(): MutableMap<String, String> {
+                val map : MutableMap<String, String> = HashMap()
+                map["usr_email"] = binding.email.text.toString()
+                map["usr_pwd"] = binding.password.text.toString()
+                Log.d("mmm" , map.toString());
+                return map
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val map : MutableMap<String, String> = HashMap()
+
+                map["Accept"] = "*/*"
+                map["Accept-Encoding"] = "gzip, deflate, br"
+                map["Content-Type"] = "multipart/form-data; boundary=<calculated when request is sent>"
+                map["Content-Length"] = "<calculated when request is sent>"
+                return map
+            }
+
+
+
+        }
 
         request.retryPolicy = DefaultRetryPolicy(
             50000,
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,)
         Volley.newRequestQueue(this).add(request)
+    }
+
+
+    private fun requestUploadSurvey(context : Context) {
+        sweet.show("Loging in");
+        val webServicesAPI = ApiService2.retrofit
+            .create(WebServicesAPI::class.java)
+        var surveyResponse: Call<Any?>? = null
+        var email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.email.text.toString())
+        var password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.password.text.toString())
+
+
+
+
+        surveyResponse = webServicesAPI.uploadSurvey(
+            email, password
+        )
+        surveyResponse!!.enqueue(object : Callback<Any?> {
+
+            override fun onResponse(call: Call<Any?>, response: retrofit2.Response<Any?>) {
+                sweet.dismiss()
+                try {
+                    Log.d("res" , response.body().toString())
+                    val obj = JSONObject(response.body().toString())
+                    val s = obj.getString("ret");
+                    if(s == "100"){
+                        Toast.makeText(context,"Invalid credentials",Toast.LENGTH_SHORT).show()
+                    }else{
+                        Shared(context).setString("token" , s)
+                        startActivity(Intent(context,DashboardActivity::class.java))
+                    }
+                } catch (e: java.lang.Exception) {
+                    Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<Any?>, t: Throwable) {
+                sweet.dismiss()
+                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    interface WebServicesAPI {
+        @Multipart
+        @POST("getLogin.php")
+        fun uploadSurvey(
+            @Part("usr_email") email: RequestBody,
+            @Part("usr_pwd") password: RequestBody
+        ): Call<Any?>?
+    }
+    object ApiService2 {
+        private const val BASE_URL = Constants.url
+        val retrofit: Retrofit
+            get() {
+                val okHttpClient = OkHttpClient().newBuilder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(60, TimeUnit.SECONDS)
+                    .writeTimeout(60, TimeUnit.SECONDS)
+                    .build()
+                return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
+                    .addConverterFactory(GsonConverterFactory.create()).build()
+            }
     }
 }

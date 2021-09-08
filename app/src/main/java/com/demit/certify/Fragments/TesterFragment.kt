@@ -2,19 +2,34 @@ package com.demit.certify.Fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.demit.certify.Extras.Constants
+import com.demit.certify.Extras.Functions
+import com.demit.certify.Extras.Shared
+import com.demit.certify.Extras.Sweet
+import com.demit.certify.Models.AllCertificatesModel
+import com.demit.certify.Models.TProfileModel
 import com.demit.certify.Models.TesterModel
 import com.demit.certify.R
 import com.demit.certify.databinding.FragmentTesterBinding
 import com.demit.certify.databinding.ViewTesterBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import org.json.JSONObject
 
 class TesterFragment : Fragment() {
-    var list : MutableList<TesterModel> = ArrayList();
+    var list : MutableList<TProfileModel> = ArrayList();
     lateinit var binding : FragmentTesterBinding
     lateinit var adapter : TesterAdapter
     override fun onCreateView(
@@ -23,7 +38,7 @@ class TesterFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentTesterBinding.inflate(layoutInflater)
-        addData()
+        sweet = Sweet(requireContext())
         binding.tlist.layoutManager = LinearLayoutManager(context)
         adapter = TesterAdapter()
         binding.tlist.adapter = adapter
@@ -42,16 +57,7 @@ class TesterFragment : Fragment() {
 
     }
 
-    fun addData(){
-        list.add(TesterModel("Tony"))
-        list.add(TesterModel("Steve"))
-        list.add(TesterModel("Natasha"))
-        list.add(TesterModel("Bruce"))
-        list.add(TesterModel("Clint"))
-        list.add(TesterModel("Sam"))
-        list.add(TesterModel("Frank"))
-        list.add(TesterModel("Peter"))
-    }
+
 
     fun setData(positon : Int){
         for(i in 0 until list.size){
@@ -82,7 +88,7 @@ class TesterFragment : Fragment() {
                     this@TesterFragment.setData(position)
                 }
             }
-            holder.binding.tname.text = model.name
+            holder.binding.tname.text = model.usr_firstname + " " + model.usr_surname
 
             holder.binding.rd.isChecked = model.checked
         }
@@ -101,6 +107,74 @@ class TesterFragment : Fragment() {
                 binding.gotop.visibility = View.VISIBLE
             }
         }
+        getProfiles()
         super.onStart()
     }
+
+    lateinit var sweet : Sweet
+    fun getProfiles(){
+        sweet.show("getting profiles")
+
+        val url = Functions.concat(Constants.url , "getProfile.php");
+        val request : StringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener{
+                sweet.dismiss()
+                Log.d("sss" , it.toString())
+
+                try{
+                    val obj = JSONObject(it)
+                    val s = obj.getString("ret");
+                    if(s == "100"){
+                        if(context != null) {
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }else{
+                        val gson = Gson()
+                        val listType = object : TypeToken<List<TProfileModel?>?>() {}.type
+                        val sliderItem: MutableList<TProfileModel> = gson.fromJson(obj.get("ret").toString(), listType)
+                        list = sliderItem
+                        adapter.notifyDataSetChanged()
+
+                    }
+                }catch (e : Exception){
+                    e.printStackTrace()
+                    sweet.dismiss()
+                    if(context != null) {
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            },
+            Response.ErrorListener{
+                sweet.dismiss()
+                if(context != null) {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                        .show()
+                }
+
+            }
+        ){
+            override fun getParams(): MutableMap<String, String> {
+
+                val map : MutableMap<String, String> = HashMap();
+                if(context != null) {
+                    map["token"] = Shared(context!!).getString("token")!!
+                }
+                return map
+            }
+        }
+
+        request.retryPolicy = DefaultRetryPolicy(
+            50000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
+        )
+        if(context != null) {
+            Volley.newRequestQueue(context).add(request)
+        }
+    }
+
 }
