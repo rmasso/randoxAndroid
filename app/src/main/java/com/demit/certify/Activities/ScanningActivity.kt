@@ -12,7 +12,7 @@ import com.demit.certify.R
 import com.demit.certify.databinding.ActivityScanBinding
 import java.lang.Exception
 
-class ScanActivity : AppCompatActivity() {
+class ScanningActivity : AppCompatActivity() {
     lateinit var binding : ActivityScanBinding
     lateinit var camera : Camera
     override fun onCreate(savedInstanceState: Bundle?) {

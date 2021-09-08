@@ -53,4 +53,7 @@ dependencies {
         transitive = true
     }
 
+    //Device Scanning Library
+    implementation 'com.github.zynkware:Document-Scanning-Android-SDK:1.0.1'
+
 }
