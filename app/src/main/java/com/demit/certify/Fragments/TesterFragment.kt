@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Cache
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -54,11 +55,7 @@ class TesterFragment : Fragment() {
         binding.cancel.setOnClickListener {
             activity?.onBackPressed()
         }
-
     }
-
-
-
     fun setData(positon : Int){
         for(i in 0 until list.size){
             list[i].checked = false
@@ -110,7 +107,6 @@ class TesterFragment : Fragment() {
         getProfiles()
         super.onStart()
     }
-
     lateinit var sweet : Sweet
     fun getProfiles(){
         sweet.show("getting profiles")
@@ -154,16 +150,18 @@ class TesterFragment : Fragment() {
                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                         .show()
                 }
-
             }
         ){
             override fun getParams(): MutableMap<String, String> {
-
                 val map : MutableMap<String, String> = HashMap();
                 if(context != null) {
                     map["token"] = Shared(context!!).getString("token")!!
                 }
                 return map
+            }
+
+            override fun getCacheEntry(): Cache.Entry? {
+                return super.getCacheEntry()
             }
         }
 
@@ -173,8 +171,9 @@ class TesterFragment : Fragment() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
         )
         if(context != null) {
-            Volley.newRequestQueue(context).add(request)
+            val queue = Volley.newRequestQueue(context)
+            queue.cache.clear()
+            queue.add(request)
         }
     }
-
 }

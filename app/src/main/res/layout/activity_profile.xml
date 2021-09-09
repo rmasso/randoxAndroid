@@ -109,8 +109,6 @@
             android:background="@drawable/et_bg"
             android:inputType="textNoSuggestions"
             />
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -122,8 +120,6 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/poppinsmedium"
                 android:textSize="@dimen/_14sdp"/>
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,6 +134,7 @@
             android:layout_height="wrap_content"
             android:paddingVertical="@dimen/_10sdp"
             android:paddingHorizontal="@dimen/_15sdp"
+            android:hint="yyyy-MM-dd"
             android:background="@drawable/et_bg"
             android:inputType="textNoSuggestions"
             />
@@ -173,6 +170,36 @@
             android:inputType="textEmailAddress"
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:text="Password"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"/>
+        </LinearLayout>
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/et_bg"
+            android:inputType="textPassword"
+            android:paddingHorizontal="@dimen/_15sdp"
+            android:paddingVertical="@dimen/_10sdp"
+            />
 
         <TextView
             android:layout_width="wrap_content"

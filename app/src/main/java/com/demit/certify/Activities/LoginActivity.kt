@@ -57,82 +57,19 @@ class LoginActivity : AppCompatActivity() {
 
         }
         binding.scan.setOnClickListener {
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
+//            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M){
 //                startActivity(Intent(this,ScanActivity::class.java))
-                return@setOnClickListener
-            }
-            if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
+//                return@setOnClickListener
+//            }
+//            if(ContextCompat.checkSelfPermission(this,android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED){
 //                startActivity(Intent(this,ScanActivity::class.java))
-            }else{
-                requestPermissions(arrayOf(android.Manifest.permission.CAMERA),1)
-            }
+//            }else{
+//                requestPermissions(arrayOf(android.Manifest.permission.CAMERA),1)
+//            }
 
+            startActivity(Intent(this,RegisterActivity::class.java))
         }
     }
-
-    fun login(){
-        sweet.show("Loging in")
-
-//        "https://httpbin.org/post"
-
-        val url = "https://httpbin.org/post";
-//        val url = Functions.concat(Constants.url , "getLogin.php");
-        val request : StringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener{
-                sweet.dismiss()
-
-                Log.d("response" , it);
-                try{
-                    val obj = JSONObject(it);
-                    val s = obj.getString("ret");
-                    if(s == "100"){
-                        Toast.makeText(this,"Invalid credentials",Toast.LENGTH_SHORT).show()
-                    }else{
-
-                    }
-                }catch (e : Exception){
-                    e.printStackTrace()
-                    sweet.dismiss()
-                    Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
-                }
-            },
-            Response.ErrorListener{
-                sweet.dismiss()
-                Toast.makeText(this,"Something went wrong",Toast.LENGTH_SHORT).show()
-
-            }
-        ){
-            override fun getParams(): MutableMap<String, String> {
-                val map : MutableMap<String, String> = HashMap()
-                map["usr_email"] = binding.email.text.toString()
-                map["usr_pwd"] = binding.password.text.toString()
-                Log.d("mmm" , map.toString());
-                return map
-            }
-
-            override fun getHeaders(): MutableMap<String, String> {
-                val map : MutableMap<String, String> = HashMap()
-
-                map["Accept"] = "*/*"
-                map["Accept-Encoding"] = "gzip, deflate, br"
-                map["Content-Type"] = "multipart/form-data; boundary=<calculated when request is sent>"
-                map["Content-Length"] = "<calculated when request is sent>"
-                return map
-            }
-
-
-
-        }
-
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,)
-        Volley.newRequestQueue(this).add(request)
-    }
-
 
     private fun requestUploadSurvey(context : Context) {
         sweet.show("Loging in");

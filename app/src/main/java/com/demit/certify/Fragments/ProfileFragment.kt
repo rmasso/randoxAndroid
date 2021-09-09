@@ -5,16 +5,29 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.demit.certify.Extras.Constants
+import com.demit.certify.Extras.Functions
+import com.demit.certify.Extras.Shared
+import com.demit.certify.Extras.Sweet
 import com.demit.certify.Models.ProfileModel
 import com.demit.certify.databinding.FragmentProfileBinding
 import com.demit.certify.databinding.ViewProfileBinding
+import org.json.JSONObject
+import java.util.HashMap
 
 //import com.microblink.entities.recognizers.Recognizer
 //import com.microblink.entities.recognizers.RecognizerBundle
@@ -29,6 +42,7 @@ class ProfileFragment : Fragment() {
     var index = 0
     val list: MutableList<ProfileModel> = ArrayList();
 
+    lateinit var sweet : Sweet
     //Blink Id Variables
 //    private lateinit var mRecognizer: BlinkIdCombinedRecognizer
 //    private lateinit var mRecognizerBundle: RecognizerBundle
@@ -38,6 +52,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentProfileBinding.inflate(layoutInflater)
+        sweet = Sweet(requireContext())
 
         val p = ProfileModel();
         p.selected = true;
@@ -45,8 +60,7 @@ class ProfileFragment : Fragment() {
         clicks()
         fielddata()
         adapter = ProfileAdapter()
-        binding.rv.layoutManager =
-            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = adapter
         return binding.root
     }
@@ -119,6 +133,25 @@ class ProfileFragment : Fragment() {
                 )
             };
             setData(list.size - 1)
+        }
+
+        binding.save.setOnClickListener {
+            if(binding.fname.text.toString().isEmpty()){
+                if(context != null)
+                Toast.makeText(context, "Firstname can't be empty",Toast.LENGTH_SHORT).show()
+            }else if(binding.sname.text.toString().isEmpty()){
+                if(context != null)
+                Toast.makeText(context, "Surname can't be empty",Toast.LENGTH_SHORT).show()
+            }else
+                if(!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()){
+                    if(context != null)
+                Toast.makeText(context, "Invalid Email Address",Toast.LENGTH_SHORT).show()
+                }else if(binding.dob.text.toString().isEmpty()){
+                    if(context != null)
+                    Toast.makeText(context, "Date of birth can't be empty",Toast.LENGTH_SHORT).show()
+                }else{
+                    familyregister()
+                }
         }
     }
 
@@ -316,7 +349,6 @@ class ProfileFragment : Fragment() {
 
         inner class ProfileVH(val binding: ViewProfileBinding) :
             RecyclerView.ViewHolder(binding.root) {
-
         }
     }
 
@@ -328,5 +360,84 @@ class ProfileFragment : Fragment() {
 //
 //        // Start activity
 //        ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
+    }
+
+    fun familyregister(){
+        sweet.show("Registering User")
+        val url = Functions.concat(Constants.url , "FamilyRegistration.php");
+        val request : StringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener{
+                sweet.dismiss()
+                Log.d("sss" , it.toString())
+                try{
+                    val obj = JSONObject(it)
+                    val s = obj.getString("ret");
+                    if(s == "100"){
+                        if(context != null)
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
+                    }else{
+                        if(context != null)
+                        Toast.makeText(context, "User registered successfully", Toast.LENGTH_SHORT)
+                            .show()
+
+                        list.removeAt(index);
+                        if(list.isEmpty()){
+                            val m = ProfileModel()
+                            m.selected = true
+                            list.add(m)
+                        }
+                        setData(0)
+                    }
+                }catch (e : Exception){
+                    e.printStackTrace()
+                    sweet.dismiss()
+                    if(context != null)
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            },
+            Response.ErrorListener{
+                sweet.dismiss()
+                if(context != null)
+                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        ){
+            override fun getParams(): MutableMap<String, String> {
+                val map : MutableMap<String, String> = HashMap()
+                map["usr_email"] = binding.email.text.toString()
+                map["token"] = Shared(requireContext()).getString("token")
+                map["usr_firstname"] = binding.fname.text.toString()
+                map["usr_surname"] = binding.sname.text.toString()
+                map["usr_birth"] = binding.dob.text.toString()
+                map["usr_home"] = binding.address.text.toString()
+                map["usr_zip"] = binding.zip.text.toString()
+                map["usr_passport"] = binding.pnumber.text.toString()
+                map["usr_country"] = binding.country.selectedCountryName
+                map["usr_phone"] = binding.phone.text.toString()
+                if(binding.gender.selectedItemPosition == 0){
+                    map["usr_sex"] = "M"
+                }else{
+                    map["usr_sex"] = "F"
+                }
+                return map
+            }
+        }
+
+        request.retryPolicy = DefaultRetryPolicy(
+            50000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
+        )
+
+        if(context != null) {
+            val queue = Volley.newRequestQueue(context)
+            queue.cache.clear()
+            queue.add(request)
+        }
+
     }
 }

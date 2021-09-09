@@ -21,8 +21,8 @@ class Shared(var context: Context) {
         return sharedPreferences.getInt(key, 0)
     }
 
-    fun getString(key: String?): String? {
-        return sharedPreferences.getString(key, "")
+    fun getString(key: String): String {
+        return sharedPreferences.getString(key, "")!!
     }
 
     init {
