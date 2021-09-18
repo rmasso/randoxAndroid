@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Cache
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
@@ -24,8 +25,11 @@ import com.demit.certify.Extras.Functions
 import com.demit.certify.Extras.Shared
 import com.demit.certify.Extras.Sweet
 import com.demit.certify.Models.ProfileModel
+import com.demit.certify.Models.TProfileModel
 import com.demit.certify.databinding.FragmentProfileBinding
 import com.demit.certify.databinding.ViewProfileBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.json.JSONObject
 import java.util.HashMap
 
@@ -40,7 +44,7 @@ class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
     lateinit var adapter: ProfileAdapter
     var index = 0
-    val list: MutableList<ProfileModel> = ArrayList();
+    var list: MutableList<TProfileModel> = ArrayList();
 
     lateinit var sweet : Sweet
     //Blink Id Variables
@@ -54,11 +58,9 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(layoutInflater)
         sweet = Sweet(requireContext())
 
-        val p = ProfileModel();
-        p.selected = true;
-        list.add(p)
-        clicks()
-        fielddata()
+
+
+        getProfiles();
         adapter = ProfileAdapter()
         binding.rv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         binding.rv.adapter = adapter
@@ -125,7 +127,7 @@ class ProfileFragment : Fragment() {
     fun clicks() {
         binding.add.setOnClickListener() {
 //            startScanning()
-            val p = ProfileModel();
+            val p = TProfileModel();
             list.add(p)
             binding.rv.getAdapter()?.itemCount?.minus(1)?.let { it1 ->
                 binding.rv.smoothScrollToPosition(
@@ -166,7 +168,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].fname = s.toString();
+                list[index].usr_firstname = s.toString();
             }
 
         })
@@ -181,7 +183,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].sname = s.toString();
+                list[index].usr_surname = s.toString();
             }
 
         })
@@ -196,7 +198,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].dob = s.toString();
+                list[index].usr_birth = s.toString();
             }
 
         })
@@ -211,7 +213,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].pnumber = s.toString();
+                list[index].usr_passport = s.toString();
             }
 
         })
@@ -226,7 +228,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].email = s.toString();
+                list[index].usr_email = s.toString();
             }
 
         })
@@ -242,7 +244,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].phone = s.toString();
+                list[index].usr_phone = s.toString();
             }
 
         })
@@ -257,7 +259,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].address = s.toString();
+                list[index].usr_home = s.toString();
             }
 
         })
@@ -272,11 +274,17 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].zipcode = s.toString();
+                list[index].usr_zip = s.toString();
             }
         })
 
-        list[index].gender = binding.gender.selectedItemPosition
+        val p :String = if(binding.gender.selectedItemPosition == 0){
+            "M"
+        }else{
+            "F"
+        }
+
+        list[index].usr_sex = p
 
         binding.gender.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -289,38 +297,50 @@ class ProfileFragment : Fragment() {
                 position: Int,
                 id: Long
             ) {
-                list[index].gender = position
+                if(position == 0){
+                    list[index].usr_sex = "M"
+                }else{
+                    list[index].usr_sex = "F"
+                }
+
             }
 
         }
 
-        list[index].country = binding.country.selectedCountryNameCode
+        list[index].usr_country = binding.country.selectedCountryNameCode
 
         binding.country.setOnCountryChangeListener {
-            list[index].country = binding.country.selectedCountryNameCode
+            list[index].usr_country = binding.country.selectedCountryNameCode
         }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     fun setData(position: Int) {
 //         for(i in 0 until list.size){
-        list[index].selected = false
+        list[index].checked = false
 //         }
         index = position
-        list[position].selected = true
+        list[position].checked = true
 
         adapter.notifyDataSetChanged()
 
-        binding.fname.setText(list[position].fname)
-        binding.sname.setText(list[position].sname)
-        binding.dob.setText(list[position].dob)
-        binding.email.setText(list[position].email)
-        binding.pnumber.setText(list[position].pnumber)
-        binding.phone.setText(list[position].phone)
-        binding.address.setText(list[position].address)
-        binding.zip.setText(list[position].zipcode)
-        binding.country.setCountryForNameCode(list[position].country);
-        binding.gender.setSelection(list[position].gender)
+        binding.fname.setText(list[position].usr_firstname)
+        binding.sname.setText(list[position].usr_surname)
+        binding.dob.setText(list[position].usr_birth)
+        binding.email.setText(list[position].usr_email)
+        binding.pnumber.setText(list[position].usr_passport)
+        binding.phone.setText(list[position].usr_phone)
+        binding.address.setText(list[position].usr_home)
+        binding.zip.setText(list[position].usr_zip)
+        binding.country.setCountryForNameCode(list[position].usr_country);
+        var p :Int;
+        if(list[position].usr_sex == "M"){
+            p = 0
+        }else{
+            p = 1
+        }
+
+        binding.gender.setSelection(p)
     }
 
     inner class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileVH>() {
@@ -336,7 +356,7 @@ class ProfileFragment : Fragment() {
             holder.itemView.setOnClickListener {
                 this@ProfileFragment.setData(position)
             }
-            if (model.selected) {
+            if (model.checked) {
                 holder.binding.verified.visibility = View.VISIBLE
             } else {
                 holder.binding.verified.visibility = View.GONE
@@ -385,8 +405,8 @@ class ProfileFragment : Fragment() {
 
                         list.removeAt(index);
                         if(list.isEmpty()){
-                            val m = ProfileModel()
-                            m.selected = true
+                            val m = TProfileModel()
+                            m.checked = true
                             list.add(m)
                         }
                         setData(0)
@@ -439,5 +459,81 @@ class ProfileFragment : Fragment() {
             queue.add(request)
         }
 
+    }
+
+
+    fun getProfiles(){
+        sweet.show("getting profiles")
+
+        val url = Functions.concat(Constants.url , "getProfile.php");
+        val request : StringRequest = object : StringRequest(
+            Method.POST,
+            url,
+            Response.Listener{
+                sweet.dismiss()
+                Log.d("sss" , it.toString())
+
+                try{
+                    val obj = JSONObject(it)
+                    val s = obj.getString("ret");
+                    if(s == "100"){
+                        if(context != null) {
+                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    }else{
+                        val gson = Gson()
+                        val listType = object : TypeToken<List<TProfileModel?>?>() {}.type
+                        val sliderItem: MutableList<TProfileModel> = gson.fromJson(obj.get("ret").toString(), listType)
+                        list = sliderItem
+                        if(list.size > 0) {
+                            index = 0
+                            setData(index)
+                            list[0].checked = true;
+                        }
+                        adapter.notifyDataSetChanged()
+                        clicks()
+                        fielddata()
+                    }
+                }catch (e : Exception){
+                    e.printStackTrace()
+                    sweet.dismiss()
+                    if(context != null) {
+                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            },
+            Response.ErrorListener{
+                sweet.dismiss()
+                if(context != null) {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        ){
+            override fun getParams(): MutableMap<String, String> {
+                val map : MutableMap<String, String> = HashMap();
+                if(context != null) {
+                    map["token"] = Shared(context!!).getString("token")!!
+                }
+                return map
+            }
+
+            override fun getCacheEntry(): Cache.Entry? {
+                return super.getCacheEntry()
+            }
+        }
+
+        request.retryPolicy = DefaultRetryPolicy(
+            50000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
+        )
+        if(context != null) {
+            val queue = Volley.newRequestQueue(context)
+            queue.cache.clear()
+            queue.add(request)
+        }
     }
 }

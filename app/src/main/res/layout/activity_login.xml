@@ -15,7 +15,7 @@
         android:paddingVertical="@dimen/_25sdp">
 
         <ImageView
-            android:layout_width="@dimen/_100sdp"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:src="@drawable/logo"
             android:layout_marginBottom="@dimen/_60sdp"

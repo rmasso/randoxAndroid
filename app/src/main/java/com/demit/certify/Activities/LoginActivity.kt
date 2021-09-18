@@ -100,6 +100,8 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(Intent(context,DashboardActivity::class.java))
                     }
                 } catch (e: java.lang.Exception) {
+
+                    Toast.makeText(context,e.localizedMessage,Toast.LENGTH_SHORT).show()
                     Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
@@ -107,7 +109,9 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 sweet.dismiss()
-                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
+
+                Toast.makeText(context,call.request().body().toString(),Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
             }
         })
     }

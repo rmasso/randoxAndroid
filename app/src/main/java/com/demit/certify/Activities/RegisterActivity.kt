@@ -160,8 +160,10 @@ class RegisterActivity : AppCompatActivity() {
             },
             Response.ErrorListener{
                 sweet.dismiss()
-                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-                    .show()
+
+
+//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
 
             }
         ){
@@ -195,7 +197,9 @@ class RegisterActivity : AppCompatActivity() {
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
         )
 
-        Volley.newRequestQueue(this).add(request)
+        val queue = Volley.newRequestQueue(this);
+        queue.cache.clear();
+        queue.add(request)
 
     }
 }

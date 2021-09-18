@@ -1,17 +1,17 @@
 package com.demit.certify.Models
 
 class TProfileModel {
-    val usr_firstname : String = ""
-    val usr_surname : String = ""
-    val usr_sex : String = ""
-    val usr_birth : String = ""
-    val usr_home : String = ""
-    val usr_zip : String = ""
-    val usr_passport : String = ""
-    val usr_country : String = ""
-    val usr_phone : String = ""
-    val usr_email : String = ""
-    val usr_id : String = ""
-    val usr_admin : String = ""
+    var usr_firstname : String = ""
+    var usr_surname : String = ""
+    var usr_sex : String = ""
+    var usr_birth : String = ""
+    var usr_home : String = ""
+    var usr_zip : String = ""
+    var usr_passport : String = ""
+    var usr_country : String = ""
+    var usr_phone : String = ""
+    var usr_email : String = ""
+    var usr_id : String = ""
+    var usr_admin : String = ""
     var checked : Boolean = false
 }

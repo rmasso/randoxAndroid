@@ -2,7 +2,7 @@ package com.demit.certify
 
 import android.app.Application
 import android.graphics.Bitmap
-//import com.microblink.MicroblinkSDK
+//import com.microblink.*
 //import com.microblink.intent.IntentDataTransferMode
 //import com.microblink.licence.exception.InvalidLicenceKeyException
 //import com.zynksoftware.documentscanner.ui.DocumentScanner
