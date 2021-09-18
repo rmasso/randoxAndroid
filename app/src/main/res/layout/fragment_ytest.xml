@@ -25,6 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Your Test"
+            android:visibility="gone"
             android:textSize="@dimen/_15sdp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppinsbold"
@@ -98,13 +99,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Confirm that the test has been taken by the person who will be listed on the certificate"
+                    android:text="Confirm there's no covid 19 Symptoms"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppinsbold"/>
             </LinearLayout>
         </LinearLayout>
         <TextView
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/textlight"
@@ -122,7 +124,7 @@
             android:paddingVertical="@dimen/_10sdp"
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
-            android:text="Ready"
+            android:text="Begin Scan"
             android:layout_marginBottom="@dimen/_10sdp"
             android:textColor="@color/white"
             android:gravity="center"/>

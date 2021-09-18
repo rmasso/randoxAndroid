@@ -17,6 +17,18 @@ class FaqFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentFaqBinding.inflate(layoutInflater)
+        binding.verify.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
+
+        }
+        binding.cancel.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragcontainer,TesterFragment())?.addToBackStack("")?.commit()
+
+        }
         return binding.root
     }
+
+
 }

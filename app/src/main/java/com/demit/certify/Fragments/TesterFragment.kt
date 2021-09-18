@@ -49,8 +49,10 @@ class TesterFragment : Fragment() {
 
     fun setclicks(){
         binding.gotop.setOnClickListener {
+//            activity?.supportFragmentManager?.beginTransaction()
+//                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
+                ?.replace(R.id.fragcontainer,FaqFragment())?.addToBackStack("")?.commit()
         }
         binding.cancel.setOnClickListener {
             activity?.onBackPressed()

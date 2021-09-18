@@ -35,13 +35,14 @@
 
 
     </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/tlist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/topll"
         android:layout_above="@id/bottomll"
-        tools:listitem="@layout/view_tester"/>
+        android:layout_below="@id/topll"
+        tools:listitem="@layout/view_tester" />
     <LinearLayout
         android:id="@+id/bottomll"
         android:layout_alignParentBottom="true"
@@ -57,10 +58,26 @@
             android:paddingVertical="@dimen/_10sdp"
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
-            android:text="Go to profile"
+            android:text="Next"
+            android:textAllCaps="true"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:textColor="@color/white"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/newprofile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_bg"
+            android:paddingVertical="@dimen/_10sdp"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsbold"
+            android:text="New profile"
+            android:textAllCaps="true"
             android:layout_marginVertical="@dimen/_10sdp"
             android:textColor="@color/white"
             android:gravity="center"/>
+
         <TextView
             android:id="@+id/cancel"
             android:layout_width="match_parent"
@@ -70,6 +87,7 @@
             android:textSize="@dimen/_14sdp"
             android:fontFamily="@font/poppinsbold"
             android:text="Cancel"
+
             android:textColor="@color/black"
             android:gravity="center"/>
 
