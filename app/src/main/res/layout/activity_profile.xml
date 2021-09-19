@@ -358,6 +358,7 @@
                 android:layout_weight="1">
 
                 <ImageView
+                    android:id="@+id/scan_your_passport"
                     android:layout_width="@dimen/_50sdp"
                     android:layout_height="@dimen/_50sdp"
                     android:layout_centerHorizontal="true"

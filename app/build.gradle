@@ -55,9 +55,9 @@ dependencies {
 
     implementation files('libs/LibBlinkID-javadoc.jar')
     //BlinkId Sdk
-//    implementation("com.microblink:blinkid:5.13.0@aar") {
-//        transitive = true
-//    }
+    implementation("com.microblink:blinkid:5.13.0@aar") {
+        transitive = true
+    }
 
     //Device Scanning Library
 //    implementation 'com.github.zynkware:Document-Scanning-Android-SDK:1.0.1'
