@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
@@ -22,6 +23,7 @@ import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecogn
 import com.microblink.uisettings.ActivityRunner
 import com.microblink.uisettings.BlinkIdUISettings
 import kotlinx.android.synthetic.main.activity_profile.*
+import kotlinx.android.synthetic.main.view_prepare_passport.view.*
 import org.json.JSONObject
 import java.util.*
 
@@ -63,8 +65,18 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.scanYourPassport.setOnClickListener {
-                startScanning()
+            binding.passportScanInfo.visibility= View.VISIBLE
+
         }
+
+        binding.subInfo.verify.setOnClickListener {
+            startScanning()
+
+        }
+        binding.subInfo.cancel.setOnClickListener {
+            binding.passportScanInfo.visibility= View.GONE
+        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -72,6 +84,7 @@ class RegisterActivity : AppCompatActivity() {
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 // load the data into all recognizers bundled within your RecognizerBundle
+                binding.passportScanInfo.visibility= View.GONE
                 mRecognizerBundle.loadFromIntent(data)
 
                 // now every recognizer object that was bundled within RecognizerBundle
