@@ -1,7 +1,9 @@
 package com.demit.certify.Fragments
 
 import android.annotation.SuppressLint
+import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -30,6 +32,11 @@ import com.demit.certify.databinding.FragmentProfileBinding
 import com.demit.certify.databinding.ViewProfileBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.microblink.entities.recognizers.Recognizer
+import com.microblink.entities.recognizers.RecognizerBundle
+import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
+import com.microblink.uisettings.ActivityRunner
+import com.microblink.uisettings.BlinkIdUISettings
 import org.json.JSONObject
 import java.util.HashMap
 
@@ -48,8 +55,8 @@ class ProfileFragment : Fragment() {
 
     lateinit var sweet : Sweet
     //Blink Id Variables
-//    private lateinit var mRecognizer: BlinkIdCombinedRecognizer
-//    private lateinit var mRecognizerBundle: RecognizerBundle
+    private lateinit var mRecognizer: BlinkIdCombinedRecognizer
+    private lateinit var mRecognizerBundle: RecognizerBundle
     private val MY_REQUEST_CODE = 801
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,64 +76,48 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        mRecognizer = BlinkIdCombinedRecognizer()
-//        mRecognizer.setReturnFaceImage(true)
+        mRecognizer = BlinkIdCombinedRecognizer()
+        mRecognizer.setReturnFaceImage(true)
         // bundle recognizers into RecognizerBundle
-//        mRecognizerBundle = RecognizerBundle(mRecognizer)
+       mRecognizerBundle = RecognizerBundle(mRecognizer)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        if (requestCode === MY_REQUEST_CODE) {
-//            if (resultCode === RESULT_OK && data != null) {
-//                // load the data into all recognizers bundled within your RecognizerBundle
-////                mRecognizerBundle.loadFromIntent(data)
-//
-//                // now every recognizer object that was bundled within RecognizerBundle
-//                // has been updated with results obtained during scanning session
-//                // you can get the result by invoking getResult on recognizer
-////                val result = mRecognizer.result
-//                // result is valid, you can use it however you wish
-//                if (result.resultState == Recognizer.Result.State.Valid) {
-//                    binding.fname.text= Editable.Factory.getInstance().newEditable( result.firstName)
-//                    binding.sname.text= Editable.Factory.getInstance().newEditable( result.lastName)
-//
-//                    result.dateOfBirth.date?.let {date->
-//                        val day= date.day
-//                        val year= date.year
-//                        val month= date.month
-//                        binding.dob.text= Editable.Factory.getInstance().newEditable("$day/$month/$year")
-//                    }
-//
-//
-//                    binding.pnumber.text= Editable.Factory.getInstance().newEditable( result.documentNumber)
-//
-//
-//
-//
-//                    /* val imageArr = result.encodedFaceImage
-//                     faceImage.setImageBitmap(
-//                         result.faceImage?.convertToBitmap()
-//                     )*/
-//
-//               /*     val p = ProfileModel();
-//                list.add(p)
-//                binding.rv.getAdapter()?.itemCount?.minus(1)?.let { it1 ->
-//                    binding.rv.smoothScrollToPosition(
-//                        it1
-//                    )
-//                };
-//                setData(list.size - 1)*/
-//
-//                }
-//            }
-//        }
-//
-//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == MY_REQUEST_CODE) {
+            if (resultCode == RESULT_OK && data != null) {
+                // load the data into all recognizers bundled within your RecognizerBundle
+                mRecognizerBundle.loadFromIntent(data)
+                // now every recognizer object that was bundled within RecognizerBundle
+                // has been updated with results obtained during scanning session
+                // you can get the result by invoking getResult on recognizer
+                binding.passportScanInfo.visibility= View.GONE
+                val result = mRecognizer.result
+                // result is valid, you can use it however you wish
+                if (result.resultState == Recognizer.Result.State.Valid) {
+                    binding.fname.text= Editable.Factory.getInstance().newEditable( result.firstName)
+                    binding.sname.text= Editable.Factory.getInstance().newEditable( result.lastName)
+
+                    result.dateOfBirth.date?.let {date->
+                        val day= date.day
+                        val year= date.year
+                        val month= date.month
+                        binding.dob.text= Editable.Factory.getInstance().newEditable("$day/$month/$year")
+                    }
+
+
+                    binding.pnumber.text= Editable.Factory.getInstance().newEditable( result.documentNumber)
+
+                }
+            }
+        }
+
+    }
 
     fun clicks() {
         binding.add.setOnClickListener() {
-//            startScanning()
+            binding.passportScanInfo.visibility= View.VISIBLE
+
             val p = TProfileModel();
             list.add(p)
             binding.rv.getAdapter()?.itemCount?.minus(1)?.let { it1 ->
@@ -154,6 +145,14 @@ class ProfileFragment : Fragment() {
                 }else{
                     familyregister()
                 }
+        }
+
+        binding.subInfo.verify.setOnClickListener {
+            startScanning()
+
+        }
+        binding.subInfo.cancel.setOnClickListener {
+            binding.passportScanInfo.visibility= View.GONE
         }
     }
 
@@ -374,12 +373,12 @@ class ProfileFragment : Fragment() {
 
     private fun startScanning() {
         // Settings for BlinkIdActivity
-//        val settings = BlinkIdUISettings(mRecognizerBundle)
-//
-//        // tweak settings as you wish
-//
-//        // Start activity
-//        ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
+        val settings = BlinkIdUISettings(mRecognizerBundle)
+
+        // tweak settings as you wish
+
+        // Start activity
+        ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
     }
 
     fun familyregister(){
