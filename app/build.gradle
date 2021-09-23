@@ -1,7 +1,8 @@
 plugins {
-   id 'com.android.application'
+    id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -34,6 +35,14 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    aaptOptions {
+        noCompress "tflite" // To avoid ML model compression
+    }
+
+    dataBinding {
+        enabled = true // To enable data binding
+    }
 }
 
 dependencies {
@@ -59,6 +68,24 @@ dependencies {
         transitive = true
     }
 
-    //Device Scanning Library
-//    implementation 'com.github.zynkware:Document-Scanning-Android-SDK:1.0.1'
+    //CameraX Api's
+    implementation "androidx.camera:camera-camera2:1.1.0-alpha08"
+    implementation "androidx.camera:camera-lifecycle:1.1.0-alpha08"
+    implementation "androidx.camera:camera-view:1.0.0-alpha28"
+
+    //Ml Kit Qr Api
+    implementation 'com.google.mlkit:barcode-scanning:17.0.0'
+    implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:16.2.1'
+
+    //TensorFlow
+    implementation 'org.tensorflow:tensorflow-lite-task-vision:0.2.0'
+
+    //Lottie
+    def lottieVersion = '4.0.0'
+    implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    //Networking
+    implementation 'com.amitshekhar.android:android-networking:1.0.2'
+
+
 }

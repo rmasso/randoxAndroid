@@ -2,21 +2,27 @@ package com.demit.certify.Fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.demit.certify.Activities.CaptureActivity
+import com.demit.certify.Models.CertificateModel
 //import com.demit.certify.Activities.DeviceScanActivity
 import com.demit.certify.R
+import com.demit.certify.data.ApiHelper
 import com.demit.certify.databinding.FragmentScancompleteBinding
 import java.io.File
 
 
 class ScancompleteFragment : Fragment() {
-    val SCAN_RESULT=150
+    val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,31 +37,61 @@ class ScancompleteFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==SCAN_RESULT){
-            if(resultCode!= Activity.RESULT_CANCELED){
+        if (requestCode == SCAN_RESULT) {
+            if (resultCode != Activity.RESULT_CANCELED) {
                 //Todo add image initilization related code here
                 data?.let {
-                    val originalImageFile= it.getSerializableExtra("original_image") as File
-                    val croppedImageFile= it.getSerializableExtra("cropped_image") as File
-                    binding.scannedImage.setImageBitmap(BitmapFactory.decodeFile(croppedImageFile.path))
+                    val croppedImage = it.getStringExtra("device")
+                    val qrCode = it.getStringExtra("qr")
+                    croppedImage?.let { image ->
+                        val imageBytes = Base64.decode(image, Base64.DEFAULT)
+                        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+
+                        binding.scannedImage.setImageBitmap(bitmap)
+                        createNewCertificate(image)
+                    }
+
                 }
 
             }
         }
 
     }
-    fun setclicks(){
+
+    fun setclicks() {
         binding.submit.setOnClickListener {
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer,ScansubmitFragment())?.addToBackStack("")?.commit()
+                ?.replace(R.id.fragcontainer, ScansubmitFragment())?.addToBackStack("")?.commit()
         }
         binding.rescan.setOnClickListener {
             startScanning()
         }
     }
 
-    private fun startScanning(){
-//        val intent= Intent(requireContext(), DeviceScanActivity::class.java)
-//        startActivityForResult(intent,SCAN_RESULT)
+    private fun startScanning() {
+        val intent = Intent(requireContext(), CaptureActivity::class.java)
+        startActivityForResult(intent, SCAN_RESULT)
+    }
+
+    private fun createNewCertificate(deviceImageBase64: String) {
+        val certificateModel = CertificateModel(
+            usr_id = "",
+            cert_name = "Hammad Android",
+            cert_email = "hammad@email.com",
+            cert_passport = "AB-12VQ34",
+            cert_country = "PK",
+            cert_device_id = "COVIDE-DEVICE-00133",
+            cert_ai_pred = "AI Predicate",
+            cert_ai_approved = "N",
+            cert_create = "2021-09-05",
+            cert_deviceToken = "1234$+A*5678",
+            cert_image = deviceImageBase64
+        )
+
+        ApiHelper.createNewCertificate(requireContext(), certificateModel)
+            .observe(this) { response ->
+                Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
+            }
+
     }
 }
