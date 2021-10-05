@@ -14,14 +14,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.demit.certify.Activities.CaptureActivity
 import com.demit.certify.Models.CertificateModel
+import com.demit.certify.Models.TProfileModel
 //import com.demit.certify.Activities.DeviceScanActivity
 import com.demit.certify.R
 import com.demit.certify.data.ApiHelper
 import com.demit.certify.databinding.FragmentScancompleteBinding
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 
-class ScancompleteFragment : Fragment() {
+class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
     override fun onCreateView(
@@ -48,7 +51,7 @@ class ScancompleteFragment : Fragment() {
                         val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
                         binding.scannedImage.setImageBitmap(bitmap)
-                        createNewCertificate(image)
+                        createNewCertificate(image,qrCode!!)
                     }
 
                 }
@@ -73,18 +76,18 @@ class ScancompleteFragment : Fragment() {
         startActivityForResult(intent, SCAN_RESULT)
     }
 
-    private fun createNewCertificate(deviceImageBase64: String) {
+    private fun createNewCertificate(deviceImageBase64: String,qrCode:String) {
         val certificateModel = CertificateModel(
-            usr_id = "",
-            cert_name = "Hammad Android",
-            cert_email = "hammad@email.com",
-            cert_passport = "AB-12VQ34",
-            cert_country = "PK",
-            cert_device_id = "COVIDE-DEVICE-00133",
+            usr_id = selectedProfile.usr_id,
+            cert_name = "${selectedProfile.usr_firstname} ${selectedProfile.usr_surname}",
+            cert_email = selectedProfile.usr_email,
+            cert_passport = selectedProfile.usr_passport,
+            cert_country = selectedProfile.usr_country,
+            cert_device_id = qrCode,
             cert_ai_pred = "AI Predicate",
             cert_ai_approved = "N",
-            cert_create = "2021-09-05",
-            cert_deviceToken = "1234$+A*5678",
+            cert_create = SimpleDateFormat("dd-MMM-yyyy hh:mm").format(Date()),
+            cert_deviceToken = qrCode,
             cert_image = deviceImageBase64
         )
 

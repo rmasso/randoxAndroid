@@ -87,5 +87,12 @@ dependencies {
     //Networking
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
 
+    //Pdf generator and viewer
+    implementation 'com.itextpdf:itextg:5.5.10'
+    implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+
+    //Card StackView
+    implementation 'com.mutualmobile.android:cardstack:0.5.3'
+
 
 }

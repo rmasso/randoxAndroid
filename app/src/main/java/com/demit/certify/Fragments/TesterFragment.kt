@@ -33,6 +33,7 @@ class TesterFragment : Fragment() {
     var list : MutableList<TProfileModel> = ArrayList();
     lateinit var binding : FragmentTesterBinding
     lateinit var adapter : TesterAdapter
+    lateinit var currentSelectedProfile:TProfileModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,7 +53,7 @@ class TesterFragment : Fragment() {
 //            activity?.supportFragmentManager?.beginTransaction()
 //                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
+                ?.replace(R.id.fragcontainer,ScancompleteFragment(currentSelectedProfile))?.addToBackStack("")?.commit()
         }
         binding.cancel.setOnClickListener {
             activity?.onBackPressed()
@@ -63,6 +64,7 @@ class TesterFragment : Fragment() {
             list[i].checked = false
         }
         list[positon].checked = true
+        currentSelectedProfile= list[positon]
         binding.gotop.visibility = View.VISIBLE
         adapter.notifyDataSetChanged()
     }

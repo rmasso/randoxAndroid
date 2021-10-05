@@ -16,114 +16,102 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.demit.certify.Extras.Constants
 import com.demit.certify.Extras.Functions
+import com.demit.certify.Extras.Shared
 import com.demit.certify.Extras.Sweet
+import com.demit.certify.Interfaces.DialogDismissInterface
 import com.demit.certify.Models.AllCertificatesModel
 import com.demit.certify.R
+import com.demit.certify.adapters.CertificateAdapter
 import com.demit.certify.databinding.FragmentCertificatesBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import kotlinx.android.synthetic.main.fragment_certificates.*
 import org.json.JSONObject
 import java.util.ArrayList
 
-class CertificatesFragment : Fragment() {
-    lateinit var sweet : Sweet
+class CertificatesFragment : Fragment(), DialogDismissInterface {
+    lateinit var sweet: Sweet
     lateinit var binding: FragmentCertificatesBinding
-    lateinit var adapter : CertificateAdapter
+    lateinit var certificatesList: MutableList<AllCertificatesModel>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentCertificatesBinding.inflate(layoutInflater)
-        adapter = CertificateAdapter(requireContext(), 0)
-        binding.stackview.adapter = adapter
+
 
         sweet = Sweet(requireContext());
         getCertificates()
         return binding.root
     }
 
-    var l: MutableList<AllCertificatesModel> = ArrayList()
-    inner class CertificateAdapter(context: Context, resource: Int) : ArrayAdapter<Any?>(context, resource) {
-
-        override fun getCount(): Int {
-            return l.size
-        }
-
-        override fun getItem(position: Int): Any? {
-            return l[position]
-        }
-
-        override fun getView(position: Int, convertview: View?, parent: ViewGroup): View {
-            var convertView = convertview
-            if (convertView == null) {
-                convertView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.view_certificates, parent, false)
-            }
-            val model = l[position]
-            val name : TextView = convertView!!.findViewById(R.id.name)
-            val dob : TextView = convertView.findViewById(R.id.dob)
-            val tdate : TextView = convertView.findViewById(R.id.tdate)
-            val passport : TextView = convertView.findViewById(R.id.passport)
-
-            name.text = model.cert_name
-            passport.text = model.cert_passport
-            tdate.text = model.cert_create
-//            dob.text = model.cert_name
-            return convertView
-        }
+    override fun dismissDialog() {
+        sweet.dismiss()
+        cardStack.visibility = View.VISIBLE
     }
 
-
-    fun getCertificates(){
-        sweet.show("Loging in")
-
-        val url = Functions.concat(Constants.url , "getAdminAllCert.php");
-        val request : StringRequest = object : StringRequest(
+    fun getCertificates() {
+        sweet.show("Retrieving Certificates")
+        if (binding.noCertificateMessage.visibility == View.VISIBLE)
+            binding.noCertificateMessage.visibility = View.GONE
+        val url = Functions.concat(Constants.url, "getAllCert.php");
+        val request: StringRequest = object : StringRequest(
             Method.POST,
             url,
 
-            Response.Listener{
-                sweet.dismiss()
-                Log.d("sss" , it.toString())
+            Response.Listener {
+                Log.d("sss", it.toString())
 
-                try{
+                try {
                     val obj = JSONObject(it)
                     val s = obj.getString("ret");
-                    if(s == "100"){
-                        if(context != null) {
+                    if (s == "100") {
+                        if (context != null) {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                                 .show()
                         }
-                    }else{
+                    } else {
+                        val pendingCount = obj.getString("count")
+                        binding.pendingCount.text = "Pending: $pendingCount"
+                        binding.pendingCount.visibility = View.VISIBLE
+
                         val gson = Gson()
                         val listType = object : TypeToken<List<AllCertificatesModel?>?>() {}.type
-                        val sliderItem: MutableList<AllCertificatesModel> = gson.fromJson(obj.get("ret").toString(), listType)
-                        l = sliderItem
-                        adapter.notifyDataSetChanged()
-
+                        val sliderItem: MutableList<AllCertificatesModel> =
+                            gson.fromJson(obj.get("ret").toString(), listType)
+                        if (sliderItem.size > 0) {
+                            binding.cardStack.adapter = CertificateAdapter(
+                                requireActivity(),
+                                sliderItem,
+                                this@CertificatesFragment
+                            )
+                        } else {
+                            binding.noCertificateMessage.visibility = View.VISIBLE
+                            sweet.dismiss()
+                        }
                     }
-                }catch (e : Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                     sweet.dismiss()
-                    if(context != null) {
+                    if (context != null) {
                         Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                             .show()
                     }
                 }
             },
-            Response.ErrorListener{
+            Response.ErrorListener {
                 sweet.dismiss()
-                if(context != null) {
+                if (context != null) {
                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
                         .show()
                 }
 
             }
-        ){
+        ) {
             override fun getParams(): MutableMap<String, String> {
-                val map : MutableMap<String, String> = HashMap();
-                map["token"] = Constants.adminToken
+                val map: MutableMap<String, String> = HashMap();
+                map["token"] = Shared(requireContext()).getString("token")
                 return map
             }
         }
@@ -133,8 +121,10 @@ class CertificatesFragment : Fragment() {
             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
         )
-        if(context != null) {
+        if (context != null) {
             Volley.newRequestQueue(context).add(request)
         }
     }
+
+
 }

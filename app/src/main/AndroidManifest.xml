@@ -3,6 +3,7 @@
     package="com.demit.certify">
 
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera2.full" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,11 +18,11 @@
         android:theme="@style/Theme.Certify"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Activities.CertificatePreviewActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activities.CaptureActivity"
-            android:exported="true"
-            >
-
-        </activity>
+            android:exported="true"></activity>
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
@@ -47,7 +48,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 
