@@ -104,13 +104,14 @@
         </LinearLayout>
 
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/support"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_bg"
             android:paddingVertical="@dimen/_10sdp"
             android:textSize="@dimen/_14sdp"
+
             android:fontFamily="@font/poppinsbold"
             android:text="Support"
             android:textAllCaps="true"
@@ -129,7 +130,7 @@
             android:paddingVertical="@dimen/_10sdp"
             android:text="Terms &amp; Conditions"
             android:textColor="@color/sblue"
-            android:textSize="@dimen/_14sdp" />
+            android:textSize="@dimen/_14sdp" />-->
 
     </LinearLayout>
 

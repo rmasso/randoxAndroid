@@ -43,7 +43,7 @@ class YtestFragment(val dInterface : DashboardInterface) : Fragment() {
         }
         binding.ready.setOnClickListener {
             if(binding.sw1.isChecked && binding.sw2.isChecked){
-                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragcontainer,TraveldestinationFragment())?.addToBackStack("")?.commit()
+                activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragcontainer,TesterFragment())?.addToBackStack("")?.commit()
             }
 
         }

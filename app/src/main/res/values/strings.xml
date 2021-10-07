@@ -9,6 +9,34 @@
     <array name="genders">
         <item>Male</item>
         <item>Female</item>
+        <item>Other/Dont know</item>
+    </array>
+
+    <array name="ethnicity">
+        <item>Not Provided</item>
+        <item>White</item>
+        <item>White British</item>
+        <item>Asian/Asian British</item>
+        <item>Any Other Ethnic Category</item>
+        <item>African</item>
+        <item>Any Other Mixed Group</item>
+        <item>Black/African/Caribbean/Black British</item>
+        <item>Indian</item>
+        <item>Chinese</item>
+        <item>Black - African</item>
+        <item>Arab</item>
+        <item>Black - Caribbean</item>
+        <item>Other ethnic group</item>
+        <item>Black - Other</item>
+        <item>Irish Traveller</item>
+        <item>Bangladeshi</item>
+        <item>Mixed/Multiple ethnic groups</item>
+        <item>Pakistani</item>
+        <item>Unknown</item>
+        <item>White and Asian</item>
+        <item>Other / Mixed</item>
+        <item>White and Black African</item>
+        <item>White Other</item>
     </array>
 
     <array name="countries">

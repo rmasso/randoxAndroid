@@ -58,6 +58,10 @@ class TesterFragment : Fragment() {
         binding.cancel.setOnClickListener {
             activity?.onBackPressed()
         }
+        binding.newprofile.setOnClickListener {
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragcontainer,ProfileFragment())?.addToBackStack("")?.commit()
+        }
     }
     fun setData(positon : Int){
         for(i in 0 until list.size){

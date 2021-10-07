@@ -48,14 +48,14 @@ object CertificateGenerator {
                 //Row1
                 headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
                 headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id, 22f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_device_id.takeLast(13), 22f, Font.NORMAL))
 
                 //Row2
                 headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        if (usr_sex == "M") "Male" else "Female",
+                        if (usr_sex == "M") "Male" else if(usr_sex=="O") "Other" else "Female",
                         20f,
                         Font.NORMAL
                     )
@@ -248,14 +248,14 @@ object CertificateGenerator {
                 //Row1
                 headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
                 headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id, 22f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_device_id.takeLast(13), 22f, Font.NORMAL))
 
                 //Row2
                 headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        if (usr_sex == "M") "Male" else "Female",
+                        if (usr_sex == "M") "Male" else if(usr_sex=="O") "Other" else "Female",
                         20f,
                         Font.NORMAL
                     )
@@ -364,6 +364,10 @@ object CertificateGenerator {
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"
             "P" -> "Your coronavirus (COVID-19) test result is positive, meaning you had the virus when the test was done.\n\n" +
+                    "You must self-isolate straight away.\n" +
+                    "Please continue to follow your local government guidelines.\n" +
+                    "Contact 112 or 999 for a medical emergency.\n\n"
+            "R" -> "Your coronavirus (COVID-19) test result is positive, meaning you had the virus when the test was done.\n\n" +
                     "You must self-isolate straight away.\n" +
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"

@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/bwhite"
-    tools:context=".Fragments.ProfileFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bwhite"
+        tools:context=".Fragments.ProfileFragment">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/scan" />
+                    android:src="@drawable/ic_baseline_add_24" />
 
             </RelativeLayout>
 
@@ -87,41 +88,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinsmedium"
-                    android:text="Surname"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp" />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppinsmedium"
-                    android:text=" *"
-                    android:textColor="@color/orange"
-                    android:textSize="@dimen/_14sdp" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/sname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/et_bg"
-                android:inputType="textNoSuggestions"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                android:visibility="gone" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp">
 
                 <TextView
@@ -142,12 +108,45 @@
                     android:textSize="@dimen/_14sdp" />
             </LinearLayout>
 
-            <EditText
+            <TextView
                 android:id="@+id/dob"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="yyyy-MM-dd"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:text=""
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Passport number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/pnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint="012457454"
                 android:inputType="textNoSuggestions"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp" />
@@ -157,7 +156,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppinsmedium"
-                android:text="Nationality"
+                android:text="Country"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
 
@@ -176,35 +175,10 @@
                     app:ccp_showFullName="true"
                     app:ccp_showNameCode="false"
                     app:ccp_showPhoneCode="false" />
-                <!--            <Spinner-->
-                <!--                android:id="@+id/country"-->
-                <!--                android:layout_width="match_parent"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                style="@style/SpinnerTheme"-->
-                <!--                android:entries="@array/countries"-->
-                <!--                />-->
+
 
             </LinearLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:text="Passport number"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
-
-            <EditText
-                android:id="@+id/pnumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/et_bg"
-                android:hint="012457454"
-                android:inputType="textNoSuggestions"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -216,7 +190,7 @@
                 android:textSize="@dimen/_14sdp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
                 android:paddingHorizontal="@dimen/_15sdp"
@@ -225,24 +199,42 @@
                 <Spinner
                     android:id="@+id/gender"
                     style="@style/SpinnerTheme"
-                    android:layout_width="@dimen/_120sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:entries="@array/genders"
-                    android:inputType="phone"
-                    android:pointerIcon="arrow" />
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:paddingEnd="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    tools:ignore="RtlHardcoded,RtlSymmetry"
+                    />
+
 
 
             </LinearLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:text="Home Address"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Address Line 1"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/address"
@@ -259,10 +251,80 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
                 android:fontFamily="@font/poppinsmedium"
-                android:text="Zip Code"
+                android:text="Address Line 2"
                 android:textColor="@color/black"
                 android:textSize="@dimen/_14sdp" />
+
+            <EditText
+                android:id="@+id/address2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint="+10 Downing Street, London"
+                android:inputType="textPostalAddress"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Town/City"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:hint="London"
+                android:inputType="textPostalAddress"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Zip Code"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/zip"
@@ -275,14 +337,27 @@
                 android:paddingVertical="@dimen/_10sdp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:text="Phone number"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Phone number"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/phone"
@@ -328,18 +403,16 @@
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp" />
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:visibility="gone">
+                android:layout_marginTop="@dimen/_5sdp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinsmedium"
-                    android:text="Password"
+                    android:text="Confirm Email"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp" />
 
@@ -354,36 +427,55 @@
             </LinearLayout>
 
             <EditText
-
-                android:id="@+id/password"
+                android:id="@+id/confirm_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="******"
-                android:inputType="textPassword"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:text="Ethnicity"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp" />
-
-            <EditText
-                android:id="@+id/ethnicity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/et_bg"
-                android:hint="British"
-                android:inputType="textPostalAddress"
+                android:hint="joseph@gmail.com"
+                android:inputType="textEmailAddress"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text="Ethnicity"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_14sdp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsmedium"
+                    android:text=" *"
+                    android:textColor="@color/orange"
+                    android:textSize="@dimen/_14sdp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp">
+
+                <Spinner
+                    android:id="@+id/ethnicity"
+                    style="@style/SpinnerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/ethnicity"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:paddingEnd="@dimen/dp10"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+            </LinearLayout>
 
 
             <LinearLayout
@@ -445,14 +537,15 @@ and agree to the  Terms and Conditions."
         </LinearLayout>
 
 
-</ScrollView>
+    </ScrollView>
+
     <LinearLayout
         android:id="@+id/passport_scan_info"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
+
         <include
             android:id="@+id/sub_info"
             layout="@layout/view_prepare_passport" />

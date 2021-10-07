@@ -10,8 +10,12 @@ class TProfileModel {
     var usr_passport : String = ""
     var usr_country : String = ""
     var usr_phone : String = ""
-    var usr_email : String = ""
+    var email : String = ""
     var usr_id : String = ""
     var usr_admin : String = ""
     var checked : Boolean = false
+    var usr_image:String=""
+    var usr_city:String=""
+    var usr_addressLine2:String=""
+    var ethnicity:String=""
 }

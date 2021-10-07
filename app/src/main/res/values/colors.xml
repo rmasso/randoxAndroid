@@ -8,6 +8,7 @@
     <color name="orange">#ff5916</color>
     <color name="textlight">#707070</color>
     <color name="gray">#E9E9ED</color>
+    <color name="textHint">#B1B1B1</color>
     <color name="textblue">#4b22264C</color>
 
 </resources>

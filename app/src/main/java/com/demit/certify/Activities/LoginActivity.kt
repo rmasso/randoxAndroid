@@ -49,9 +49,11 @@ class LoginActivity : AppCompatActivity() {
         binding.signin.setOnClickListener{
             if(!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()){
                 Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show()
-            }else if(binding.email.text.toString().isEmpty()){
-                Toast.makeText(this, "Password cant be empty", Toast.LENGTH_SHORT).show()
-            }else{
+            }else if(binding.password.text.toString().isEmpty()){
+                Toast.makeText(this, "Password can't be empty", Toast.LENGTH_SHORT).show()
+            }
+
+            else{
                 requestUploadSurvey(this)
             }
 
@@ -72,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun requestUploadSurvey(context : Context) {
-        sweet.show("Loging in");
+        sweet.show("Logging In");
         val webServicesAPI = ApiService2.retrofit
             .create(WebServicesAPI::class.java)
         var surveyResponse: Call<Any?>? = null
@@ -93,7 +95,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("res" , response.body().toString())
                     val obj = JSONObject(response.body().toString())
                     val s = obj.getString("ret");
-                    if(s == "100"){
+                    if(s == "100.0"){
                         Toast.makeText(context,"Invalid credentials",Toast.LENGTH_SHORT).show()
                     }else{
                         Shared(context).setString("token" , s)

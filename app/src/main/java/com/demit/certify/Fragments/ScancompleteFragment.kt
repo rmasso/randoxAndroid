@@ -13,6 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.demit.certify.Activities.CaptureActivity
+import com.demit.certify.Extras.Shared
+import com.demit.certify.Extras.Sweet
 import com.demit.certify.Models.CertificateModel
 import com.demit.certify.Models.TProfileModel
 //import com.demit.certify.Activities.DeviceScanActivity
@@ -27,11 +29,14 @@ import java.util.*
 class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
+    lateinit var certificateModel:CertificateModel
+    lateinit var sweet:Sweet
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScancompleteBinding.inflate(layoutInflater)
+        sweet= Sweet(requireContext())
         setclicks()
         startScanning()
         return binding.root
@@ -51,7 +56,7 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
                         val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
                         binding.scannedImage.setImageBitmap(bitmap)
-                        createNewCertificate(image,qrCode!!)
+                      certificateModel=  createNewCertificate(image, qrCode!!)
                     }
 
                 }
@@ -63,8 +68,11 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     fun setclicks() {
         binding.submit.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer, ScansubmitFragment())?.addToBackStack("")?.commit()
+
+            if(this::certificateModel.isInitialized){
+                sweet.show("Please Wait...")
+                submitCertificate(certificateModel)
+            }
         }
         binding.rescan.setOnClickListener {
             startScanning()
@@ -76,11 +84,14 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
         startActivityForResult(intent, SCAN_RESULT)
     }
 
-    private fun createNewCertificate(deviceImageBase64: String,qrCode:String) {
+    private fun createNewCertificate(deviceImageBase64: String, qrCode: String): CertificateModel {
+        val token = Shared(requireContext()).getString("token")
+
         val certificateModel = CertificateModel(
+            token = token,
             usr_id = selectedProfile.usr_id,
-            cert_name = "${selectedProfile.usr_firstname} ${selectedProfile.usr_surname}",
-            cert_email = selectedProfile.usr_email,
+            cert_name = selectedProfile.usr_firstname + " Covid Cert",
+            cert_email = selectedProfile.email,
             cert_passport = selectedProfile.usr_passport,
             cert_country = selectedProfile.usr_country,
             cert_device_id = qrCode,
@@ -90,11 +101,36 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
             cert_deviceToken = qrCode,
             cert_image = deviceImageBase64
         )
+        return certificateModel
+    }
 
-        ApiHelper.createNewCertificate(requireContext(), certificateModel)
-            .observe(this) { response ->
-                Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
+    private fun submitCertificate(certificateModel:CertificateModel){
+        ApiHelper.isQrValid(certificateModel.token, certificateModel.cert_device_id).observe(viewLifecycleOwner) { validityResponse ->
+            if (validityResponse == "0") {
+
+                ApiHelper.createNewCertificate(certificateModel)
+                    .observe(viewLifecycleOwner) { response ->
+                        // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
+                        Log.d("++res++",response)
+                        sweet.dismiss()
+                        if(response!="Something went wrong")
+                        activity?.supportFragmentManager?.beginTransaction()
+                            ?.replace(R.id.fragcontainer, ScansubmitFragment())?.addToBackStack("")?.commit()
+                        else{
+                            Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+
+            } else {
+                sweet.dismiss()
+                if (validityResponse == "100")
+                    Toast.makeText(requireContext(), "Bad Device Can't Submit", Toast.LENGTH_SHORT).show()
+                else
+                    Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT).show()
+
             }
-
+        }
     }
 }

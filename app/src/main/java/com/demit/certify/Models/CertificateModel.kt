@@ -3,6 +3,7 @@ package com.demit.certify.Models
 import java.io.File
 
 data class CertificateModel(
+    val token:String ="",
     val usr_id: String = "",
     val cert_name: String = "",
     val cert_email: String = "",

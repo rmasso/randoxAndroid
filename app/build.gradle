@@ -9,7 +9,8 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.demit.certifly"
+        //com.demit.certifly
+        applicationId "com.demit.certify"
         minSdk 21
         targetSdk 30
         versionCode 1
@@ -93,6 +94,9 @@ dependencies {
 
     //Card StackView
     implementation 'com.mutualmobile.android:cardstack:0.5.3'
+
+    //Glide ImageLoader
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
 
 
 }
