@@ -115,6 +115,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                     takePhoto()
                 }
                 R.id.rescan_btn -> {
+                    binding.sheetContainer.submitBtn.visibility = View.VISIBLE
                     showOrHideBottomSheet(false)
                     isQrFound = false
                     qrValue = ""
@@ -216,7 +217,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                     showOrHideBottomSheet(true)
                     binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
                     binding.sheetContainer.qrText.text =
-                        if (qrValue != "") "QrCode: $qrValue" else "QrCode: NotFound"
+                        if (qrValue != "") "Success" else "Unknown: Contact Supplier"
                     with(binding.sheetContainer.animator) {
                         visibility = View.VISIBLE
                         playAnimation()
@@ -442,14 +443,22 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                 val cropImage =
                     bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
                 binding.sheetContainer.scannedImage.setImageBitmap(cropImage)
+
                 croppedDevice = cropImage.toBase64String()
             } else {
+
                 Toast.makeText(this@CaptureActivity, "No Device Detected", Toast.LENGTH_LONG).show()
             }
             with(binding.sheetContainer.animator) {
                 visibility = View.GONE
                 playAnimation()
             }
+
+            if (!isQrFound)
+                binding.sheetContainer.submitBtn.visibility = View.GONE
+            else
+                binding.sheetContainer.submitBtn.visibility = View.VISIBLE
+
 
         }
     }
@@ -481,11 +490,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                     barcodeScanner.process(inputImage)
                         .addOnSuccessListener { barcodeList ->
                             if (barcodeList.isNotEmpty()) {
-                                val barcode = barcodeList[0].rawValue
-                                qrValue = barcode?.let {
-                                    isQrFound = true
-                                    it
-                                } ?: run { "" }
+                                if (!isQrFound) {
+                                    val barcode = barcodeList[0].rawValue
+                                    qrValue = barcode?.let {
+                                        isQrFound = true
+                                        it
+                                    } ?: run { "" }
+                                }
                             }
                         }
                         .addOnFailureListener { qrValue = "" }

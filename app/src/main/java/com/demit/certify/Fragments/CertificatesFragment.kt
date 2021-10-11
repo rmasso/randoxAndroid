@@ -65,7 +65,8 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
 
                 try {
                     val obj = JSONObject(it)
-                    val s = obj.getString("ret");
+                    val s = obj.getString("ret")
+                    Log.d("++res++",s)
                     if (s == "100") {
                         if (context != null) {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)

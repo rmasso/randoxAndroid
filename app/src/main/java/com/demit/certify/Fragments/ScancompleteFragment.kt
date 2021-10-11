@@ -90,14 +90,14 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
         val certificateModel = CertificateModel(
             token = token,
             usr_id = selectedProfile.usr_id,
-            cert_name = selectedProfile.usr_firstname + " Covid Cert",
+            cert_name = "${selectedProfile.usr_firstname} ${selectedProfile.usr_surname}",
             cert_email = selectedProfile.email,
             cert_passport = selectedProfile.usr_passport,
             cert_country = selectedProfile.usr_country,
-            cert_device_id = qrCode,
+            cert_device_id = qrCode.takeLast(13),
             cert_ai_pred = "AI Predicate",
             cert_ai_approved = "N",
-            cert_create = SimpleDateFormat("dd-MMM-yyyy hh:mm").format(Date()),
+            cert_create = "",
             cert_deviceToken = qrCode,
             cert_image = deviceImageBase64
         )

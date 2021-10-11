@@ -364,8 +364,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="+441234567"
-                android:inputType="phone"
+                android:hint="441234567"
+                android:inputType="number"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp" />
 
@@ -514,6 +514,7 @@
 
 
             <RadioButton
+                android:id="@+id/radio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/sblue"

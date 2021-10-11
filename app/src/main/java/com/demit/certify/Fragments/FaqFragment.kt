@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.demit.certify.Interfaces.FaqScrollInterface
 import com.demit.certify.Models.FaqAsk
 import com.demit.certify.adapters.FaqAdapter
 import com.demit.certify.databinding.FragmentFaqBinding
 
 
-class FaqFragment : Fragment() {
+class FaqFragment : Fragment(),FaqScrollInterface {
     lateinit var binding: FragmentFaqBinding
     lateinit var adapter: FaqAdapter
     override fun onCreateView(
@@ -41,7 +42,7 @@ class FaqFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        adapter = FaqAdapter(getSampleList())
+        adapter = FaqAdapter(getSampleList(),this)
     }
 
     private fun getSampleList(): List<FaqAsk> {
@@ -87,6 +88,10 @@ class FaqFragment : Fragment() {
 
 
         return faqAskList
+    }
+
+    override fun scrollTo(position: Int) {
+        binding.rvFaq.smoothScrollToPosition(position)
     }
 
 }

@@ -39,11 +39,11 @@ import java.util.*
 class RegisterActivity : AppCompatActivity() {
     //Blink Id Variables
     private lateinit var mRecognizer: BlinkIdCombinedRecognizer
-   private lateinit var mRecognizerBundle: RecognizerBundle
-   private var usr_img=""
+    private lateinit var mRecognizerBundle: RecognizerBundle
+    private var usr_img = ""
     private val MY_REQUEST_CODE = 801
-    lateinit var sweet : Sweet
-    lateinit var binding : ActivityProfileBinding
+    lateinit var sweet: Sweet
+    lateinit var binding: ActivityProfileBinding
     var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,25 +56,23 @@ class RegisterActivity : AppCompatActivity() {
         mRecognizer.setReturnFullDocumentImage(true)
         mRecognizerBundle = RecognizerBundle(mRecognizer)
         binding.ethnicity.setSelection(0)
-        binding.passportScanInfo.visibility= View.VISIBLE
+        binding.passportScanInfo.visibility = View.VISIBLE
     }
+
     private fun clicks() {
-        Log.d("ssss" , "here")
+        Log.d("ssss", "here")
         binding.save.setOnClickListener {
-            if(usr_img==""){
+            if (usr_img == "") {
                 Toast.makeText(this, "Passport Image Missing", Toast.LENGTH_SHORT).show()
-            }
-           else if (binding.fname.text.toString().isEmpty()) {
-                    Toast.makeText(this, "Firstname Missing", Toast.LENGTH_SHORT).show()
-            }else if (binding.sname.text.isEmpty()) {
+            } else if (binding.fname.text.toString().isEmpty()) {
+                Toast.makeText(this, "Firstname Missing", Toast.LENGTH_SHORT).show()
+            } else if (binding.sname.text.isEmpty()) {
                 Toast.makeText(this, "Surname Missing", Toast.LENGTH_SHORT)
                     .show()
-            }
+            } else if (binding.dob.text.isEmpty()) {
 
-            else if (binding.dob.text.isEmpty()) {
-
-                    Toast.makeText(this, "Date of birth Missing", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(this, "Date of birth Missing", Toast.LENGTH_SHORT)
+                    .show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
                 Toast.makeText(this, "Invalid Email Address", Toast.LENGTH_SHORT).show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.toString())
@@ -89,37 +87,33 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-            }else if(binding.password.text.toString().isEmpty()){
-                Toast.makeText(this, "Password Missing",Toast.LENGTH_SHORT).show()
-            }
-
-            else if (binding.pnumber.text.isEmpty()) {
-                    Toast.makeText(this, "Passport Number Missing", Toast.LENGTH_SHORT)
-                        .show()
-            }else if (binding.phone.text.toString().isEmpty()) {
+            } else if (binding.password.text.toString().isEmpty()) {
+                Toast.makeText(this, "Password Missing", Toast.LENGTH_SHORT).show()
+            } else if (binding.pnumber.text.isEmpty()) {
+                Toast.makeText(this, "Passport Number Missing", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (binding.phone.text.toString().isEmpty()) {
                 Toast.makeText(this, "Phone Number Missing", Toast.LENGTH_SHORT)
                     .show()
-            }
-
-            else if (binding.address.text.toString() == "") {
-                    Toast.makeText(this, "Address Missing", Toast.LENGTH_SHORT)
-                        .show()
+            } else if (binding.address.text.toString() == "") {
+                Toast.makeText(this, "Address Missing", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.city.text.isEmpty()) {
-                    Toast.makeText(this, "City Missing", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(this, "City Missing", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.zip.text.isEmpty()) {
-                    Toast.makeText(this, "Zip Code Missing", Toast.LENGTH_SHORT)
-                        .show()
-            }  else if (binding.ethnicity.selectedItem == 0) {
-                    Toast.makeText(this, "Ethnicity Missing", Toast.LENGTH_SHORT)
-                        .show()
-            }else{
+                Toast.makeText(this, "Zip Code Missing", Toast.LENGTH_SHORT)
+                    .show()
+            } else if (binding.ethnicity.selectedItemPosition == 0) {
+                Toast.makeText(this, "Choose Ethnicity", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
                 register()
             }
         }
 
         binding.scanYourPassport.setOnClickListener {
-            binding.passportScanInfo.visibility= View.VISIBLE
+            binding.passportScanInfo.visibility = View.VISIBLE
 
         }
 
@@ -128,7 +122,7 @@ class RegisterActivity : AppCompatActivity() {
 
         }
         binding.subInfo.cancel.setOnClickListener {
-            binding.passportScanInfo.visibility= View.GONE
+            binding.passportScanInfo.visibility = View.GONE
         }
 
         binding.dob.setOnClickListener {
@@ -142,7 +136,7 @@ class RegisterActivity : AppCompatActivity() {
         if (requestCode == MY_REQUEST_CODE) {
             if (resultCode == RESULT_OK && data != null) {
                 // load the data into all recognizers bundled within your RecognizerBundle
-                binding.passportScanInfo.visibility= View.GONE
+                binding.passportScanInfo.visibility = View.GONE
                 mRecognizerBundle.loadFromIntent(data)
 
                 // now every recognizer object that was bundled within RecognizerBundle
@@ -153,8 +147,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (result.resultState == Recognizer.Result.State.Valid) {
                     val docImage = result.fullDocumentFrontImage?.convertToBitmap()
                     docImage?.let {
-                        usr_img =  it.toBase64String()
-                        image.visibility= View.VISIBLE
+                        usr_img = it.toBase64String()
+                        image.visibility = View.VISIBLE
                         Glide.with(this)
                             .load(Base64.decode(usr_img, Base64.DEFAULT))
                             .placeholder(R.drawable.profile)
@@ -177,29 +171,29 @@ class RegisterActivity : AppCompatActivity() {
         ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
     }
 
-    fun register(){
+    fun register() {
         sweet.show("Registering User")
-        val url = Functions.concat(Constants.url , "UserRegistration.php");
-        val request : StringRequest = object : StringRequest(
+        val url = Functions.concat(Constants.url, "UserRegistration.php");
+        val request: StringRequest = object : StringRequest(
             Method.POST,
             url,
-            Response.Listener{
+            Response.Listener {
                 sweet.dismiss()
-                Log.d("sss" , it.toString())
+                Log.d("sss", it.toString())
 
-                try{
+                try {
                     val obj = JSONObject(it)
                     val s = obj.getString("ret");
-                    if(s == "100"){
+                    if (s == "100") {
                         Toast.makeText(this, "User already registered", Toast.LENGTH_SHORT)
                             .show()
 
-                    }else{
+                    } else {
                         Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT)
                             .show()
                         finish()
                     }
-                }catch (e : Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                     sweet.dismiss()
 
@@ -207,7 +201,7 @@ class RegisterActivity : AppCompatActivity() {
                         .show()
                 }
             },
-            Response.ErrorListener{
+            Response.ErrorListener {
                 sweet.dismiss()
 
 
@@ -215,26 +209,10 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
 
             }
-        ){
+        ) {
             override fun getParams(): MutableMap<String, String> {
 
-                /*
-                * "usr_email=" + usr_email
-+ "&usr_pwd=" + usr_pwd
-+ "&usr_firstname=" + usr_firstname
-+ "&usr_surname=" + usr_surname
-+ "&usr_sex=" + usr_sex
-+ "&usr_birth=" + usr_birth
-+ "&usr_passport=" + usr_passport
-+ "&usr_country=" + usr_country
-+ "&usr_home=" + usr_home
-+ "&usr_addressLine2=" + usr_addressLine2
-+ "&usr_city=" + usr_city
-+ "&usr_zip=" + usr_zip
-+ "&usr_phone=" + usr_phone
-+ "&usr_passport_image=" + strBase64
-+ "&usr_ethnicity=" + usr_ethnicity*/
-                val map : MutableMap<String, String> = HashMap()
+                val map: MutableMap<String, String> = HashMap()
                 map["usr_email"] = binding.email.text.toString()
                 map["usr_pwd"] = binding.password.text.toString()
                 map["usr_firstname"] = binding.fname.text.toString()
@@ -252,9 +230,9 @@ class RegisterActivity : AppCompatActivity() {
                     resources.getStringArray(R.array.ethnicity)[binding.ethnicity.selectedItemPosition]
                 if (binding.gender.selectedItemPosition == 0) {
                     map["usr_sex"] = "M"
-                } else if(binding.gender.selectedItemPosition == 1) {
+                } else if (binding.gender.selectedItemPosition == 1) {
                     map["usr_sex"] = "F"
-                }else{
+                } else {
                     map["usr_sex"] = "O"
                 }
 
@@ -280,7 +258,7 @@ class RegisterActivity : AppCompatActivity() {
         // Build constraints.
 
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
-        calendar.timeInMillis= currentDatePicked
+        calendar.timeInMillis = currentDatePicked
         val constraintsBuilder =
             CalendarConstraints.Builder()
                 .setEnd(calendar.timeInMillis)

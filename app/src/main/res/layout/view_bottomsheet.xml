@@ -29,7 +29,7 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Done"
+            android:text="Ready"
             android:textColor="#d72027"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"

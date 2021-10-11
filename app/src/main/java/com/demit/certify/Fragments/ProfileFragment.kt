@@ -48,6 +48,7 @@ import com.microblink.entities.recognizers.RecognizerBundle
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
 import com.microblink.uisettings.ActivityRunner
 import com.microblink.uisettings.BlinkIdUISettings
+import kotlinx.android.synthetic.main.activity_certificate_preview.*
 import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile.view.*
 import org.json.JSONObject
@@ -198,7 +199,8 @@ class ProfileFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-            } else if (binding.ethnicity.selectedItem == 0) {
+            }
+            else if (binding.ethnicity.selectedItemPosition == 0) {
                 if (context != null)
                     Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
                         .show()
@@ -421,8 +423,17 @@ class ProfileFragment : Fragment() {
         list[position].checked = true
         adapter.notifyItemChanged(position)
 
-        val fullName = "${list[position].usr_firstname} ${list[position].usr_surname}"
-        binding.fname.setText(fullName)
+        if(list[position].usr_id!="") {
+            binding.radio.isChecked = true
+            binding.radio.isClickable=false
+        }
+        else{
+            binding.radio.isChecked = false
+            binding.radio.isClickable=true
+        }
+
+
+        binding.fname.setText(list[position].usr_firstname)
         binding.dob.text = list[position].usr_birth
         binding.email.setText(list[position].email)
         binding.confirmEmail.setText(list[position].email)
@@ -438,10 +449,10 @@ class ProfileFragment : Fragment() {
         )
         var p =
             when (list[position].usr_sex) {
-                "M" -> {
+                "Male","" -> {
                     0
                 }
-                "F" -> 1
+                "Female" -> 1
                 else -> 2
             }
 
@@ -515,8 +526,17 @@ class ProfileFragment : Fragment() {
         val map: MutableMap<String, String> = HashMap()
         map["usr_email"] = list[index].email
         map["token"] = Shared(requireContext()).getString("token")
-        map["usr_firstname"] = list[index].usr_firstname
-        map["usr_surname"] = list[index].usr_surname
+        val fullName=list[index].usr_firstname.trim()
+        val idx = fullName.lastIndexOf(' ')
+        if (idx != -1){
+            map["usr_firstname"] = fullName.substring(0, idx)
+            map["usr_surname"]  = fullName.substring(idx + 1)
+
+        }else {
+            map["usr_firstname"] = fullName
+            map["usr_surname"] = ""
+        }
+
         map["usr_birth"] = list[index].usr_birth
         map["usr_home"] = list[index].usr_home
         map["usr_addressLine2"] = list[index].usr_addressLine2
@@ -529,21 +549,15 @@ class ProfileFragment : Fragment() {
         map["usr_ethnicity"] = list[index].ethnicity
         map["usr_sex"] = when (binding.gender.selectedItemPosition) {
             0 -> {
-                "M"
+                "Male"
             }
             1 -> {
-                "F"
+                "Female"
             }
             else -> {
-                "O"
+                "Other"
             }
         }
-        val gson = Gson()
-        val json = gson.toJson(map)
-
-
-
-        Log.d("++map", json)
         ApiHelper.postFamilyUser(map).observe(viewLifecycleOwner) { response ->
             sweet.dismiss()
             if (response == "0") {
@@ -552,7 +566,7 @@ class ProfileFragment : Fragment() {
                     "User registered successfully",
                     Toast.LENGTH_SHORT
                 ).show()
-                list[index].usr_id="1"
+                list[index].usr_id = "1"
                 shouldEnableFormFields(false)
             } else {
                 Toast.makeText(
@@ -562,92 +576,6 @@ class ProfileFragment : Fragment() {
                 ).show()
             }
         }
-
-
-        /* val url = Functions.concat(Constants.url, "FamilyRegistration.php");
-         val request: StringRequest = object : StringRequest(
-             Method.POST,
-             url,
-             Response.Listener {
-                 sweet.dismiss()
-                 Log.d("sss", it.toString())
-                 try {
-                     val obj = JSONObject(it)
-                     val s = obj.getString("ret");
-                     if (s == "100") {
-                         if (context != null)
-                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                                 .show()
-                     } else {
-                         if (context != null)
-                             Toast.makeText(
-                                 context,
-                                 "User registered successfully",
-                                 Toast.LENGTH_SHORT
-                             ).show()
-                     }
-                 } catch (e: Exception) {
-                     e.printStackTrace()
-                     sweet.dismiss()
-                     if (context != null)
-                         Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                             .show()
-                 }
-             },
-             Response.ErrorListener {
-                 sweet.dismiss()
-                 if (context != null)
-                     Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                         .show()
-             }
-         ) {
-             override fun getParams(): MutableMap<String, String> {
-                 val map: MutableMap<String, String> = HashMap()
-                 map["usr_email"] =list[index].email
-                 map["token"] = Shared(requireContext()).getString("token")
-                 map["usr_firstname"] = list[index].usr_firstname
-                 map["usr_surname"] = list[index].usr_surname
-                 map["usr_birth"] = list[index].usr_birth
-                 map["usr_home"] =list[index].usr_home
-                 map["usr_addressLine2"] = list[index].usr_addressLine2
-                 map["usr_city"] = list[index].usr_city
-                 map["usr_zip"] =list[index].usr_zip
-                 map["usr_passport"] =list[index].usr_passport
-                 map["usr_country"] = list[index].usr_country
-                 map["usr_phone"] =list[index].usr_phone
-                 map["usr_passport_image"] = list[index].usr_image
-                 map["usr_ethnicity"] =
-                     resources.getStringArray(R.array.ethnicity)[binding.ethnicity.selectedItemPosition]
-                 map["usr_sex"] = when (binding.gender.selectedItemPosition) {
-                     0 -> {
-                         "M"
-                     }
-                     1 -> {
-                         "F"
-                     }
-                     else -> {
-                         "O"
-                     }
-                 }
-
-                 for (key in map.keys)
-                     Log.d("++map++", "${list[index]} ${map.keys.size}")
-                 return map
-             }
-         }
-
-         request.retryPolicy = DefaultRetryPolicy(
-             50000,
-             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
-         )
-
-         request.setShouldCache(false)
-         if (context != null) {
-             val queue = Volley.newRequestQueue(context)
-             queue.cache.clear()
-             queue.add(request)
-         }*/
 
     }
 
@@ -678,6 +606,9 @@ class ProfileFragment : Fragment() {
                             gson.fromJson(obj.get("ret").toString(), listType)
                         list = sliderItem
                         if (list.size > 0) {
+                            for(item in list)
+                                item.usr_firstname+=" ${item.usr_surname}"
+
                             index = 0
                             setData(index)
                             list[0].checked = true;
@@ -770,7 +701,7 @@ class ProfileFragment : Fragment() {
 
             pnumber.isEnabled= enable
             phone.isEnabled= enable
-            country.isClickable=enable
+            country.setCcpClickable(enable)
             gender.isEnabled= enable
             ethnicity.isEnabled= enable
             address.isEnabled= enable
@@ -779,6 +710,9 @@ class ProfileFragment : Fragment() {
             email.isEnabled= enable
             confirmEmail.isEnabled= enable
             address2.isEnabled= enable
+
+            val shouldHideSaveBtn= if(!enable) View.GONE else View.VISIBLE
+            save.visibility= shouldHideSaveBtn
 
         }
     }

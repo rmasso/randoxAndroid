@@ -65,11 +65,11 @@ object CertificateGenerator {
                 //Row3
                 headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_create, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
                 //Row4
                 headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_proc_stop, 20f, Font.NORMAL))
 
                 //Row5
                 headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
@@ -97,9 +97,7 @@ object CertificateGenerator {
                 //Report Body
                 val bodyContent =
                     "Dear ${certificate.cert_name} , Date of Birth: $usr_birth Contact Number: $usr_phone\n\n" +
-                            getMessageForCovidStatus(cert_manual_approved) +
-                            "For more advice:\n" +
-                            "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+                            "Your coronavirus (COVID-19) test result is "
 
 
                 val fsBody = FontSelector()
@@ -110,6 +108,22 @@ object CertificateGenerator {
                 val phraseBody = fsBody.process(bodyContent)
                 val body = Paragraph(phraseBody)
                 body.leading = 24f
+
+
+                val fontStatus = FontFactory.getFont(FontFactory.HELVETICA, 23f)
+                fontStatus.color = BaseColor.BLACK
+                fontStatus.style = Font.BOLD
+                val phraseStatusChunk= Chunk(getCovidStatus(cert_manual_approved),fontStatus)
+
+                body.add(phraseStatusChunk)
+
+                val bodSubContent= getMessageForCovidStatus(cert_manual_approved) +
+                        "For more advice:\n" +
+                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+
+                val phraseSubBodyChunk = Chunk(bodSubContent,fontBody)
+                body.add(phraseSubBodyChunk)
+
 
 
                 //Test Information Table
@@ -265,11 +279,11 @@ object CertificateGenerator {
                 //Row3
                 headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_create, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
                 //Row4
                 headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_proc_stop, 20f, Font.NORMAL))
 
                 //Row5
                 headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
@@ -297,9 +311,7 @@ object CertificateGenerator {
                 //Report Body
                 val bodyContent =
                     "Dear ${certificate.cert_name} , Date of Birth: $usr_birth Contact Number: $usr_phone\n\n" +
-                            getMessageForCovidStatus(cert_manual_approved) +
-                            "For more advice:\n" +
-                            "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+                            "Your coronavirus (COVID-19) test result is "
 
 
                 val fsBody = FontSelector()
@@ -310,6 +322,21 @@ object CertificateGenerator {
                 val phraseBody = fsBody.process(bodyContent)
                 val body = Paragraph(phraseBody)
                 body.leading = 24f
+
+
+                val fontStatus = FontFactory.getFont(FontFactory.HELVETICA, 23f)
+                fontStatus.color = BaseColor.BLACK
+                fontStatus.style = Font.BOLD
+                val phraseStatusChunk= Chunk(getCovidStatus(cert_manual_approved),fontStatus)
+
+                body.add(phraseStatusChunk)
+
+                val bodSubContent= getMessageForCovidStatus(cert_manual_approved) +
+                        "For more advice:\n" +
+                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+
+                val phraseSubBodyChunk = Chunk(bodSubContent,fontBody)
+                body.add(phraseSubBodyChunk)
 
                 //Generating the pdf from above data
                 doc.open()
@@ -360,20 +387,29 @@ object CertificateGenerator {
 
     private fun getMessageForCovidStatus(status: String): String {
         return when (status) {
-            "N" -> "Your coronavirus (COVID-19) test result is negative, meaning you did not have the virus when the test was done.\n" +
+            "N" -> " meaning you did not have the virus when the test was done.\n" +
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"
-            "P" -> "Your coronavirus (COVID-19) test result is positive, meaning you had the virus when the test was done.\n\n" +
+            "P" -> " meaning you had the virus when the test was done.\n\n" +
                     "You must self-isolate straight away.\n" +
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"
-            "R" -> "Your coronavirus (COVID-19) test result is positive, meaning you had the virus when the test was done.\n\n" +
+            "R" -> " meaning you had the virus when the test was done.\n\n" +
                     "You must self-isolate straight away.\n" +
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"
-            else -> "Your coronavirus (COVID-19) test result is unclear.You’ll have to have another test.\n" +
+            else -> " You’ll have to have another test.\n" +
                     "Please continue to follow your local government guidelines.\n" +
                     "Contact 112 or 999 for a medical emergency.\n\n"
+        }
+    }
+
+    private fun getCovidStatus(status: String): String {
+        return when (status) {
+            "N" -> "Negative,"
+            "P" -> "Positive,"
+            "R" -> "Positive,"
+            else -> "Unclear,"
         }
     }
 }
