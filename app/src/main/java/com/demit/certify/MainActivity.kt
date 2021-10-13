@@ -17,11 +17,7 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         Handler().postDelayed({
 
-            if(Shared(this).getString("token") == ""){
                 startActivity(Intent(this, LoginActivity::class.java))
-            }else{
-                startActivity(Intent(this, DashboardActivity::class.java))
-            }
 
             finish()
         }, 3000)

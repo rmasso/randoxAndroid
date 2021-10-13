@@ -5,9 +5,12 @@ import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
@@ -48,9 +51,8 @@ import com.microblink.entities.recognizers.RecognizerBundle
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
 import com.microblink.uisettings.ActivityRunner
 import com.microblink.uisettings.BlinkIdUISettings
-import kotlinx.android.synthetic.main.activity_certificate_preview.*
-import kotlinx.android.synthetic.main.activity_profile.*
 import kotlinx.android.synthetic.main.view_profile.view.*
+
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -89,6 +91,18 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val text = "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
+                " and agree to the  Terms and Conditions. </a>"
+
+        binding.link.isClickable=true
+        binding.link.movementMethod = LinkMovementMethod.getInstance()
+        val htmlOut=if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M)
+            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
+        else
+            Html.fromHtml(text)
+        binding.link.text= htmlOut
+
+
         mRecognizer = BlinkIdCombinedRecognizer()
         mRecognizer.setReturnFaceImage(true)
         mRecognizer.setReturnFullDocumentImage(true)
@@ -204,7 +218,12 @@ class ProfileFragment : Fragment() {
                 if (context != null)
                     Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
                         .show()
-            } else {
+            } else if(!binding.radio.isChecked) {
+                Toast.makeText(context, "Please Confirm that you agree with our Terms&conditions", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
+            else {
                 familyregister()
             }
         }

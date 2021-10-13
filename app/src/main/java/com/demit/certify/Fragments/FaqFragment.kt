@@ -12,7 +12,7 @@ import com.demit.certify.adapters.FaqAdapter
 import com.demit.certify.databinding.FragmentFaqBinding
 
 
-class FaqFragment : Fragment(),FaqScrollInterface {
+class FaqFragment : Fragment(), FaqScrollInterface {
     lateinit var binding: FragmentFaqBinding
     lateinit var adapter: FaqAdapter
     override fun onCreateView(
@@ -42,47 +42,67 @@ class FaqFragment : Fragment(),FaqScrollInterface {
     }
 
     private fun initAdapter() {
-        adapter = FaqAdapter(getSampleList(),this)
+        adapter = FaqAdapter(getSampleList(), this)
     }
 
     private fun getSampleList(): List<FaqAsk> {
         val faqAskList = ArrayList<FaqAsk>()
-        faqAskList.add(FaqAsk(question = "Will this hurt?"
-            ,answer = "Possible discomfort during swabbing. Possible incorrect test results"))
+        
+
         faqAskList.add(
             FaqAsk(
-                question = "What are the potential benefits of this test?",
-                answer = "The nasal swab may cause slight discomfort. To obtain an accurate test result it is important to swab the nostril as instructed in the test procedure. Discomfort may be increased if swab is inserted beyond recommended depth. If sharp pain is experienced, do not swab the nostril any further."
+                question = "How do I use the COVID-19 sample collection kit?",
+                answer = "Each sample collection kit contains instructions for use. It is the user’s responsibility to ensure the instructions are read in full prior to engaging in the sampling process."
             )
         )
         faqAskList.add(
             FaqAsk(
-                question = "What are the potential risks of this test?",
-                answer = "The test can determine if you have COVID-19.\nThe results, along with other information, can help your healthcare provider make informed decisions about your care./nYou can help limit the spread of COVID-19 by knowing your infection status with this test."
+                question = "Will I get a travel certificate?",
+                answer = "You will receive your results via email, as well as a certificate of your results to use whilst travelling. In order for your certificate to be correct, please ensure the information used during the registration process matches the details on your passport"
             )
         )
         faqAskList.add(
             FaqAsk(
-                question = "What are the differences between COVID-19 molecular, antigen, and antibody tests?",
-                answer = "Possible discomfort during swabbing. Possible incorrect test results"
-            )
-        )
-        faqAskList.add(
-            FaqAsk(
-                question = "Howaccurateisthe RapidCOVID-19AntigenSelf-Test?",
-                answer = "There are three main types of COVID-19 tests available, and there are significant differences between them. Molecular tests (also known as PCR tests) detect the genetic material of the Coronavirus. The Rapid COVID-19 Antigen Self-Test is an antigen test. Antigen tests detect for proteins, which are small pieces, belonging to the Coronavirus. Antibody test detects anti -bodies that the immune system in your body produces in response to previous COVID-19 infection. Antibody tests cannot be used to diagnose active COVID-19 infection."
-            )
-        )
-        faqAskList.add(
-            FaqAsk(
-                question = "What does it mean if I have a positive result?",
-                answer = "A positive test result means that proteins from the virus that causes COVID-19 was found in your swab sample. It is likely that you may be required to self-isolate at home to prevent the spread of COVID-19. Please also observe the relevant rules for spread control and contact your doctor or local health department. In this case, it is recommended to have the result confirmed with an alternative test method such as a PCR test."
+                question = "Do I need to prepare for my sample?",
+                answer = "Food or drink should not be consumed within the 30 minutes"
             )
         )
         faqAskList.add(
             FaqAsk(
                 question = "What does it mean if I have a negative result?",
-                answer = "A negative test results means that you are unlikely to have COVID-19. The test did not"
+                answer = "A negative test results means that you are unlikely to have COVID-19."
+            )
+        )
+        faqAskList.add(
+            FaqAsk(
+                question = "What is the difference between an Antigen test and PCR test?",
+                answer = "PCR (polymerase chain reaction) tests have been designed to find genetic material called RNA that tells the virus to make these proteins. This test the most accurate Covid-19 test. When swabs are taken for PCR tests, reagents are used to convert the RNA into DNA in order to identify any infection within the patient. Antigen tests have been designed to find proteins on the surface of the virus to identify the pathogen. Antigen tests are often called rapid tests and are carried out by mixing the sample with a solution where it releases the viral proteins. The combination is normally applied on a paper strip that will be able to detect any antibodies that bind the protein."
+            )
+        )
+        faqAskList.add(
+            FaqAsk(
+                question = "How accurate are the antigen tests?",
+                answer = "The test meets performance standards of ≥97% specificity, ≥80% sensitivity at viral loads above 100,000 copies/ml"
+            )
+        )
+        faqAskList.add(
+            FaqAsk(
+                question = "Can I reuse a test?",
+                answer = "No. Each test is single use only."
+            )
+        )
+
+        faqAskList.add(
+            FaqAsk(
+                question = "Are your kits on the EUR approval list?",
+                answer = "Yes."
+            )
+        )
+
+        faqAskList.add(
+            FaqAsk(
+                question = "Where can I find more info?",
+                answer = "Randox.com"
             )
         )
 

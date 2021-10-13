@@ -27,7 +27,7 @@ class HomeFragment(val dinterface : DashboardInterface) : Fragment() {
         binding.activecert.setOnClickListener {
             dinterface.setpage(1)
         }
-        binding.scan.setOnClickListener {
+        binding.register.setOnClickListener {
             dinterface.setpage(2)
         }
         binding.faqs.setOnClickListener{

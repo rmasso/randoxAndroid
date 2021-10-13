@@ -2,9 +2,12 @@ package com.demit.certify.Activities
 
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
@@ -57,6 +60,17 @@ class RegisterActivity : AppCompatActivity() {
         mRecognizerBundle = RecognizerBundle(mRecognizer)
         binding.ethnicity.setSelection(0)
         binding.passportScanInfo.visibility = View.VISIBLE
+
+        val text = "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
+                " and agree to the  Terms and Conditions. </a>"
+
+        binding.link.isClickable=true
+        binding.link.movementMethod = LinkMovementMethod.getInstance()
+        val htmlOut=if(Build.VERSION.SDK_INT> Build.VERSION_CODES.M)
+            Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
+        else
+            Html.fromHtml(text)
+        binding.link.text= htmlOut
     }
 
     private fun clicks() {
@@ -106,6 +120,9 @@ class RegisterActivity : AppCompatActivity() {
                     .show()
             } else if (binding.ethnicity.selectedItemPosition == 0) {
                 Toast.makeText(this, "Choose Ethnicity", Toast.LENGTH_SHORT)
+                    .show()
+            }else if(!binding.radio.isChecked) {
+                Toast.makeText(this, "Please Confirm that you agree with our Terms&conditions", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 register()
@@ -191,6 +208,10 @@ class RegisterActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT)
                             .show()
+                        val sharedPreferences= Shared(this)
+                        sharedPreferences.setString("email",binding.email.text.toString())
+                        sharedPreferences.setString("password",binding.password.text.toString())
+                        startActivity(Intent(this,LoginActivity::class.java))
                         finish()
                     }
                 } catch (e: Exception) {
@@ -229,11 +250,11 @@ class RegisterActivity : AppCompatActivity() {
                 map["usr_ethnicity"] =
                     resources.getStringArray(R.array.ethnicity)[binding.ethnicity.selectedItemPosition]
                 if (binding.gender.selectedItemPosition == 0) {
-                    map["usr_sex"] = "M"
+                    map["usr_sex"] = "Male"
                 } else if (binding.gender.selectedItemPosition == 1) {
-                    map["usr_sex"] = "F"
+                    map["usr_sex"] = "Female"
                 } else {
-                    map["usr_sex"] = "O"
+                    map["usr_sex"] = "Other"
                 }
 
 

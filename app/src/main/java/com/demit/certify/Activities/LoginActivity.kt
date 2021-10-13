@@ -43,6 +43,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         sweet = Sweet(this)
         clicks()
+        val sharedPreferences= Shared(this)
+        val email= sharedPreferences.getString("email")
+        val password= sharedPreferences.getString("password")
+        binding.email.setText(email)
+        binding.password.setText(password)
     }
 
     private fun clicks() {
@@ -58,10 +63,9 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
-        binding.scan.setOnClickListener {
-
-
+        binding.register.setOnClickListener {
             startActivity(Intent(this,RegisterActivity::class.java))
+            finish()
         }
     }
 
@@ -90,7 +94,10 @@ class LoginActivity : AppCompatActivity() {
                     if(s == "100.0"){
                         Toast.makeText(context,"Invalid credentials",Toast.LENGTH_SHORT).show()
                     }else{
-                        Shared(context).setString("token" , s)
+                        val sharedPreferences= Shared(context)
+                        sharedPreferences.setString("token" , s)
+                        sharedPreferences.setString("email",binding.email.text.toString())
+                        sharedPreferences.setString("password",binding.password.text.toString())
                         startActivity(Intent(context,DashboardActivity::class.java))
                         this@LoginActivity.finish()
                     }

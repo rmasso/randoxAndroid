@@ -15,7 +15,7 @@
         </item>
 
         <item
-            android:id="@+id/scan"
+            android:id="@+id/register"
             android:title="">
         </item>
 

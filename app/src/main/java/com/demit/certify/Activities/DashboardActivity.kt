@@ -28,7 +28,7 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
                 changefragment(ProfileFragment())
             }else if(it.itemId == R.id.certi){
                 changefragment(CertificatesFragment())
-            }else if(it.itemId == R.id.scan){
+            }else if(it.itemId == R.id.register){
                 changefragment(YtestFragment(this))
             }else if(it.itemId == R.id.faq){
                 changefragment(FaqFragment())
@@ -56,7 +56,7 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         val ids : MutableList<Int> = ArrayList();
         ids.add(R.id.home)
         ids.add(R.id.certi)
-        ids.add(R.id.scan)
+        ids.add(R.id.register)
         ids.add(R.id.faq)
         ids.add(R.id.profile)
 

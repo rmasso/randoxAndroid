@@ -339,8 +339,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="+441234567"
-                android:inputType="phone"
+                android:hint="441234567"
+                android:inputType="number"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp" />
 
@@ -372,7 +372,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="+10 Downing Street, London"
+                android:hint="10 Downing Street, London"
                 android:inputType="textPostalAddress"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp"
@@ -393,7 +393,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/et_bg"
-                android:hint="+10 Downing Street, London"
+                android:hint="10 Downing Street, London"
                 android:inputType="textPostalAddress"
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp"
@@ -552,14 +552,30 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_14sdp" />
 
-            <RadioButton
-                android:id="@+id/radio"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:buttonTint="@color/sblue"
-                android:text="I agree to the accuracy of the submitted data
-and agree to the  Terms and Conditions."
-                android:textSize="@dimen/_10sdp" />
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/radio"
+                    android:padding="0dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/sblue"
+                    android:layout_gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/link"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text=""
+                    android:textSize="@dimen/_10sdp"
+                    />
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>

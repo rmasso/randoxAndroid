@@ -43,7 +43,7 @@
                 android:visibility="gone" />
 
             <LinearLayout
-                android:id="@+id/scan"
+                android:id="@+id/register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="@dimen/_5sdp"
@@ -109,7 +109,7 @@
                         android:fontFamily="@font/poppinsbold"
                         android:text="Certificates"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_14sdp" />
+                        android:textSize="@dimen/_18sdp"/>
 
                 </LinearLayout>
             </LinearLayout>

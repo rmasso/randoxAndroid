@@ -126,7 +126,7 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
             } else {
                 sweet.dismiss()
                 if (validityResponse == "100")
-                    Toast.makeText(requireContext(), "Bad Device Can't Submit", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Duplicate Test, please scan a new device", Toast.LENGTH_SHORT).show()
                 else
                     Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT).show()
 
