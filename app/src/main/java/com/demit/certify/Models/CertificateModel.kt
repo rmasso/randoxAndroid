@@ -1,18 +1,36 @@
 package com.demit.certify.Models
 
-import java.io.File
-
 data class CertificateModel(
-    val token:String ="",
-    val usr_id: String = "",
-    val cert_name: String = "",
-    val cert_email: String = "",
-    val cert_passport: String = "",
-    val cert_country: String = "",
-    val cert_device_id: String = "",
-    val cert_ai_pred: String = "",
-    val cert_ai_approved: String = "",
-    val cert_create: String = "",
-    val cert_deviceToken: String= "",
-    val cert_image: String = ""
+    var token:String ="",
+    var usr_id: String = "",
+    var cert_name: String = "",
+    var cert_email: String = "",
+    var cert_passport: String = "",
+    var cert_country: String = "",
+    var cert_device_id: String = "",
+    var cert_ai_pred: String = "",
+    var cert_ai_approved: String = "",
+    var cert_create: String = "",
+    var cert_deviceToken: String= "",
+    var cert_image: String = "",
+    var cert_nationality: String="",
+    var is_viccinated: String="",
+    var vaccine_name:String="",
+    var is_fully_vaccinated_14days_uk:String="",
+    var pfl_code:String="",
+    var transport_type:String="",
+    var isolation_address_line1:String="",
+    var isolation_address_line2:String="",
+    var town:String="",
+    var post_code:String="",
+    var arrival_date:String="",
+    var fligh_vessel_train_no:String="",
+    var nhs_no:String="",
+    var country_territory_part_journey:String="",
+    var last_date_department:String="",
+    var Country_of_departure:String=""
+
+
+
+
 )

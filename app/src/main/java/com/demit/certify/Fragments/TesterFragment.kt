@@ -50,10 +50,11 @@ class TesterFragment : Fragment() {
 
     fun setclicks(){
         binding.gotop.setOnClickListener {
-//            activity?.supportFragmentManager?.beginTransaction()
-//                ?.replace(R.id.fragcontainer,ScancompleteFragment())?.addToBackStack("")?.commit()
+            /*activity?.supportFragmentManager?.beginTransaction()
+               ?.replace(R.id.fragcontainer,ScancompleteFragment(currentSelectedProfile,null))?.addToBackStack("")?.commit()
+*/
             activity?.supportFragmentManager?.beginTransaction()
-                ?.replace(R.id.fragcontainer,ScancompleteFragment(currentSelectedProfile))?.addToBackStack("")?.commit()
+                ?.replace(R.id.fragcontainer,CertificateTypeFragment(currentSelectedProfile))?.addToBackStack("")?.commit()
         }
         binding.cancel.setOnClickListener {
             activity?.onBackPressed()

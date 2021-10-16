@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingStart="@dimen/_20sdp"
+    android:paddingEnd="@dimen/_20sdp"
+    android:paddingTop="@dimen/_25sdp"
+    android:background="@color/bwhite"
+    >
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_60sdp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/certificate_type_heading"
+        android:textSize="@dimen/_16sdp"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppinsbold"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_30sdp"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintBottom_toTopOf="@id/container_fit2travel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/container_fit2travel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:padding="@dimen/_16sdp"
+        android:background="@drawable/et_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        >
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/fit_to_travel_switch"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:layout_gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="@string/fit_to_travel"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_2days"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:padding="@dimen/_16sdp"
+        android:background="@drawable/et_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container_fit2travel"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal"
+        >
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/days_switch"
+            android:layout_gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinsmedium"
+            android:layout_gravity="center_vertical"
+            android:includeFontPadding="false"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:text="@string/days_2"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sdp" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:textAllCaps="false"
+        android:textColor="@color/sblue"
+        android:textSize="@dimen/_14sdp"
+        android:fontFamily="@font/poppinsmedium"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/button_bg2"
+        app:layout_constraintTop_toBottomOf="@id/barrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_scan"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Begin Scan"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone"
+        android:fontFamily="@font/poppinsmedium"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/button_bg"
+        app:layout_constraintTop_toBottomOf="@id/container_2days"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_fill_form"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Add Information"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        android:visibility="gone"
+        android:fontFamily="@font/poppinsmedium"
+        android:includeFontPadding="false"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:background="@drawable/button_bg"
+        app:layout_constraintTop_toBottomOf="@id/container_2days"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="btn_fill_form,btn_scan"
+        />
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

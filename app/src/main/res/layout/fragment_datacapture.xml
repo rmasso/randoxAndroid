@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bwhite"
+       >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:paddingVertical="@dimen/_40sdp"
+            >
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_60sdp"
+                android:src="@drawable/logo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/nationality_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp30"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Nationality"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/logo" />
+
+            <LinearLayout
+                android:id="@+id/nationality_picker"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nationality_header">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/country"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultPhoneCode="36"
+                    app:ccp_showFullName="true"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/days_received_vaccine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Have you received your vaccine ?"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nationality_picker" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/days_received_vaccine"
+                app:layout_constraintStart_toEndOf="@id/days_received_vaccine"
+                app:layout_constraintTop_toTopOf="@id/days_received_vaccine" />
+
+            <LinearLayout
+                android:id="@+id/vaccines_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/days_received_vaccine"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <Spinner
+                android:id="@+id/received_vaccine"
+                style="@style/SpinnerTheme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/vaccines_types"
+                android:gravity="left"
+                android:inputType="text"
+                android:paddingEnd="@dimen/dp10"
+                android:spinnerMode="dialog"
+                tools:ignore="RtlHardcoded,RtlSymmetry"
+
+
+                />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/vaccine_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Vaccine Name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vaccines_container" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/vaccine_header"
+                app:layout_constraintStart_toEndOf="@id/vaccine_header"
+                app:layout_constraintTop_toTopOf="@id/vaccine_header" />
+
+
+            <LinearLayout
+                android:id="@+id/vaccines"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vaccine_header">
+
+                <Spinner
+                    android:id="@+id/vaccine_picker"
+                    style="@style/SpinnerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/vaccines"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:paddingEnd="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/how_many_days_past_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="@string/how_many_days_you_were_vaccinated"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vaccines" />
+            <LinearLayout
+                android:id="@+id/days_past_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/how_many_days_past_header">
+
+                <Spinner
+                    android:id="@+id/yes_no_picker"
+                    style="@style/SpinnerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/days_past_yes_no"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:paddingEnd="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+
+            </LinearLayout>
+
+
+
+
+            <TextView
+                android:id="@+id/address_line_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Isolation Address line 1"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/days_past_container" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/address_line_1"
+                app:layout_constraintStart_toEndOf="@id/address_line_1"
+                app:layout_constraintTop_toTopOf="@id/address_line_1" />
+
+            <EditText
+                android:id="@+id/address_line_1_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="10 Downing Street, London"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/address_line_1" />
+
+            <TextView
+                android:id="@+id/address_line_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Address line 2"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/address_line_1_edit" />
+
+            <EditText
+                android:id="@+id/address_line_2_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="10 Downing Street, London"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/address_line_2" />
+
+            <TextView
+                android:id="@+id/city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Town"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/address_line_2_edit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/city"
+                app:layout_constraintStart_toEndOf="@id/city"
+                app:layout_constraintTop_toTopOf="@id/city" />
+
+            <EditText
+                android:id="@+id/city_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="London"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/city" />
+
+            <TextView
+                android:id="@+id/zip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Postal Code"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/city_edit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/zip"
+                app:layout_constraintStart_toEndOf="@id/zip"
+                app:layout_constraintTop_toTopOf="@id/zip" />
+
+            <EditText
+                android:id="@+id/zip_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="SW1A2AA"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/zip" />
+
+
+
+            <TextView
+                android:id="@+id/date_arrival_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Date of Arrival"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/zip_edit" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/date_arrival_header"
+                app:layout_constraintStart_toEndOf="@id/date_arrival_header"
+                app:layout_constraintTop_toTopOf="@id/date_arrival_header" />
+            <TextView
+                android:id="@+id/date_of_arrival_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text=""
+                android:hint="dd-mm-yyyy"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/date_arrival_header"
+                />
+
+            <TextView
+                android:id="@+id/travel_type_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Transport type"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_of_arrival_text" />
+
+            <LinearLayout
+                android:id="@+id/travel_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/travel_type_header">
+
+                <Spinner
+                    android:id="@+id/travel_type_picker"
+                    style="@style/SpinnerTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/travel_type"
+                    android:gravity="left"
+                    android:inputType="text"
+                    android:paddingEnd="@dimen/dp10"
+                    android:spinnerMode="dialog"
+                    tools:ignore="RtlHardcoded,RtlSymmetry" />
+
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/travel_type_header"
+                app:layout_constraintStart_toEndOf="@id/travel_type_header"
+                app:layout_constraintTop_toTopOf="@id/travel_type_header" />
+
+            <TextView
+                android:id="@+id/flight_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Flight/ Vessel/ Train number"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/travel_type" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/flight_number"
+                app:layout_constraintStart_toEndOf="@id/flight_number"
+                app:layout_constraintTop_toTopOf="@id/flight_number" />
+
+            <EditText
+                android:id="@+id/flight_number_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="AA8025"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/flight_number" />
+
+
+            <TextView
+                android:id="@+id/departure_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Country of departure"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/flight_number_edit" />
+
+            <LinearLayout
+                android:id="@+id/departure_picker_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/departure_header">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/departure_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultPhoneCode="36"
+                    app:ccp_showFullName="true"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false" />
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+            <TextView
+                android:id="@+id/nhs_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="NHS Number (if applicable)"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/departure_picker_container" />
+
+
+            <EditText
+                android:id="@+id/nhs_number_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="nh12aa1"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/nhs_number" />
+
+
+
+
+            <TextView
+                android:id="@+id/transited_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp16"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Any country or territory you transited through as part of this journey"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nhs_number_edit" />
+
+            <LinearLayout
+                android:id="@+id/transited_picker_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_5sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transited_header">
+
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/transited_picker"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ccp_defaultPhoneCode="36"
+                    app:ccp_showFullName="true"
+                    app:ccp_showNameCode="false"
+                    app:ccp_showPhoneCode="false" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/last_date_departed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Last date departed from or transited through a non exempt country or territory"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/transited_picker_container" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/last_date_departed"
+                app:layout_constraintStart_toEndOf="@id/last_date_departed"
+                app:layout_constraintTop_toTopOf="@id/last_date_departed" />
+            <TextView
+                android:id="@+id/last_date_departed_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/et_bg"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:text=""
+                android:hint="dd-mm-yyyy"
+                android:textColor="@color/black"
+                app:layout_constraintTop_toBottomOf="@id/last_date_departed"
+                />
+
+            <TextView
+                android:id="@+id/book_ref_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text="Day 2 booking reference"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/last_date_departed_text" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:text=" *"
+                android:textColor="@color/orange"
+                android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="@id/book_ref_header"
+                app:layout_constraintStart_toEndOf="@id/book_ref_header"
+                app:layout_constraintTop_toTopOf="@id/book_ref_header" />
+
+            <EditText
+                android:id="@+id/booking_ref_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:background="@drawable/et_bg"
+                android:hint="PLF"
+                android:inputType="textNoSuggestions"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:paddingVertical="@dimen/_10sdp"
+                app:layout_constraintTop_toBottomOf="@id/book_ref_header" />
+
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_proceed"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:visibility="visible"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/button_bg"
+                app:layout_constraintTop_toBottomOf="@id/booking_ref_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/sblue"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/button_bg2"
+                app:layout_constraintTop_toBottomOf="@id/btn_proceed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -26,17 +26,20 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
+class ScancompleteFragment(
+    val selectedProfile: TProfileModel,
+    val additionalData: Map<String, String>?
+) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
-    lateinit var certificateModel:CertificateModel
-    lateinit var sweet:Sweet
+    lateinit var certificateModel: CertificateModel
+    lateinit var sweet: Sweet
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentScancompleteBinding.inflate(layoutInflater)
-        sweet= Sweet(requireContext())
+        sweet = Sweet(requireContext())
         setclicks()
         startScanning()
         return binding.root
@@ -56,7 +59,7 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
                         val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
 
                         binding.scannedImage.setImageBitmap(bitmap)
-                      certificateModel=  createNewCertificate(image, qrCode!!)
+                        certificateModel = createNewCertificate(image, qrCode!!)
                     }
 
                 }
@@ -69,7 +72,7 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
     fun setclicks() {
         binding.submit.setOnClickListener {
 
-            if(this::certificateModel.isInitialized){
+            if (this::certificateModel.isInitialized) {
                 sweet.show("Please Wait...")
                 submitCertificate(certificateModel)
             }
@@ -94,43 +97,76 @@ class ScancompleteFragment(val selectedProfile: TProfileModel) : Fragment() {
             cert_email = selectedProfile.email,
             cert_passport = selectedProfile.usr_passport,
             cert_country = selectedProfile.usr_country,
-            cert_device_id = qrCode.takeLast(13),
+            cert_device_id = qrCode,
             cert_ai_pred = "AI Predicate",
             cert_ai_approved = "N",
             cert_create = "",
             cert_deviceToken = qrCode,
             cert_image = deviceImageBase64
         )
+        additionalData?.let { dataMap ->
+            with(certificateModel) {
+                cert_nationality = dataMap["cert_nationality"]!!
+                is_viccinated = dataMap["is_viccinated"]!!
+                vaccine_name = dataMap["vaccine_name"]!!
+                is_fully_vaccinated_14days_uk = dataMap["is_fully_vaccinated_14days_uk"]!!
+                pfl_code = dataMap["two_day_booking_ref"]!!
+                transport_type= dataMap["transport_type"]!!
+                isolation_address_line1 = dataMap["isolation_address_line1"]!!
+                isolation_address_line2 = dataMap["isolation_address_line2"]!!
+                town = dataMap["town"]!!
+                post_code = dataMap["post_code"]!!
+                arrival_date = dataMap["arrival_date"]!!
+                fligh_vessel_train_no = dataMap["fligh_vessel_train_no"]!!
+                nhs_no = dataMap["nhs_no"]!!
+                country_territory_part_journey = dataMap["country_territory_part_journey"]!!
+                last_date_department = dataMap["last_date_department"]!!
+                Country_of_departure = dataMap["Country_of_departure"]!!
+            }
+        }
+
+
         return certificateModel
     }
 
-    private fun submitCertificate(certificateModel:CertificateModel){
-        ApiHelper.isQrValid(certificateModel.token, certificateModel.cert_device_id).observe(viewLifecycleOwner) { validityResponse ->
-            if (validityResponse == "0") {
+    private fun submitCertificate(certificateModel: CertificateModel) {
+        ApiHelper.isQrValid(certificateModel.token, certificateModel.cert_device_id)
+            .observe(viewLifecycleOwner) { validityResponse ->
+                if (validityResponse == "0") {
 
-                ApiHelper.createNewCertificate(certificateModel)
-                    .observe(viewLifecycleOwner) { response ->
-                        // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
-                        Log.d("++res++",response)
-                        sweet.dismiss()
-                        if(response!="Something went wrong")
-                        activity?.supportFragmentManager?.beginTransaction()
-                            ?.replace(R.id.fragcontainer, ScansubmitFragment())?.addToBackStack("")?.commit()
-                        else{
-                            Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT).show()
+                    ApiHelper.createNewCertificate(certificateModel)
+                        .observe(viewLifecycleOwner) { response ->
+                            // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
+                            Log.d("++res++", response)
+                            sweet.dismiss()
+                            if (response != "Something went wrong")
+                                activity?.supportFragmentManager?.beginTransaction()
+                                    ?.replace(R.id.fragcontainer, ScansubmitFragment())
+                                    ?.addToBackStack("")?.commit()
+                            else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    validityResponse,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
                         }
 
-                    }
 
+                } else {
+                    sweet.dismiss()
+                    if (validityResponse == "100")
+                        Toast.makeText(
+                            requireContext(),
+                            "Duplicate Test, please scan a new device",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    else
+                        Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT)
+                            .show()
 
-            } else {
-                sweet.dismiss()
-                if (validityResponse == "100")
-                    Toast.makeText(requireContext(), "Duplicate Test, please scan a new device", Toast.LENGTH_SHORT).show()
-                else
-                    Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT).show()
-
+                }
             }
-        }
     }
 }

@@ -21,6 +21,7 @@ object ApiHelper {
         val CREATE_NEW_CERTIFICATE="setCert.php"
         val VALIDATE_QRCODE="getQrVerification.php"
         val FAMILY_REGISTER="FamilyRegistration.php"
+        val PLF_VERIFICATION="getPLFVerificationRandox.php"
     }
 
     fun createNewCertificate(certificateModel: CertificateModel): LiveData<String>
@@ -91,5 +92,27 @@ object ApiHelper {
         return apiResponseLiveData
     }
 
+    fun verifyPlfNumber(token:String,plfNum:String):LiveData<String>{
+        val apiResponseLiveData= MutableLiveData<String>()
+
+        AndroidNetworking.post("${Constants.url}${ApiEndPoint.PLF_VERIFICATION}")
+            .addBodyParameter("token",token)
+            .addBodyParameter("cert_pfl",plfNum)
+            .setTag("test")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object:JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    apiResponseLiveData.postValue(response?.getString("ret"))
+                }
+
+                override fun onError(anError: ANError?) {
+                    apiResponseLiveData.postValue("Something went wrong")
+                    Log.d("++err++","${anError?.message}")
+                }
+            })
+
+        return apiResponseLiveData
+    }
 
 }
