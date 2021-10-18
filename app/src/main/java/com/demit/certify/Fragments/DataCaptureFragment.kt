@@ -19,8 +19,7 @@ import com.demit.certify.databinding.FragmentDatacaptureBinding
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
+import com.hbb20.CountryCodePicker
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
@@ -29,6 +28,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     private lateinit var binding: FragmentDatacaptureBinding
     private var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
+    private lateinit var countryCodePicker: CountryCodePicker
 
 
     override fun onCreateView(
@@ -47,7 +47,6 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.btnProceed.setOnClickListener {
             validateForm()
         }
@@ -65,6 +64,13 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
         }
 
         binding.bookingRefEdit.filters = binding.bookingRefEdit.filters + InputFilter.AllCaps()
+
+        binding.transitedPickerContainer.setOnClickListener {
+           countryCodePicker.launchCountrySelectionDialog()
+
+        }
+
+        initCounterDialogPicker()
 
 
     }
@@ -165,7 +171,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             dataMap["arrival_date"] = dateOfArrivalText.text.toString()
             dataMap["fligh_vessel_train_no"] = flightNumberEdit.text.toString()
             dataMap["nhs_no"] = nhsNumberEdit.text.toString()
-            dataMap["country_territory_part_journey"] = transitedPicker.selectedCountryEnglishName
+            dataMap["country_territory_part_journey"] = transitedText.text.toString()
             dataMap["last_date_department"] = lastDateDepartedText.text.toString()
             dataMap["Country_of_departure"] = departurePicker.selectedCountryEnglishName
             dataMap["transport_type"] =
@@ -252,5 +258,18 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             timePicker.dismiss()
         }
         timePicker.show(requireActivity().supportFragmentManager, "timepicker")*/
+    }
+
+    private fun initCounterDialogPicker(){
+        countryCodePicker= CountryCodePicker(requireContext())
+
+        countryCodePicker.setOnCountryChangeListener {
+            countryCodePicker.selectedCountryEnglishName?.let {
+                binding.transitedText.text= it
+            }
+
+        }
+
+
     }
 }

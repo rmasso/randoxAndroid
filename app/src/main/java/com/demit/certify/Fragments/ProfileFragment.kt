@@ -466,18 +466,10 @@ class ProfileFragment : Fragment() {
         binding.ethnicity.setSelection(
             resources.getStringArray(R.array.ethnicity).indexOf(list[position].ethnicity)
         )
-        var p =
-            when (list[position].usr_sex) {
-                "Male","" -> {
-                    0
-                }
-                "Female" -> 1
-                else -> 2
-            }
 
-
-        binding.gender.setSelection(p)
-
+        binding.gender.setSelection(
+            resources.getStringArray(R.array.genders).indexOf(list[position].usr_sex)
+        )
     }
 
     inner class ProfileAdapter : RecyclerView.Adapter<ProfileAdapter.ProfileVH>() {

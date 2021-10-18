@@ -2,6 +2,7 @@ package com.demit.certify.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,7 @@ import com.demit.certify.Extras.Constants
 import com.demit.certify.Extras.Functions
 import com.demit.certify.Extras.Shared
 import com.demit.certify.Extras.Sweet
+import com.demit.certify.data.ApiHelper
 import com.demit.certify.databinding.ActivityLoginBinding
 import com.google.gson.Gson
 import okhttp3.MediaType
@@ -35,47 +37,80 @@ import retrofit2.http.Part
 import java.util.concurrent.TimeUnit
 
 class LoginActivity : AppCompatActivity() {
-    lateinit var binding :ActivityLoginBinding
-    lateinit var sweet : Sweet
+    lateinit var binding: ActivityLoginBinding
+    lateinit var sweet: Sweet
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         sweet = Sweet(this)
         clicks()
-        val sharedPreferences= Shared(this)
-        val email= sharedPreferences.getString("email")
-        val password= sharedPreferences.getString("password")
+        val sharedPreferences = Shared(this)
+        val email = sharedPreferences.getString("email")
+        val password = sharedPreferences.getString("password")
         binding.email.setText(email)
         binding.password.setText(password)
     }
 
     private fun clicks() {
-        binding.signin.setOnClickListener{
-            if(!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()){
+        binding.signin.setOnClickListener {
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
                 Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show()
-            }else if(binding.password.text.toString().isEmpty()){
+            } else if (binding.password.text.toString().isEmpty()) {
                 Toast.makeText(this, "Password can't be empty", Toast.LENGTH_SHORT).show()
-            }
-
-            else{
+            } else {
                 requestUploadSurvey(this)
             }
 
         }
         binding.register.setOnClickListener {
-            startActivity(Intent(this,RegisterActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
             finish()
+        }
+
+        binding.btnForgot.setOnClickListener {
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
+                Toast.makeText(this, "Invalid Email.", Toast.LENGTH_SHORT).show()
+            } else {
+                sweet.show("Please Wait")
+                ApiHelper.forgetPassword(
+                    Shared(this@LoginActivity).getString("token"),
+                    binding.email.text.toString()
+                )
+                    .observe(this, { response ->
+                        if (response == "0") {
+                            sweet.dismiss()
+                            Toast.makeText(
+                                this@LoginActivity,
+                                "An email has been sent to you. You can check your new password.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            sweet.dismiss()
+                            if (response == "100")
+                                Toast.makeText(
+                                    this@LoginActivity,
+                                    "Email not registered.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            else
+                                Toast.makeText(this@LoginActivity, response, Toast.LENGTH_SHORT)
+                                    .show()
+                        }
+                    })
+            }
         }
     }
 
-    private fun requestUploadSurvey(context : Context) {
+    private fun requestUploadSurvey(context: Context) {
         sweet.show("Logging In");
         val webServicesAPI = ApiService2.retrofit
             .create(WebServicesAPI::class.java)
         var surveyResponse: Call<Any?>? = null
-        var email: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.email.text.toString())
-        var password: RequestBody = RequestBody.create(MediaType.parse("text/plain"), binding.password.text.toString())
+        var email: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), binding.email.text.toString())
+        var password: RequestBody =
+            RequestBody.create(MediaType.parse("text/plain"), binding.password.text.toString())
 
 
 
@@ -88,23 +123,23 @@ class LoginActivity : AppCompatActivity() {
             override fun onResponse(call: Call<Any?>, response: retrofit2.Response<Any?>) {
                 sweet.dismiss()
                 try {
-                    Log.d("res" , response.body().toString())
+                    Log.d("res", response.body().toString())
                     val obj = JSONObject(response.body().toString())
                     val s = obj.getString("ret");
-                    if(s == "100.0"){
-                        Toast.makeText(context,"Invalid credentials",Toast.LENGTH_SHORT).show()
-                    }else{
-                        val sharedPreferences= Shared(context)
-                        sharedPreferences.setString("token" , s)
-                        sharedPreferences.setString("email",binding.email.text.toString())
-                        sharedPreferences.setString("password",binding.password.text.toString())
-                        startActivity(Intent(context,DashboardActivity::class.java))
+                    if (s == "100.0") {
+                        Toast.makeText(context, "Invalid credentials", Toast.LENGTH_SHORT).show()
+                    } else {
+                        val sharedPreferences = Shared(context)
+                        sharedPreferences.setString("token", s)
+                        sharedPreferences.setString("email", binding.email.text.toString())
+                        sharedPreferences.setString("password", binding.password.text.toString())
+                        startActivity(Intent(context, DashboardActivity::class.java))
                         this@LoginActivity.finish()
                     }
                 } catch (e: java.lang.Exception) {
 
-                    Toast.makeText(context,e.localizedMessage,Toast.LENGTH_SHORT).show()
-                    Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
                     e.printStackTrace()
                 }
             }
@@ -112,7 +147,7 @@ class LoginActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Any?>, t: Throwable) {
                 sweet.dismiss()
 
-                Toast.makeText(context,call.request().body().toString(),Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, call.request().body().toString(), Toast.LENGTH_SHORT).show()
 //                Toast.makeText(context,"Something went wrong",Toast.LENGTH_SHORT).show()
             }
         })
@@ -126,6 +161,7 @@ class LoginActivity : AppCompatActivity() {
             @Part("usr_pwd") password: RequestBody
         ): Call<Any?>?
     }
+
     object ApiService2 {
         private const val BASE_URL = Constants.url
         val retrofit: Retrofit

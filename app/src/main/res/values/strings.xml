@@ -3,13 +3,12 @@
     <string name="app_name">Randox1v1</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="faq_heading">Frequently Asked Questions:</string>
+    <string name="faq_heading">How to use Randox-Certifly?</string>
     <string name="no_record_text">You have no certificates yet. Result certificates will appear here once they are available.</string>
-    <string name="certificate_type_heading">Please choose certificate type:</string>
+    <string name="certificate_type_heading">Please choose test type:</string>
     <string name="fit_to_travel">Fit to travel</string>
-    <string name="days_2">UK Day 2</string>
+    <string name="days_2">UK Day 2 arrival</string>
     <string name="how_many_days_you_were_vaccinated">Has it been 14 or more days since you have been fully vaccinated in a UK approved vaccination program ?</string>
-
     <array name="genders">
         <item>Male</item>
         <item>Female</item>

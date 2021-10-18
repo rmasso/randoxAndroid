@@ -34,6 +34,8 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_8sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_16sdp"

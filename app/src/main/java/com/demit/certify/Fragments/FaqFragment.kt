@@ -10,6 +10,15 @@ import com.demit.certify.Interfaces.FaqScrollInterface
 import com.demit.certify.Models.FaqAsk
 import com.demit.certify.adapters.FaqAdapter
 import com.demit.certify.databinding.FragmentFaqBinding
+import android.content.ActivityNotFoundException
+
+import android.R.id
+
+import android.content.Intent
+import android.net.Uri
+import com.bumptech.glide.Glide
+import com.demit.certify.Extras.Constants
+import com.demit.certify.R
 
 
 class FaqFragment : Fragment(), FaqScrollInterface {
@@ -28,6 +37,14 @@ class FaqFragment : Fragment(), FaqScrollInterface {
         super.onViewCreated(view, savedInstanceState)
         initAdapter()
         initRecyclerView()
+        Glide.with(requireContext())
+            .load(R.drawable.thumbnail3)
+            .placeholder(R.drawable.thumbnail3)
+            .into(binding.youtubePlayer)
+
+        binding.youtubePlayer.setOnClickListener {
+            launchYoutube()
+        }
     }
 
     private fun initRecyclerView() {
@@ -47,7 +64,7 @@ class FaqFragment : Fragment(), FaqScrollInterface {
 
     private fun getSampleList(): List<FaqAsk> {
         val faqAskList = ArrayList<FaqAsk>()
-        
+
 
         faqAskList.add(
             FaqAsk(
@@ -112,6 +129,20 @@ class FaqFragment : Fragment(), FaqScrollInterface {
 
     override fun scrollTo(position: Int) {
         binding.rvFaq.smoothScrollToPosition(position)
+    }
+
+    private fun launchYoutube() {
+        val appIntent =
+            Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${Constants.VIDEO_ID_HOW_IT_WORKS}"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=${Constants.VIDEO_ID_HOW_IT_WORKS}")
+        )
+        try {
+            requireContext().startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            requireContext().startActivity(webIntent)
+        }
     }
 
 }

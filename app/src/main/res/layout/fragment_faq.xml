@@ -21,6 +21,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/youtube_player"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.25"
+        />
+
     <TextView
         android:id="@+id/heading"
         android:layout_width="0dp"
@@ -29,17 +40,19 @@
         android:fontFamily="@font/poppinsmedium"
         android:includeFontPadding="false"
         android:text="@string/faq_heading"
+        android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/_16sdp"
+        android:textSize="@dimen/_14sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/logo" />
+        app:layout_constraintTop_toBottomOf="@id/youtube_player" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_faq"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingBottom="@dimen/_34sdp"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/_32sdp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

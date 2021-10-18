@@ -388,6 +388,7 @@
                 android:paddingHorizontal="@dimen/_15sdp"
                 android:paddingVertical="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:textSize="@dimen/_15sdp"
                 android:text=""
                 android:hint="dd-mm-yyyy"
                 android:textColor="@color/black"
@@ -584,19 +585,21 @@
                 android:layout_marginTop="@dimen/_5sdp"
                 android:background="@drawable/et_bg"
                 android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_5sdp"
+                android:paddingVertical="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/transited_header">
 
-                <com.hbb20.CountryCodePicker
-                    android:id="@+id/transited_picker"
+                <TextView
+                    android:id="@+id/transited_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ccp_defaultPhoneCode="36"
-                    app:ccp_showFullName="true"
-                    app:ccp_showNameCode="false"
-                    app:ccp_showPhoneCode="false" />
+                    android:text=""
+                    android:textSize="@dimen/_15sdp"
+                    android:hint="country"
+                    android:layout_gravity="center_vertical"
+                    android:textColor="@color/black"
+                    />
             </LinearLayout>
 
             <TextView
@@ -634,6 +637,7 @@
                 android:paddingVertical="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:text=""
+                android:textSize="@dimen/_15sdp"
                 android:hint="dd-mm-yyyy"
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/last_date_departed"
