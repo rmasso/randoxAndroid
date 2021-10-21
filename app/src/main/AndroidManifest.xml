@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.demit.certify">
+    package="com.demit.certifly">
 
     <uses-feature android:name="android.hardware.camera.any" />
 
@@ -13,7 +13,7 @@
         />
 
     <application
-        android:name=".BaseApp"
+        android:name="com.demit.certifly.BaseApp"
         android:allowBackup="false"
         tools:replace="android:allowBackup"
         android:icon="@mipmap/ic_launcher_logo"
@@ -25,10 +25,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".Activities.CertificatePreviewActivity"
+            android:name="com.demit.certifly.Activities.CertificatePreviewActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.CaptureActivity"
+            android:name="com.demit.certifly.Activities.CaptureActivity"
             android:exported="true" />
 
         <meta-data
@@ -36,19 +36,19 @@
             android:value="barcode" />
 
         <activity
-            android:name=".Activities.RegisterActivity"
+            android:name="com.demit.certifly.Activities.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.ScanningActivity"
+            android:name="com.demit.certifly.Activities.ScanningActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.DashboardActivity"
+            android:name="com.demit.certifly.Activities.DashboardActivity"
             android:exported="true" />
         <activity
-            android:name=".Activities.LoginActivity"
+            android:name="com.demit.certifly.Activities.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".MainActivity"
+            android:name="com.demit.certifly.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

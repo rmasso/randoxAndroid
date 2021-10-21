@@ -24,7 +24,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Congratulation, Submit for manual review"
+            android:text="Congratulations, Submit for manual review"
             android:textSize="@dimen/_15sdp"
             android:textColor="@color/black"
             android:fontFamily="@font/poppinsbold"
@@ -89,7 +89,7 @@
             android:textColor="@color/textlight"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppinsregular"
-            android:text="Once you have submitted the scan for certification this test can no longer be used with Randox."
+            android:text="Once you have submitted the scan for certification this test can no longer be used."
             android:textSize="@dimen/_8sdp"
             />
 

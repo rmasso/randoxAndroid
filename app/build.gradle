@@ -10,10 +10,11 @@ android {
 
     defaultConfig {
         //com.demit.certifly
-        applicationId "com.demit.certify"
+        //com.demit.certify
+        applicationId "com.demit.certifly"
         minSdk 21
         targetSdk 30
-        versionCode 2
+        versionCode 4
         versionName "1.1"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
