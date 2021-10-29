@@ -2,14 +2,24 @@ package com.demit.certifly.Activities
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.demit.certifly.Extras.Constants
+import com.demit.certifly.Extras.DetachableClickListener
 import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
+import com.demit.certifly.Fragments.PermissionDialog
+import com.demit.certifly.R
 import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.ActivityLoginBinding
 import okhttp3.MediaType
@@ -24,14 +34,19 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import java.util.concurrent.TimeUnit
+import java.util.jar.Manifest
 
 class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     lateinit var sweet: Sweet
+    val permissions = arrayListOf<String>()
+    private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            checkPermissions()
         sweet = Sweet(this)
         clicks()
         val sharedPreferences = Shared(this)
@@ -39,7 +54,50 @@ class LoginActivity : AppCompatActivity() {
         val password = sharedPreferences.getString("password")
         binding.email.setText(email)
         binding.password.setText(password)
+
+        permissionResultLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grantResultsMap ->
+                if (grantResultsMap.containsValue(false))
+                    showAlertDialog()
+            }
+
     }
+
+    private fun checkPermissions() {
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.CAMERA)
+        }
+        val hasWritePermission = ContextCompat.checkSelfPermission(
+            this,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (!hasWritePermission) {
+            permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+
+        if (permissions.isNotEmpty()) {
+
+            var permissionDialog = PermissionDialog { btnClickId ->
+                when (btnClickId) {
+                    R.id.agreeBtn -> {
+                        permissionResultLauncher.launch(permissions.toArray(arrayOf<String>()))
+                    }
+                    R.id.cancelBtn -> {
+                        showAlertDialog()
+                    }
+                }
+            }
+            permissionDialog.isCancelable = false
+            permissionDialog.show(supportFragmentManager, "permission_dialog")
+        }
+    }
+
 
     private fun clicks() {
         binding.signin.setOnClickListener {
@@ -164,5 +222,29 @@ class LoginActivity : AppCompatActivity() {
                 return Retrofit.Builder().baseUrl(BASE_URL).client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create()).build()
             }
+    }
+
+    private fun showAlertDialog() {
+
+        val positiveClickListener = DetachableClickListener.wrap { _, _ ->
+            permissionResultLauncher.launch(
+                permissions.toArray(arrayOf<String>())
+            )
+        }
+
+        val negativeClickListener = DetachableClickListener.wrap { _, _ -> finish() }
+
+
+        val builder = AlertDialog.Builder(this@LoginActivity)
+            .setTitle(R.string.missing_permissions)
+            .setMessage(R.string.you_have_to_grant_permissions)
+            .setPositiveButton(R.string.ok, positiveClickListener)
+            .setNegativeButton(R.string.no_close_the_app, negativeClickListener)
+            .create()
+
+        //avoid memory leaks
+        positiveClickListener.clearOnDetach(builder)
+        negativeClickListener.clearOnDetach(builder)
+        builder.show()
     }
 }

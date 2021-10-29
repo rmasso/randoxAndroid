@@ -95,12 +95,8 @@ class CertificatePreviewActivity : AppCompatActivity() {
             this,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
-        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-
-        writePermissionGranted = hasWritePermission || minSdk29
-
         val permissionsToRequest = mutableListOf<String>()
-        if(!writePermissionGranted) {
+        if(!hasWritePermission) {
             permissionsToRequest.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
         if(permissionsToRequest.isNotEmpty()) {

@@ -84,4 +84,9 @@
     <array name="none_opt_arr">
         <item>None</item>
     </array>
+
+    <string name="missing_permissions">Missing Permissions</string>
+    <string name="no_close_the_app">NO Close The App</string>
+    <string name="you_have_to_grant_permissions">You have to grant permissions in order to use this App</string>
+    <string name="ok">OK</string>
 </resources>
