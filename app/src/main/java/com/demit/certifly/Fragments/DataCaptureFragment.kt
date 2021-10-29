@@ -5,6 +5,8 @@ import android.text.InputFilter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -28,6 +30,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
     private lateinit var binding: FragmentDatacaptureBinding
     private var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
     private lateinit var countryCodePicker: CountryCodePicker
+    private var isSelected = false
 
 
     override fun onCreateView(
@@ -65,11 +68,45 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
         binding.bookingRefEdit.filters = binding.bookingRefEdit.filters + InputFilter.AllCaps()
 
         binding.transitedPickerContainer.setOnClickListener {
-           countryCodePicker.launchCountrySelectionDialog()
+            countryCodePicker.launchCountrySelectionDialog()
 
         }
 
         initCounterDialogPicker()
+        binding.receivedVaccine.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    if (position == 1) {
+                        val vaccineNameAdapter = getSpinnerAdapter(R.array.none_opt_arr)
+                        val yesNoAdapter = getSpinnerAdapter(R.array.none_opt_arr)
+                        binding.vaccinePicker.adapter = vaccineNameAdapter
+                        binding.yesNoPicker.adapter = yesNoAdapter
+                        binding.vaccinePicker.isEnabled = false
+                        binding.yesNoPicker.isEnabled = false
+                        isSelected = true
+                    } else {
+                        if (isSelected) {
+                            val vaccineNameAdapter = getSpinnerAdapter(R.array.vaccines)
+                            val yesNoAdapter = getSpinnerAdapter(R.array.days_past_yes_no)
+                            binding.vaccinePicker.adapter = vaccineNameAdapter
+                            binding.yesNoPicker.adapter = yesNoAdapter
+                            binding.vaccinePicker.isEnabled = true
+                            binding.yesNoPicker.isEnabled = true
+                            isSelected = false
+                        }
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
 
 
     }
@@ -82,39 +119,39 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                     "Please confirm that you have received your vaccine",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (vaccinePicker.selectedItemPosition == 0) {
+            } else if (vaccinePicker.selectedItemPosition == 0 && vaccinePicker.selectedItem.toString() != "None") {
                 Toast.makeText(
                     requireContext(),
                     "Vaccine Name missing",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (yesNoPicker.selectedItemPosition == 0) {
+            } else if (yesNoPicker.selectedItemPosition == 0 && yesNoPicker.selectedItem.toString() != "None") {
                 Toast.makeText(
                     requireContext(),
                     "Please confirm that either Yes or No that it has been 14 or more days since you have been fully vaccinated in the UK-approved program.",
                     Toast.LENGTH_LONG
                 ).show()
 
-            } else if (addressLine1Edit.text.isEmpty()) {
+            } else if (addressLine1Edit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Missing isolation address line1",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (cityEdit.text.isEmpty()) {
+            } else if (cityEdit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "City or Town is missing",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (zipEdit.text.isEmpty()) {
+            } else if (zipEdit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Postal code is missing",
                     Toast.LENGTH_SHORT
                 ).show()
 
-            } else if (dateOfArrivalText.text.isEmpty()) {
+            } else if (dateOfArrivalText.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Date of arrival is missing",
@@ -126,19 +163,19 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                     "Transport type is missing.",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (flightNumberEdit.text.isEmpty()) {
+            } else if (flightNumberEdit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Flight/ Vessel/ Train number is missing",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (lastDateDepartedText.text.isEmpty()) {
+            } else if (lastDateDepartedText.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Last date of departure from or through a non-exempt country or territory is missing",
                     Toast.LENGTH_LONG
                 ).show()
-            } else if (bookingRefEdit.text.isEmpty()) {
+            } else if (bookingRefEdit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "PLF number is missing",
@@ -156,25 +193,21 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
         val dataMap = HashMap<String, String>()
         with(binding) {
             dataMap["cert_nationality"] = country.selectedCountryEnglishName
-            dataMap["is_viccinated"] =
-                resources.getStringArray(R.array.vaccines_types)[receivedVaccine.selectedItemPosition]
-            dataMap["vaccine_name"] =
-                resources.getStringArray(R.array.vaccines)[vaccinePicker.selectedItemPosition]
-            dataMap["is_fully_vaccinated_14days_uk"] =
-                resources.getStringArray(R.array.days_past_yes_no)[yesNoPicker.selectedItemPosition]
-            dataMap["two_day_booking_ref"] = bookingRefEdit.text.toString()
-            dataMap["isolation_address_line1"] = addressLine1Edit.text.toString()
-            dataMap["isolation_address_line2"] = addressLine2Edit.text.toString()
-            dataMap["town"] = cityEdit.text.toString()
-            dataMap["post_code"] = zipEdit.text.toString()
-            dataMap["arrival_date"] = dateOfArrivalText.text.toString()
-            dataMap["fligh_vessel_train_no"] = flightNumberEdit.text.toString()
-            dataMap["nhs_no"] = nhsNumberEdit.text.toString()
-            dataMap["country_territory_part_journey"] = transitedText.text.toString()
-            dataMap["last_date_department"] = lastDateDepartedText.text.toString()
+            dataMap["is_viccinated"] = receivedVaccine.selectedItem.toString()
+            dataMap["vaccine_name"] = vaccinePicker.selectedItem.toString()
+            dataMap["is_fully_vaccinated_14days_uk"] = yesNoPicker.selectedItem.toString()
+            dataMap["two_day_booking_ref"] = bookingRefEdit.text.toString().trim()
+            dataMap["isolation_address_line1"] = addressLine1Edit.text.toString().trim()
+            dataMap["isolation_address_line2"] = addressLine2Edit.text.toString().trim()
+            dataMap["town"] = cityEdit.text.toString().trim()
+            dataMap["post_code"] = zipEdit.text.toString().trim()
+            dataMap["arrival_date"] = dateOfArrivalText.text.toString().trim()
+            dataMap["fligh_vessel_train_no"] = flightNumberEdit.text.toString().trim()
+            dataMap["nhs_no"] = nhsNumberEdit.text.toString().trim()
+            dataMap["country_territory_part_journey"] = transitedText.text.toString().trim()
+            dataMap["last_date_department"] = lastDateDepartedText.text.toString().trim()
             dataMap["Country_of_departure"] = departurePicker.selectedCountryEnglishName
-            dataMap["transport_type"] =
-                resources.getStringArray(R.array.travel_type)[travelTypePicker.selectedItemPosition]
+            dataMap["transport_type"] = travelTypePicker.selectedItem.toString()
         }
 
         val sweet = Sweet(requireContext())
@@ -259,16 +292,27 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
         timePicker.show(requireActivity().supportFragmentManager, "timepicker")*/
     }
 
-    private fun initCounterDialogPicker(){
-        countryCodePicker= CountryCodePicker(requireContext())
+    private fun initCounterDialogPicker() {
+        countryCodePicker = CountryCodePicker(requireContext())
 
         countryCodePicker.setOnCountryChangeListener {
             countryCodePicker.selectedCountryEnglishName?.let {
-                binding.transitedText.text= it
+                binding.transitedText.text = it
             }
 
         }
 
 
     }
+
+    private fun getSpinnerAdapter(resourceId: Int): ArrayAdapter<CharSequence> =
+        ArrayAdapter.createFromResource(
+            requireContext(),
+            resourceId,
+            android.R.layout.simple_spinner_item
+        ).apply {
+            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        }
+
+
 }

@@ -12,7 +12,7 @@ class BaseApp: Application() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         AndroidNetworking.initialize(applicationContext)
         try {
-            MicroblinkSDK.setLicenseKey("sRwAAAASY29tLmRlbWl0LmNlcnRpZmx5WpCGl43EjZKT6DLykIEgnyUnm1dXpKRTW/S/FKaOXVR8tTQe9c/PheGGnw5KevLw5hb2u4ARGVHFwwxxzJ8iYXLPvWYxQii7lhgkysB+6uGanXNV3ScRA3Xs5o2gay626xr9kYljuTujxB8TdQ6Q6moOM6u0bUaw7kp4hZTtxOqZpE8p7GqoZ/fZBMzT3jhiT1Kzk7FIq2SvyND/dNa0HI9onRZ+QqzQqOMKTA9pxbk=",this)
+            MicroblinkSDK.setLicenseKey("sRwAAAASY29tLmRlbWl0LmNlcnRpZmx5WpCGl43EjZKT6DJykFngVGgZjjRMwxBGDVj33BqUE0bYr0maNuIAHkzGi2Q5gqSWfAHk4iE63BoVWYZjSoCfkVoh8w1IrMJFpLsiJhbY2xwdE9YGJxvhElgpWZKHRkeF+wTGTJVHeYYa8PXLBN3gGKcFzc/0Kal0RlaVdjaZs2F9UjW81f5VNa2qyFN4C6XCs2sqBH6eHWXIpqvlkPrswDNS1qkxBQ==",this)
             MicroblinkSDK.setIntentDataTransferMode(IntentDataTransferMode.PERSISTED_OPTIMISED)
         }catch(ex: InvalidLicenceKeyException){
             ex.printStackTrace()

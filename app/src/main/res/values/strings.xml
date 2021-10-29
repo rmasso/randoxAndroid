@@ -65,7 +65,7 @@
 
     <array name="vaccines_types">
         <item>Not Provided</item>
-        <item>No</item>
+        <item>Not Vaccinated</item>
         <item>Single dose</item>
         <item>Double dose</item>
     </array>
@@ -80,5 +80,8 @@
         <item>Train</item>
         <item>Boat</item>
         <item>Other</item>
+    </array>
+    <array name="none_opt_arr">
+        <item>None</item>
     </array>
 </resources>

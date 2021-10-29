@@ -167,43 +167,43 @@ class ProfileFragment : Fragment() {
             if (list[index].usr_image == "") {
                 if (context != null)
                     Toast.makeText(context, "Please Scan Passport", Toast.LENGTH_SHORT).show()
-            } else if (binding.fname.text.toString().isEmpty()) {
+            } else if (binding.fname.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Firstname can't be empty", Toast.LENGTH_SHORT).show()
-            } else if (binding.dob.text.isEmpty()) {
+            } else if (binding.dob.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Date of birth can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.pnumber.text.isEmpty()) {
+            } else if (binding.pnumber.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Passport Number can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.address.text.toString() == "") {
+            } else if (binding.address.text.trim() == "") {
                 if (context != null)
                     Toast.makeText(context, "Address Can't be Empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.city.text.isEmpty()) {
+            } else if (binding.city.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "City can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.zip.text.isEmpty()) {
+            } else if (binding.zip.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Zip Code can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.phone.text.toString().isEmpty()) {
+            } else if (binding.phone.text.trim().toString().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Phone Number can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.trim()).matches()) {
                 if (context != null)
                     Toast.makeText(context, "Invalid Email Address", Toast.LENGTH_SHORT).show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.toString())
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.trim())
                     .matches()
             ) {
                 if (context != null)
                     Toast.makeText(context, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.email.text.toString() != binding.confirmEmail.text.toString()) {
+            } else if (binding.email.text.trim()!= binding.confirmEmail.text.trim()) {
                 if (context != null)
                     Toast.makeText(
                         context,
@@ -211,18 +211,17 @@ class ProfileFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-            } else if (binding.ethnicity.selectedItemPosition == 0) {
+            }
+            else if (binding.ethnicity.selectedItemPosition == 0) {
                 if (context != null)
                     Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
                         .show()
-            } else if (!binding.radio.isChecked) {
-                Toast.makeText(
-                    context,
-                    "Please Confirm that you agree with our Terms&conditions",
-                    Toast.LENGTH_SHORT
-                )
+            } else if(!binding.radio.isChecked) {
+                Toast.makeText(context, "Please Confirm that you agree with our Terms&conditions", Toast.LENGTH_SHORT)
                     .show()
-            } else {
+            }
+
+            else {
                 familyregister()
             }
         }
@@ -525,31 +524,30 @@ class ProfileFragment : Fragment() {
 
 
         val map: MutableMap<String, String> = HashMap()
-        map["usr_email"] = list[index].email
+        map["usr_email"] = list[index].email.trim()
         map["token"] = Shared(requireContext()).getString("token")
-        val fullName = list[index].usr_firstname.trim()
+        val fullName=list[index].usr_firstname.trim()
         val idx = fullName.lastIndexOf(' ')
-        if (idx != -1) {
+        if (idx != -1){
             map["usr_firstname"] = fullName.substring(0, idx)
-            map["usr_surname"] = fullName.substring(idx + 1)
+            map["usr_surname"]  = fullName.substring(idx + 1)
 
-        } else {
+        }else {
             map["usr_firstname"] = fullName
             map["usr_surname"] = ""
         }
 
-        map["usr_birth"] = list[index].usr_birth
-        map["usr_home"] = list[index].usr_home
-        map["usr_addressLine2"] = list[index].usr_addressLine2
-        map["usr_city"] = list[index].usr_city
-        map["usr_zip"] = list[index].usr_zip
-        map["usr_passport"] = list[index].usr_passport
-        map["usr_country"] = list[index].usr_country
-        map["usr_phone"] = list[index].usr_phone
+        map["usr_birth"] = list[index].usr_birth.trim()
+        map["usr_home"] = list[index].usr_home.trim()
+        map["usr_addressLine2"] = list[index].usr_addressLine2.trim()
+        map["usr_city"] = list[index].usr_city.trim()
+        map["usr_zip"] = list[index].usr_zip.trim()
+        map["usr_passport"] = list[index].usr_passport.trim()
+        map["usr_country"] = list[index].usr_country.trim()
+        map["usr_phone"] = list[index].usr_phone.trim()
         map["usr_passport_image"] = list[index].usr_image
         map["usr_ethnicity"] = list[index].ethnicity
-        map["usr_sex"] =
-            resources.getStringArray(R.array.genders)[binding.gender.selectedItemPosition]
+        map["usr_sex"] = resources.getStringArray(R.array.genders)[binding.gender.selectedItemPosition]
         map["companyName"]= "Randox"
         ApiHelper.postFamilyUser(map).observe(viewLifecycleOwner) { response ->
             sweet.dismiss()

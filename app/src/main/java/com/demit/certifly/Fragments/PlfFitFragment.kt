@@ -38,7 +38,7 @@ class PlfFitFragment(val selectedProfile: TProfileModel) : Fragment() {
         }
 
         binding.btnScan.setOnClickListener {
-            if (binding.purchaseOrder.text.isEmpty()) {
+            if (binding.purchaseOrder.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Purchase order number is missing",

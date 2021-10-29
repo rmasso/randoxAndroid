@@ -8,27 +8,27 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera2.full" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        android:maxSdkVersion="28"
-        />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
     <application
-        android:name="com.demit.certifly.BaseApp"
+        android:name=".BaseApp"
         android:allowBackup="false"
-        tools:replace="android:allowBackup"
         android:icon="@mipmap/ic_launcher_logo"
-        android:requestLegacyExternalStorage="true"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_logo_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Certify"
         android:usesCleartextTraffic="true"
+        tools:replace="android:allowBackup"
         tools:targetApi="m">
         <activity
-            android:name="com.demit.certifly.Activities.CertificatePreviewActivity"
+            android:name=".Activities.CertificatePreviewActivity"
             android:exported="true" />
         <activity
-            android:name="com.demit.certifly.Activities.CaptureActivity"
+            android:name=".Activities.CaptureActivity"
             android:exported="true" />
 
         <meta-data
@@ -36,19 +36,19 @@
             android:value="barcode" />
 
         <activity
-            android:name="com.demit.certifly.Activities.RegisterActivity"
+            android:name=".Activities.RegisterActivity"
             android:exported="true" />
         <activity
-            android:name="com.demit.certifly.Activities.ScanningActivity"
+            android:name=".Activities.ScanningActivity"
             android:exported="true" />
         <activity
-            android:name="com.demit.certifly.Activities.DashboardActivity"
+            android:name=".Activities.DashboardActivity"
             android:exported="true" />
         <activity
-            android:name="com.demit.certifly.Activities.LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:exported="true" />
         <activity
-            android:name="com.demit.certifly.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
