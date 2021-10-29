@@ -29,7 +29,8 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     private lateinit var binding: FragmentDatacaptureBinding
     private var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
-    private lateinit var countryCodePicker: CountryCodePicker
+
+    // private lateinit var countryCodePicker: CountryCodePicker
     private var isSelected = false
 
 
@@ -57,9 +58,9 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             openDatePicker(it as TextView, "Select date of arrival")
         }
 
-        binding.lastDateDepartedText.setOnClickListener {
-            openDatePicker(it as TextView, "Select last date of departure")
-        }
+        /* binding.lastDateDepartedText.setOnClickListener {
+             openDatePicker(it as TextView, "Select last date of departure")
+         }*/
 
         binding.btnCancel.setOnClickListener {
             requireActivity().onBackPressed()
@@ -67,12 +68,12 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
         binding.bookingRefEdit.filters = binding.bookingRefEdit.filters + InputFilter.AllCaps()
 
-        binding.transitedPickerContainer.setOnClickListener {
-            countryCodePicker.launchCountrySelectionDialog()
+        /* binding.transitedPickerContainer.setOnClickListener {
+             countryCodePicker.launchCountrySelectionDialog()
 
-        }
+         }*/
 
-        initCounterDialogPicker()
+        //initCounterDialogPicker()
         binding.receivedVaccine.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(
@@ -169,13 +170,13 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                     "Flight/ Vessel/ Train number is missing",
                     Toast.LENGTH_SHORT
                 ).show()
-            } else if (lastDateDepartedText.text.trim().isEmpty()) {
+            } /*else if (lastDateDepartedText.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "Last date of departure from or through a non-exempt country or territory is missing",
                     Toast.LENGTH_LONG
                 ).show()
-            } else if (bookingRefEdit.text.trim().isEmpty()) {
+            }*/ else if (bookingRefEdit.text.trim().isEmpty()) {
                 Toast.makeText(
                     requireContext(),
                     "PLF number is missing",
@@ -203,15 +204,15 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             dataMap["post_code"] = zipEdit.text.toString().trim()
             dataMap["arrival_date"] = dateOfArrivalText.text.toString().trim()
             dataMap["fligh_vessel_train_no"] = flightNumberEdit.text.toString().trim()
-            dataMap["nhs_no"] = nhsNumberEdit.text.toString().trim()
-            dataMap["country_territory_part_journey"] = transitedText.text.toString().trim()
-            dataMap["last_date_department"] = lastDateDepartedText.text.toString().trim()
+              dataMap["nhs_no"] = ""//nhsNumberEdit.text.toString().trim()
+             dataMap["country_territory_part_journey"] = ""//transitedText.text.toString().trim()
+             dataMap["last_date_department"] = ""//lastDateDepartedText.text.toString().trim()
             dataMap["Country_of_departure"] = departurePicker.selectedCountryEnglishName
             dataMap["transport_type"] = travelTypePicker.selectedItem.toString()
         }
 
         val sweet = Sweet(requireContext())
-        sweet.show("Verifying...")
+        sweet.show("Verifying")
         ApiHelper.verifyPlfNumber(
             Shared(requireContext()).getString("token"),
             binding.bookingRefEdit.text.toString()
@@ -270,8 +271,8 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     }
 
-    private fun openTimePicker() {
-        /*val timePicker =
+ /*   private fun openTimePicker() {
+        *//*val timePicker =
             MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
                 .setHour(12)
@@ -289,21 +290,21 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
         timePicker.addOnCancelListener {
             timePicker.dismiss()
         }
-        timePicker.show(requireActivity().supportFragmentManager, "timepicker")*/
+        timePicker.show(requireActivity().supportFragmentManager, "timepicker")*//*
     }
 
     private fun initCounterDialogPicker() {
-        countryCodePicker = CountryCodePicker(requireContext())
+        *//*countryCodePicker = CountryCodePicker(requireContext())
 
         countryCodePicker.setOnCountryChangeListener {
             countryCodePicker.selectedCountryEnglishName?.let {
-                binding.transitedText.text = it
+               // binding.transitedText.text = it
             }
 
-        }
+        }*//*
 
 
-    }
+    }*/
 
     private fun getSpinnerAdapter(resourceId: Int): ArrayAdapter<CharSequence> =
         ArrayAdapter.createFromResource(

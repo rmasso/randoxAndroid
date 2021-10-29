@@ -572,7 +572,7 @@ class ProfileFragment : Fragment() {
 
 
     fun getProfiles() {
-        sweet.show("getting profiles")
+        sweet.show("Getting profiles")
 
         val url = Functions.concat(Constants.url, "getProfile.php");
         val request: StringRequest = object : StringRequest(

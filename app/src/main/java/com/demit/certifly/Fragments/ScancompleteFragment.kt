@@ -70,7 +70,7 @@ class ScancompleteFragment(
         binding.submit.setOnClickListener {
 
             if (this::certificateModel.isInitialized) {
-                sweet.show("Please Wait...")
+                sweet.show("Please Wait")
                 submitCertificate(certificateModel)
             }
         }

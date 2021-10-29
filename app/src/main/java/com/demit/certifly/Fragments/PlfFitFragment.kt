@@ -46,7 +46,7 @@ class PlfFitFragment(val selectedProfile: TProfileModel) : Fragment() {
                 ).show()
             } else {
                 val sweet = Sweet(requireContext())
-                sweet.show("Verifying...")
+                sweet.show("Verifying")
 
                 ApiHelper.verifyPlfFitNumber(
                     Shared(requireContext()).getString("token"),

@@ -532,7 +532,7 @@
 
 
 
-
+<!--
 
             <TextView
                 android:id="@+id/nhs_number"
@@ -641,7 +641,7 @@
                 android:hint=""
                 android:textColor="@color/black"
                 app:layout_constraintTop_toBottomOf="@id/last_date_departed"
-                />
+                />-->
 
             <TextView
                 android:id="@+id/book_ref_header"
@@ -656,7 +656,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/last_date_departed_text" />
+                app:layout_constraintTop_toBottomOf="@id/departure_picker_container" />
 
             <TextView
                 android:layout_width="wrap_content"
