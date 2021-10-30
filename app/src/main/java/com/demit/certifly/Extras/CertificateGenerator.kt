@@ -30,13 +30,26 @@ object CertificateGenerator {
             PdfWriter.getInstance(doc, baos)
             with(certificate) {
                 //Getting the header Logo image from assets
-                val ims = context.assets.open("logo_small.png")
+                val ims = context.assets.open("logo.png")
                 val bmp = BitmapFactory.decodeStream(ims)
                 val stream = ByteArrayOutputStream()
                 bmp.compress(Bitmap.CompressFormat.PNG, 100, stream)
                 val companyLogo = Image.getInstance(stream.toByteArray())
                 stream.close()
                 companyLogo.alignment = Element.ALIGN_JUSTIFIED_ALL
+
+
+                //Getting the header Logo image from assets
+                val ims2 = context.assets.open("randox_qr.png")
+                val bmp2 = BitmapFactory.decodeStream(ims2)
+                val stream2 = ByteArrayOutputStream()
+                bmp2.compress(Bitmap.CompressFormat.PNG, 100, stream2)
+                val qr = Image.getInstance(stream2.toByteArray())
+                stream2.close()
+                qr.alignment = Element.ALIGN_RIGHT
+
+
+
 
                 //Line Separator
                 val logo_line_seperator = getLineSeparator(2f, 100f)
@@ -211,8 +224,10 @@ object CertificateGenerator {
 
                 //Generating the pdf file with the above mentioned values
                 doc.open()
+                doc.add(Paragraph("\n\n"))
                 doc.add(companyLogo)
-                doc.add(Paragraph("\n\n\n\n\n\n"))
+                doc.add(qr)
+                doc.add(Paragraph("\n\n"))
                 doc.add(logo_line_seperator)
                 doc.add(Paragraph("\n"))
                 doc.add(headerTable)
