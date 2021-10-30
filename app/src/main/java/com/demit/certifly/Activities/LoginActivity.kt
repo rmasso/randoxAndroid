@@ -76,8 +76,11 @@ class LoginActivity : AppCompatActivity() {
             this,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
+        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
 
-        if (!hasWritePermission) {
+        val writePermissionGranted = hasWritePermission || minSdk29
+
+        if (!writePermissionGranted) {
             permissions.add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
 

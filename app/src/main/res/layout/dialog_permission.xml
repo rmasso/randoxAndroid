@@ -45,7 +45,9 @@
                 android:overScrollMode="never"
                 android:scrollbars="vertical">
 
-                <include layout="@layout/permission_content" />
+                <include layout="@layout/permission_content"
+                    android:id="@+id/contentContainer"
+                    />
 
 
             </ScrollView>
