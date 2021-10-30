@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="32.5dp"
-                android:text="This app require following permissions to be enabled."
+                android:text="This app requires the following permissions to be enabled."
                 android:textAlignment="center"
                 android:textSize="14sp" />
 
