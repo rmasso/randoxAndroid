@@ -51,6 +51,8 @@ object CertificateGenerator {
 
 
 
+
+
                 //Line Separator
                 val logo_line_seperator = getLineSeparator(2f, 100f)
 

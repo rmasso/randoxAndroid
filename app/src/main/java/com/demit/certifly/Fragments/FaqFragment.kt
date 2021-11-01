@@ -82,6 +82,7 @@ class FaqFragment : Fragment(), FaqScrollInterface {
                 answer = "Food or drink should not be consumed within the 30 minutes"
             )
         )
+
         faqAskList.add(
             FaqAsk(
                 question = "What does it mean if I have a negative result?",
@@ -111,6 +112,22 @@ class FaqFragment : Fragment(), FaqScrollInterface {
             FaqAsk(
                 question = "Are your kits on the EUR approval list?",
                 answer = "Yes."
+            )
+        )
+
+        faqAskList.add(
+            FaqAsk(
+                question = "What is the purchase order?",
+                answer = "This is the unique order number that you received on the order confirmation that you received from Randox when the order was placed- on the order confirmation this begins with # followed by a series of numbers. When entering in this number into the APP do not include the #"
+
+            )
+        )
+
+        faqAskList.add(
+            FaqAsk(
+                question = "What is the Day 2 Booking Reference?",
+                answer = "This is the specific Unique booking reference number that you would have used to complete the passenger locator form, you will find this within your original order confirmation and it begins with RANDX followed by a series of numbers. For each day 2 Antigen Lateral Flow ordered, there will be a specific unique booking reference number."
+
             )
         )
 
