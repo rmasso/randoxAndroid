@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Confirm there's no covid 19 Symptoms"
+                    android:text="I took the test as instructed, and did so within the last 30 mins"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppinsbold"/>
