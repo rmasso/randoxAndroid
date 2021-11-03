@@ -5,6 +5,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -40,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     lateinit var sweet: Sweet
     val permissions = arrayListOf<String>()
+    var isPasswordShown=false
     private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +63,21 @@ class LoginActivity : AppCompatActivity() {
                 if (grantResultsMap.containsValue(false))
                     showAlertDialog()
             }
+
+        binding.passwordVisibilityToggle.setOnClickListener {
+            //We have to show password to user in form of plain text
+            binding.password.transformationMethod =  if(!isPasswordShown){
+                binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_off_eye)
+                isPasswordShown=true
+                HideReturnsTransformationMethod.getInstance()
+
+            }else{
+                binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_on_eye)
+                isPasswordShown=false
+                PasswordTransformationMethod.getInstance()
+            }
+            binding.password.setSelection(binding.password.length())
+        }
 
     }
 

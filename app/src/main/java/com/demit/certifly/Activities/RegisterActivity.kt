@@ -6,7 +6,9 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
+import android.text.method.HideReturnsTransformationMethod
 import android.text.method.LinkMovementMethod
+import android.text.method.PasswordTransformationMethod
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
@@ -42,6 +44,7 @@ class RegisterActivity : AppCompatActivity() {
     //Blink Id Variables
     private lateinit var mRecognizer: BlinkIdCombinedRecognizer
     private lateinit var mRecognizerBundle: RecognizerBundle
+    var isPasswordShown = false
     private var usr_img = ""
     private val MY_REQUEST_CODE = 801
     lateinit var sweet: Sweet
@@ -60,16 +63,17 @@ class RegisterActivity : AppCompatActivity() {
         binding.ethnicity.setSelection(0)
         binding.passportScanInfo.visibility = View.VISIBLE
 
-        val text = "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
-                " and agree to the  Terms and Conditions. </a>"
+        val text =
+            "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
+                    " and agree to the  Terms and Conditions. </a>"
 
-        binding.link.isClickable=true
+        binding.link.isClickable = true
         binding.link.movementMethod = LinkMovementMethod.getInstance()
-        val htmlOut=if(Build.VERSION.SDK_INT> Build.VERSION_CODES.M)
+        val htmlOut = if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M)
             Html.fromHtml(text, Html.FROM_HTML_MODE_COMPACT)
         else
             Html.fromHtml(text)
-        binding.link.text= htmlOut
+        binding.link.text = htmlOut
     }
 
     private fun clicks() {
@@ -120,8 +124,12 @@ class RegisterActivity : AppCompatActivity() {
             } else if (binding.ethnicity.selectedItemPosition == 0) {
                 Toast.makeText(this, "Choose Ethnicity", Toast.LENGTH_SHORT)
                     .show()
-            }else if(!binding.radio.isChecked) {
-                Toast.makeText(this, "Please Confirm that you agree with our Terms&conditions", Toast.LENGTH_SHORT)
+            } else if (!binding.radio.isChecked) {
+                Toast.makeText(
+                    this,
+                    "Please Confirm that you agree with our Terms&conditions",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
             } else {
                 register()
@@ -139,12 +147,27 @@ class RegisterActivity : AppCompatActivity() {
         }
         binding.subInfo.cancel.setOnClickListener {
             //binding.passportScanInfo.visibility = View.GONE
-            startActivity(Intent(this,LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
 
         binding.dob.setOnClickListener {
             openDatePicker()
+        }
+
+        binding.passwordVisibilityToggle.setOnClickListener {
+            //We have to show password to user in form of plain text
+            binding.password.transformationMethod = if (!isPasswordShown) {
+                binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_off_eye)
+                isPasswordShown = true
+                HideReturnsTransformationMethod.getInstance()
+
+            } else {
+                binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_on_eye)
+                isPasswordShown = false
+                PasswordTransformationMethod.getInstance()
+            }
+            binding.password.setSelection(binding.password.length())
         }
 
     }
@@ -175,8 +198,8 @@ class RegisterActivity : AppCompatActivity() {
                     }
 
                 }
-            }else{
-                startActivity(Intent(this,LoginActivity::class.java))
+            } else {
+                startActivity(Intent(this, LoginActivity::class.java))
                 finish()
 
             }
@@ -213,10 +236,13 @@ class RegisterActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT)
                             .show()
-                        val sharedPreferences= Shared(this)
-                        sharedPreferences.setString("email",binding.email.text.trim().toString())
-                        sharedPreferences.setString("password",binding.password.text.trim().toString())
-                        startActivity(Intent(this,LoginActivity::class.java))
+                        val sharedPreferences = Shared(this)
+                        sharedPreferences.setString("email", binding.email.text.trim().toString())
+                        sharedPreferences.setString(
+                            "password",
+                            binding.password.text.trim().toString()
+                        )
+                        startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     }
                 } catch (e: Exception) {
@@ -261,7 +287,7 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     map["usr_sex"] = "Other"
                 }
-                map["companyName"]= "Randox"
+                map["companyName"] = "Randox"
 
 
                 return map
