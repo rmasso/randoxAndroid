@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bwhite"
+    android:fillViewport="true"
     tools:context=".Activities.LoginActivity">
 
     <LinearLayout
@@ -128,6 +129,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btn_proceed" />
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/app_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:layout_gravity="bottom"
+                android:fontFamily="@font/poppinslight"
+                android:includeFontPadding="false"
+                android:text=""
+                android:textSize="@dimen/_14sdp" />
+        </FrameLayout>
 
 
     </LinearLayout>

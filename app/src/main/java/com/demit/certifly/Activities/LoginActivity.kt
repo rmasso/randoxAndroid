@@ -1,5 +1,6 @@
 package com.demit.certifly.Activities
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.demit.certifly.BuildConfig
 import com.demit.certifly.Extras.Constants
 import com.demit.certifly.Extras.DetachableClickListener
 import com.demit.certifly.Extras.Shared
@@ -44,6 +46,7 @@ class LoginActivity : AppCompatActivity() {
     val permissions = arrayListOf<String>()
     var isPasswordShown=false
     private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -78,6 +81,8 @@ class LoginActivity : AppCompatActivity() {
             }
             binding.password.setSelection(binding.password.length())
         }
+
+        binding.appVersion.text= "v${BuildConfig.VERSION_NAME}"
 
     }
 
