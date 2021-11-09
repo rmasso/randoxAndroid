@@ -26,19 +26,21 @@ class YtestFragment(val dInterface : DashboardInterface) : Fragment() {
 
     private fun clicks() {
 
-        binding.sw1.setOnClickListener {
+        binding.sw1.setOnCheckedChangeListener { _, isChecked ->
             if(binding.sw1.isChecked && binding.sw2.isChecked){
                 binding.ready.visibility = View.VISIBLE
             }else{
                 binding.ready.visibility = View.GONE
             }
+
         }
-        binding.sw2.setOnClickListener {
+        binding.sw2.setOnCheckedChangeListener { _, isChecked ->
             if(binding.sw1.isChecked && binding.sw2.isChecked){
                 binding.ready.visibility = View.VISIBLE
             }else{
                 binding.ready.visibility = View.GONE
             }
+
         }
         binding.ready.setOnClickListener {
             if(binding.sw1.isChecked && binding.sw2.isChecked){

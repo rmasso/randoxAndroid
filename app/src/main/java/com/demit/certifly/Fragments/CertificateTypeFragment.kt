@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CompoundButton
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.demit.certifly.Models.TProfileModel
@@ -32,6 +33,30 @@ class CertificateTypeFragment(val userProfile:TProfileModel) : Fragment(),View.O
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         attachClickListener()
+
+        binding.daysSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                if(binding.fitToTravelSwitch.isChecked) {
+                    binding.fitToTravelSwitch.isChecked = false
+                    binding.btnPurchase.visibility= View.GONE
+                }
+                binding.btnFillForm.visibility=View.VISIBLE
+            }else{
+                binding.btnFillForm.visibility=View.GONE
+            }
+        }
+
+        binding.fitToTravelSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if(isChecked){
+                if(binding.daysSwitch.isChecked) {
+                    binding.daysSwitch.isChecked = false
+                    binding.btnFillForm.visibility= View.GONE
+                }
+                binding.btnPurchase.visibility=View.VISIBLE
+            }else{
+                binding.btnPurchase.visibility=View.GONE
+            }
+        }
     }
 
     override fun onResume() {
@@ -45,30 +70,6 @@ class CertificateTypeFragment(val userProfile:TProfileModel) : Fragment(),View.O
 
     override fun onClick(v: View) {
         when(v.id){
-            R.id.fit_to_travel_switch->{
-                if(binding.fitToTravelSwitch.isChecked){
-                    if(binding.daysSwitch.isChecked) {
-                        binding.daysSwitch.isChecked = false
-                        binding.btnFillForm.visibility= View.GONE
-                    }
-                    binding.btnPurchase.visibility=View.VISIBLE
-                }else{
-                    binding.btnPurchase.visibility=View.GONE
-                }
-
-            }
-            R.id.days_switch->{
-                if(binding.daysSwitch.isChecked){
-                    if(binding.fitToTravelSwitch.isChecked) {
-                        binding.fitToTravelSwitch.isChecked = false
-                        binding.btnPurchase.visibility= View.GONE
-                    }
-                    binding.btnFillForm.visibility=View.VISIBLE
-                }else{
-                    binding.btnFillForm.visibility=View.GONE
-                }
-
-            }
             R.id.btn_cancel->{
                 requireActivity().onBackPressed()
             }
