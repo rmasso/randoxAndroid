@@ -668,7 +668,7 @@ class ProfileFragment : Fragment() {
             val textDate = dateFormat.format(Date(it))
             binding.dob.text = textDate
             list[index].usr_birth = textDate
-            currentDatePicked = it
+          //  currentDatePicked = it
 
             datePicker.dismiss()
         }
