@@ -11,5 +11,6 @@
     <color name="textHint">#B1B1B1</color>
     <color name="textblue">#4b22264C</color>
     <color name="blue">#002CFF</color>
+    <color name="green_opacity_50">#4D005949</color>
 
 </resources>

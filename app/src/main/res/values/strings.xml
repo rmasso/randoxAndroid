@@ -89,4 +89,7 @@
     <string name="no_close_the_app">NO Close The App</string>
     <string name="you_have_to_grant_permissions">You have to grant permissions in order to use this App</string>
     <string name="ok">OK</string>
+    <string name="remaining_time_heading">Time Remaining</string>
+    <string name="remaining_time_sub_text">You must wait 15 mins. For the test results to display.</string>
+    <string name="skip_timer"><u>Skip to submit test</u></string>
 </resources>

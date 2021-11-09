@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bwhite"
+        android:fillViewport="true">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingTop="@dimen/_25sdp"
+        android:paddingEnd="@dimen/_20sdp">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_60sdp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.ramijemli.percentagechartview.PercentageChartView
+            android:id="@+id/time_progress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp30"
+            app:layout_constraintBottom_toTopOf="@id/remaining_time_heading"
+            app:layout_constraintDimensionRatio="H,4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:pcv_animDuration="800"
+            app:pcv_animInterpolator="accelerate_decelerate"
+            app:pcv_backgroundBarColor="@color/green_opacity_50"
+            app:pcv_backgroundColor="@color/sblue"
+            app:pcv_drawBackground="true"
+            app:pcv_mode="ring"
+            app:pcv_orientation="clockwise"
+            app:pcv_progress="0"
+            app:pcv_progressBarStyle="square"
+            app:pcv_progressColor="@color/dblue"
+            app:pcv_startAngle="270"
+            app:pcv_textSize="0sp" />
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:includeFontPadding="false"
+            android:text=""
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="26sp"
+            app:layout_constraintBottom_toBottomOf="@id/time_progress"
+            app:layout_constraintEnd_toEndOf="@id/time_progress"
+            app:layout_constraintStart_toStartOf="@id/time_progress"
+            app:layout_constraintTop_toTopOf="@id/time_progress" />
+
+        <TextView
+            android:id="@+id/remaining_time_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp16"
+            android:fontFamily="@font/poppinsmedium"
+            android:includeFontPadding="false"
+            android:text="@string/remaining_time_heading"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_18sdp"
+            app:layout_constraintBottom_toTopOf="@id/remaining_time_sub_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time_progress" />
+
+        <TextView
+            android:id="@+id/remaining_time_sub_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppinslight"
+            android:includeFontPadding="false"
+            android:text="@string/remaining_time_sub_text"
+            android:textAlignment="center"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remaining_time_heading" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:background="@drawable/button_bg"
+            android:enabled="false"
+            android:fontFamily="@font/poppinsmedium"
+            android:includeFontPadding="false"
+            android:text="Next"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            app:layout_constraintBottom_toTopOf="@id/tv_skip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/remaining_time_sub_text" />
+
+        <TextView
+            android:id="@+id/tv_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:fontFamily="@font/poppinslight"
+            android:includeFontPadding="false"
+            android:paddingHorizontal="4dp"
+            android:paddingVertical="4dp"
+            android:text="@string/skip_timer"
+            android:textAlignment="center"
+            android:textColor="@color/sblue"
+            android:textSize="@dimen/_14sdp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_next" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>

@@ -16,6 +16,7 @@
         android:name=".BaseApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_logo"
+        android:resizeableActivity="false"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_logo_round"
@@ -23,7 +24,8 @@
         android:theme="@style/Theme.Certify"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup"
-        tools:targetApi="m">
+        tools:targetApi="m"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name=".Activities.CertificatePreviewActivity"
             android:exported="true" />
