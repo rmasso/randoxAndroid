@@ -28,7 +28,6 @@ import kotlin.collections.HashMap
 class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     private lateinit var binding: FragmentDatacaptureBinding
-    private var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
 
     // private lateinit var countryCodePicker: CountryCodePicker
     private var isSelected = false
@@ -204,9 +203,9 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             dataMap["post_code"] = zipEdit.text.toString().trim()
             dataMap["arrival_date"] = dateOfArrivalText.text.toString().trim()
             dataMap["fligh_vessel_train_no"] = flightNumberEdit.text.toString().trim()
-              dataMap["nhs_no"] = ""//nhsNumberEdit.text.toString().trim()
-             dataMap["country_territory_part_journey"] = ""//transitedText.text.toString().trim()
-             dataMap["last_date_department"] = ""//lastDateDepartedText.text.toString().trim()
+            dataMap["nhs_no"] = ""//nhsNumberEdit.text.toString().trim()
+            dataMap["country_territory_part_journey"] = ""//transitedText.text.toString().trim()
+            dataMap["last_date_department"] = ""//lastDateDepartedText.text.toString().trim()
             dataMap["Country_of_departure"] = departurePicker.selectedCountryEnglishName
             dataMap["transport_type"] = travelTypePicker.selectedItem.toString()
         }
@@ -228,7 +227,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.fragcontainer,
-                            TimerFragment(selectedProfile,null)
+                            TimerFragment(selectedProfile, null)
                         )
                         .addToBackStack("")
                         .commit()
@@ -252,6 +251,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     private fun openDatePicker(textView: TextView, title: String) {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val currentDatePicked = MaterialDatePicker.todayInUtcMilliseconds()
         calendar.timeInMillis = currentDatePicked
         val constraintsBuilder =
             CalendarConstraints.Builder()
@@ -266,8 +266,6 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
             val textDate = dateFormat.format(Date(it))
             textView.text = textDate
-            currentDatePicked = it
-
             datePicker.dismiss()
         }
         datePicker.addOnCancelListener {
@@ -278,8 +276,8 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
     }
 
- /*   private fun openTimePicker() {
-        *//*val timePicker =
+    /*   private fun openTimePicker() {
+           *//*val timePicker =
             MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_12H)
                 .setHour(12)

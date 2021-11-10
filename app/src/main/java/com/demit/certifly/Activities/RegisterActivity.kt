@@ -49,7 +49,6 @@ class RegisterActivity : AppCompatActivity() {
     private val MY_REQUEST_CODE = 801
     lateinit var sweet: Sweet
     lateinit var binding: ActivityProfileBinding
-    var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -311,6 +310,7 @@ class RegisterActivity : AppCompatActivity() {
         // Build constraints.
 
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val currentDatePicked = MaterialDatePicker.todayInUtcMilliseconds()
         calendar.timeInMillis = currentDatePicked
         val constraintsBuilder =
             CalendarConstraints.Builder()
@@ -325,8 +325,6 @@ class RegisterActivity : AppCompatActivity() {
             val dateFormat = SimpleDateFormat("dd-MM-yyyy")
             val textDate = dateFormat.format(Date(it))
             binding.dob.text = textDate
-            currentDatePicked = it
-
             datePicker.dismiss()
         }
         datePicker.addOnCancelListener {

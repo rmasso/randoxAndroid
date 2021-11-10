@@ -58,9 +58,8 @@ import kotlin.collections.ArrayList
 class ProfileFragment : Fragment() {
     lateinit var binding: FragmentProfileBinding
     lateinit var adapter: ProfileAdapter
-    var currentDatePicked: Long = MaterialDatePicker.todayInUtcMilliseconds()
     var index = 0
-    var list: MutableList<TProfileModel> = ArrayList();
+    var list: MutableList<TProfileModel> = ArrayList()
 
     lateinit var sweet: Sweet
 
@@ -151,11 +150,10 @@ class ProfileFragment : Fragment() {
         binding.add.setOnClickListener() {
             binding.passportScanInfo.visibility = View.VISIBLE
             val p = TProfileModel()
+            p.usr_sex= resources.getStringArray(R.array.genders)[0]
+            p.ethnicity= resources.getStringArray(R.array.ethnicity)[0]
             list.add(p)
             shouldEnableFormFields(true)
-            binding.ethnicity.setSelection(0)
-            binding.gender.setSelection(0)
-
         }
 
         binding.dob.setOnClickListener {
@@ -203,7 +201,7 @@ class ProfileFragment : Fragment() {
                 if (context != null)
                     Toast.makeText(context, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.email.text.trim()!= binding.confirmEmail.text.trim()) {
+            } else if (binding.email.text.trim() != binding.confirmEmail.text.trim()) {
                 if (context != null)
                     Toast.makeText(
                         context,
@@ -211,17 +209,18 @@ class ProfileFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-            }
-            else if (binding.ethnicity.selectedItemPosition == 0) {
+            } else if (binding.ethnicity.selectedItemPosition == 0) {
                 if (context != null)
                     Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
                         .show()
-            } else if(!binding.radio.isChecked) {
-                Toast.makeText(context, "Please Confirm that you agree with our Terms&conditions", Toast.LENGTH_SHORT)
+            } else if (!binding.radio.isChecked) {
+                Toast.makeText(
+                    context,
+                    "Please Confirm that you agree with our Terms&conditions",
+                    Toast.LENGTH_SHORT
+                )
                     .show()
-            }
-
-            else {
+            } else {
                 familyregister()
             }
         }
@@ -526,13 +525,13 @@ class ProfileFragment : Fragment() {
         val map: MutableMap<String, String> = HashMap()
         map["usr_email"] = list[index].email.trim()
         map["token"] = Shared(requireContext()).getString("token")
-        val fullName=list[index].usr_firstname.trim()
+        val fullName = list[index].usr_firstname.trim()
         val idx = fullName.lastIndexOf(' ')
-        if (idx != -1){
+        if (idx != -1) {
             map["usr_firstname"] = fullName.substring(0, idx)
-            map["usr_surname"]  = fullName.substring(idx + 1)
+            map["usr_surname"] = fullName.substring(idx + 1)
 
-        }else {
+        } else {
             map["usr_firstname"] = fullName
             map["usr_surname"] = ""
         }
@@ -547,8 +546,9 @@ class ProfileFragment : Fragment() {
         map["usr_phone"] = list[index].usr_phone.trim()
         map["usr_passport_image"] = list[index].usr_image
         map["usr_ethnicity"] = list[index].ethnicity
-        map["usr_sex"] = resources.getStringArray(R.array.genders)[binding.gender.selectedItemPosition]
-        map["companyName"]= "Randox"
+        map["usr_sex"] =
+            resources.getStringArray(R.array.genders)[binding.gender.selectedItemPosition]
+        map["companyName"] = "Randox"
         ApiHelper.postFamilyUser(map).observe(viewLifecycleOwner) { response ->
             sweet.dismiss()
             if (response == "0") {
@@ -653,6 +653,7 @@ class ProfileFragment : Fragment() {
 
     private fun openDatePicker() {
         val calendar = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+        val currentDatePicked = MaterialDatePicker.todayInUtcMilliseconds()
         calendar.timeInMillis = currentDatePicked
         val constraintsBuilder =
             CalendarConstraints.Builder()
@@ -668,7 +669,7 @@ class ProfileFragment : Fragment() {
             val textDate = dateFormat.format(Date(it))
             binding.dob.text = textDate
             list[index].usr_birth = textDate
-          //  currentDatePicked = it
+            //  currentDatePicked = it
 
             datePicker.dismiss()
         }
