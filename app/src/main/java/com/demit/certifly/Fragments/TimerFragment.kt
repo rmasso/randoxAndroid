@@ -33,6 +33,7 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
                         timeText.text = String.format("%02d:%02d", 0, 0)
                         timeProgress.setProgress(100f, true)
                         btnNext.isEnabled=true
+                        Toast.makeText(requireContext(),"Please proceed to submit test",Toast.LENGTH_LONG).show()
                     }
 
                 } else {
