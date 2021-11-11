@@ -99,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I took the test as instructed, and did so within the last 30 mins"
+                    android:text="I took the test as instructed and will scan the device between 15 to 30 minutes of sample addition to the lateral flow device"
                     android:textSize="@dimen/_12sdp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/poppinsbold"/>

@@ -220,17 +220,17 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                 if (validityResponse == "0") {
                     sweet.dismiss()
 
-                    /*requireActivity().supportFragmentManager.beginTransaction()
+                    requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.fragcontainer, ScancompleteFragment(selectedProfile, dataMap))
                         .addToBackStack("")
-                        .commit()*/
-                    requireActivity().supportFragmentManager.beginTransaction()
+                        .commit()
+                   /* requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.fragcontainer,
                             TimerFragment(selectedProfile, dataMap)
                         )
                         .addToBackStack("")
-                        .commit()
+                        .commit()*/
 
                 } else {
                     sweet.dismiss()
