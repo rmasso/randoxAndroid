@@ -103,7 +103,7 @@
     <string name="permission_heading">User Consent</string>
     <string name="permission_consent_data">We will ask you to allow us to access the mobile device’s camera and storage.\n<u><b>Camera permission</b></u> is required in order to register with the app by doing so it allows the user to scan his/her passport and we can verify his/her identity. We also use Camera for covid-19 rapid test device scanning that is used in the creation process of the Covid-19 certificate.\n The information we get from the rapid test device is as follows.\n
 \u25BA Device QR code that helps us to identify that the device used by the user is genuine and also it is registered with our system.\n
-\u25BA Ai capability, which predicts whether the user has positive or negative or unclear results.\n
+\u25BA AI capability, to predict and locate position of our test device.\n
 <u><b>Storage permission</b></u> is required in order to enable the user to store his/her certificate on the device.</string>
     <string name="agree_and_continue">Agree and Continue</string>
     <string name="web_terms_privacy">By continuing, you agree to the Randox Certifly <a href="https://www.randoxhealth.com/covid-19-terms-and-conditions">Terms of Service</a>. Please Note: The <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> describes how data is handled in this service.</string>
