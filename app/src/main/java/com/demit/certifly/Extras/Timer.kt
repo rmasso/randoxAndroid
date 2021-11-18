@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 object Timer {
     private lateinit var timer: CountDownTimer
     private val timerLiveData by lazy { MutableLiveData<Long>() }
-    val MAX_TIME = 901000L//15 minutes
+    val MAX_TIME = 61000L//15 minutes
     private val TICK_INTERVAL = 1000L
 
     fun startTimer(): LiveData<Long> {

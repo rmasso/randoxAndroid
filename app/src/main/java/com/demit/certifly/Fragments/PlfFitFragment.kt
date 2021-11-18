@@ -56,21 +56,21 @@ class PlfFitFragment(val selectedProfile: TProfileModel) : Fragment() {
                     if (validityResponse == "0") {
                         sweet.dismiss()
 
-                        requireActivity().supportFragmentManager.beginTransaction()
+                       /* requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fragcontainer,
                                 ScancompleteFragment(selectedProfile, null)
                             )
                             .addToBackStack("")
-                            .commit()
+                            .commit()*/
 
-                        /*requireActivity().supportFragmentManager.beginTransaction()
+                        requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fragcontainer,
-                                TimerFragment(selectedProfile,null)
+                                FragmentConductTest(selectedProfile,null)
                             )
                             .addToBackStack("")
-                            .commit()*/
+                            .commit()
 
 
 

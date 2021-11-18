@@ -23,6 +23,7 @@
 
 
         <LinearLayout
+            android:id="@+id/content"
             android:layout_width="match_parent"
 
             android:layout_height="match_parent"
@@ -192,6 +193,7 @@
                     android:layout_marginHorizontal="@dimen/_15sdp"
                     android:src="@drawable/hfaq" />
 
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -203,7 +205,24 @@
 
 
             </LinearLayout>
-        </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_20sdp"
+                android:fontFamily="@font/poppinslight"
+                android:includeFontPadding="false"
+                android:text="@string/note"
+                android:textColor="@android:color/black"
+                android:textAlignment="center"
+                android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+
     </RelativeLayout>
 
 </ScrollView>

@@ -14,7 +14,7 @@ android {
         applicationId "com.demit.certifly"
         minSdk 21
         targetSdk 30
-        versionCode 6
+        versionCode 9
         versionName "1.7"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -101,6 +101,9 @@ dependencies {
 
     //Circular Progress
     implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.1'
+
+    //Time Picker
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
 
 
 }

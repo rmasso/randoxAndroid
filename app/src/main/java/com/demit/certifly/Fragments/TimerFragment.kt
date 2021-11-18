@@ -5,12 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.demit.certifly.Extras.DetachableClickListener
 import com.demit.certifly.Extras.Timer
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
 import com.demit.certifly.databinding.FragmentTimerBinding
+import kotlinx.android.synthetic.main.fragment_confirmation.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<String, String>?) : Fragment() {
     lateinit var binding: FragmentTimerBinding
@@ -26,16 +31,26 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Timer.startTimer().observe(viewLifecycleOwner, {
+
+        val timeOnWhichTimerStarted= Date().time
+
+            Timer.startTimer().observe(viewLifecycleOwner, {
             it?.let { millis ->
                 if (millis == 0L) {
                     with(binding) {
                         timeText.text = String.format("%02d:%02d", 0, 0)
                         timeProgress.setProgress(100f, true)
-                        btnNext.isEnabled=true
-                        Toast.makeText(requireContext(),"Please proceed to submit test",Toast.LENGTH_LONG).show()
-                    }
+                        val dateFormatGmt =  SimpleDateFormat("HH:mm:ss")
+                        dateFormatGmt.timeZone = TimeZone.getTimeZone("GMT")
+                        val gmtTimeString= dateFormatGmt.format(timeOnWhichTimerStarted)
 
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(
+                                R.id.fragcontainer,
+                                ConfirmationFragment(selectedProfile,additionalData,gmtTimeString)
+                            )
+                            .commit()
+                    }
                 } else {
                     val totalSeconds = millis / 1000
                     val secondInMinuteRange = totalSeconds % 60
@@ -50,29 +65,33 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
             }
         })
 
-        binding.btnNext.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragcontainer,
-                    ScancompleteFragment(selectedProfile, additionalData)
-                )
-                .addToBackStack("")
-                .commit()
+     binding.btnCancel.setOnClickListener {
+         showAlertDialog()
+     }
+
+
+    }
+
+    private fun showAlertDialog() {
+
+        val positiveClickListener = DetachableClickListener.wrap { _, _ ->
+          requireActivity().onBackPressed()
         }
 
-        binding.tvSkip.setOnClickListener {
-            requireActivity().supportFragmentManager.popBackStack()
-            requireActivity().supportFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragcontainer,
-                    ScancompleteFragment(selectedProfile, additionalData)
-                )
-                .addToBackStack("")
-                .commit()
-        }
+        val negativeClickListener = DetachableClickListener.wrap { _, _ ->  }
 
 
+        val builder = AlertDialog.Builder(requireActivity())
+            .setTitle("Skip timer")
+            .setMessage("Are you sure you want to quit the test.")
+            .setPositiveButton("Yes", positiveClickListener)
+            .setNegativeButton("No", negativeClickListener)
+            .create()
+
+        //avoid memory leaks
+        positiveClickListener.clearOnDetach(builder)
+        negativeClickListener.clearOnDetach(builder)
+        builder.show()
     }
 
     override fun onDestroy() {

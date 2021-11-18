@@ -25,7 +25,8 @@ import java.util.*
 
 class ScancompleteFragment(
     val selectedProfile: TProfileModel,
-    val additionalData: Map<String, String>?
+    val additionalData: Map<String, String>?,
+    val swabDateTime:String
 ) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding

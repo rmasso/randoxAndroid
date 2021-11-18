@@ -92,4 +92,12 @@
     <string name="remaining_time_heading">Time Remaining</string>
     <string name="remaining_time_sub_text">You must wait 15 mins. For the test results to display.</string>
     <string name="skip_timer"><u>Skip to submit test</u></string>
+    <string name="note">All results must be submitted within 15 to 30 minutes of taking test</string>
+    <string name="conduct">Conduct your test</string>
+    <string name="conduct_message">Wash your hands, unpack your kit on a clean surface, and follow the instructions in the pack.</string>
+    <string name="test_taker">Test taker name</string>
+    <string name="date">Date of the test</string>
+    <string name="time">Time of the test</string>
+    <string name="confirm_test">Please Confirm that the details mentioned above are correct.</string>
+    <string name="confirm_time">Please Select a time between current time and 30 minute from the current time.</string>
 </resources>

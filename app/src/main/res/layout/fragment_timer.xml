@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bwhite"
         android:fillViewport="true">
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/_20sdp"
@@ -35,6 +34,7 @@
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/logo"
+            app:layout_constraintVertical_bias="0.4"
             app:layout_constraintVertical_chainStyle="packed"
             app:pcv_animDuration="800"
             app:pcv_animInterpolator="accelerate_decelerate"
@@ -89,47 +89,26 @@
             android:textAlignment="center"
             android:textColor="@android:color/black"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintBottom_toTopOf="@id/btn_next"
+            app:layout_constraintBottom_toTopOf="@id/btn_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/remaining_time_heading" />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_32sdp"
-            android:background="@drawable/button_bg"
-            android:enabled="false"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/button_bg2"
             android:fontFamily="@font/poppinsmedium"
             android:includeFontPadding="false"
-            android:text="Next"
+            android:text="Cancel"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/sblue"
             android:textSize="@dimen/_14sdp"
-            app:layout_constraintBottom_toTopOf="@id/tv_skip"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/remaining_time_sub_text" />
-
-        <TextView
-            android:id="@+id/tv_skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:fontFamily="@font/poppinslight"
-            android:includeFontPadding="false"
-            android:paddingHorizontal="4dp"
-            android:paddingVertical="4dp"
-            android:text="@string/skip_timer"
-            android:textAlignment="center"
-            android:textColor="@color/sblue"
-            android:textSize="@dimen/_14sdp"
-
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_next" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

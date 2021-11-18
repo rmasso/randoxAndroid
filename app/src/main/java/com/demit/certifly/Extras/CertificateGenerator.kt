@@ -63,7 +63,7 @@ object CertificateGenerator {
                 //Row1
                 headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
                 headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id.takeLast(13), 22f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
 
                 //Row2
                 headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
@@ -80,16 +80,16 @@ object CertificateGenerator {
                 //Row3
                 headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_timestamp?:"", 20f, Font.NORMAL))
                 //Row4
                 headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_proc_stop, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_proc_stop?:"", 20f, Font.NORMAL))
 
                 //Row5
                 headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Passport Number:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_passport, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_passport?:"", 20f, Font.NORMAL))
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", 20f, Font.NORMAL))
@@ -111,7 +111,7 @@ object CertificateGenerator {
 
                 //Report Body
                 val bodyContent =
-                    "Dear ${certificate.cert_name} , Date of Birth: $usr_birth Contact Number: $usr_phone\n\n" +
+                    "Dear ${certificate.cert_name?:""} , Date of Birth: ${usr_birth?:""} Contact Number: ${usr_phone?:""}\n\n" +
                             "Your coronavirus (COVID-19) test result is "
 
 
@@ -278,7 +278,7 @@ object CertificateGenerator {
                 //Row1
                 headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
                 headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id.takeLast(13), 22f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
 
                 //Row2
                 headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
@@ -295,16 +295,16 @@ object CertificateGenerator {
                 //Row3
                 headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_timestamp?:"", 20f, Font.NORMAL))
                 //Row4
                 headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_proc_stop, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_proc_stop?:"", 20f, Font.NORMAL))
 
                 //Row5
                 headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("Passport Number:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_passport, 20f, Font.NORMAL))
+                headerTable.addCell(getCell(cert_passport?:"", 20f, Font.NORMAL))
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", 20f, Font.NORMAL))
@@ -326,7 +326,7 @@ object CertificateGenerator {
 
                 //Report Body
                 val bodyContent =
-                    "Dear ${certificate.cert_name} , Date of Birth: $usr_birth Contact Number: $usr_phone\n\n" +
+                    "Dear ${certificate.cert_name?:""} , Date of Birth: ${usr_birth?:""} Contact Number: ${usr_phone?:""}\n\n" +
                             "Your coronavirus (COVID-19) test result is "
 
 
