@@ -11,6 +11,7 @@ import com.demit.certifly.R
 import com.demit.certifly.databinding.DialogPermissionBinding
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
+import android.text.method.LinkMovementMethod
 
 
 class PermissionDialog(val onButtonClick: (id: Int) -> Unit) : DialogFragment(),
@@ -32,28 +33,23 @@ class PermissionDialog(val onButtonClick: (id: Int) -> Unit) : DialogFragment(),
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.agreeBtn.setOnClickListener(this)
-        binding.cancelBtn.setOnClickListener(this)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-            binding.contentContainer.storageMessageContainer.visibility = View.GONE
+        binding.btnAgree.setOnClickListener(this)
+        binding.link.movementMethod= LinkMovementMethod.getInstance()
     }
 
     override fun onStart() {
         super.onStart()
-        val width = resources.displayMetrics.widthPixels * 0.80
-        val height = resources.displayMetrics.heightPixels * 0.80
+        val width = resources.displayMetrics.widthPixels * 0.90
+        val height = resources.displayMetrics.heightPixels * 0.90
         dialog!!.window!!.setLayout(width.toInt(), height.toInt())
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.cancelBtn -> {
-                onButtonClick(R.id.cancelBtn)
-                dismiss()
-            }
-            R.id.agreeBtn -> {
-                onButtonClick(R.id.agreeBtn)
+
+            R.id.btn_agree -> {
+                onButtonClick(R.id.btn_agree)
                 dismiss()
             }
         }

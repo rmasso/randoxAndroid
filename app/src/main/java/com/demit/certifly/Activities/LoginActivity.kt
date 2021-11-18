@@ -111,11 +111,8 @@ class LoginActivity : AppCompatActivity() {
 
             var permissionDialog = PermissionDialog { btnClickId ->
                 when (btnClickId) {
-                    R.id.agreeBtn -> {
+                    R.id.btn_agree -> {
                         permissionResultLauncher.launch(permissions.toArray(arrayOf<String>()))
-                    }
-                    R.id.cancelBtn -> {
-                        showAlertDialog()
                     }
                 }
             }

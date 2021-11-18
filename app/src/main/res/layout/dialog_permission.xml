@@ -12,20 +12,23 @@
             android:layout_height="wrap_content"
             android:background="@drawable/round_dialog"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/_20sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="32.5dp"
-                android:text="This app requires the following permissions to be enabled."
+                android:layout_marginTop="16.25dp"
+                android:textColor="@android:color/black"
+                android:text="@string/permission_heading"
                 android:textAlignment="center"
-                android:textSize="14sp" />
+                android:textSize="16sp"
+                android:fontFamily="@font/poppinsbold"
+                android:includeFontPadding="false"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -36,7 +39,7 @@
             <ScrollView
                 android:id="@+id/parent"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="240dp"
                 android:background="@android:color/white"
                 android:clipToPadding="true"
                 android:fillViewport="true"
@@ -51,39 +54,37 @@
 
 
             </ScrollView>
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_marginTop="8dp"
                 android:background="#8a000000" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_agree"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
+                android:text="@string/agree_and_continue"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_14sdp"
+                android:fontFamily="@font/poppinsmedium"
+                android:includeFontPadding="false"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:background="@drawable/button_bg"
+                app:layout_constraintTop_toBottomOf="@id/booking_ref_edit"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+            <TextView
+                android:id="@+id/link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16.25dp"
+                android:text="@string/web_terms_privacy"
+                android:textAlignment="center"
+                android:textSize="12sp" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/cancelBtn"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
 
-                    android:text="Cancel"
-                    android:textColor="@color/sblue" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/agreeBtn"
-                    style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Agree"
-                    android:textColor="@color/sblue" />
-
-            </LinearLayout>
 
 
         </LinearLayout>

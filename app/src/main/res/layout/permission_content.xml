@@ -23,87 +23,13 @@
 
             >
 
-
-            <!--Camera-->
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\u25BA Camera"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="To capture rapid test device images for covid-19 certification and user passport images for app registration."
-                    android:textSize="14sp" />
-
-
-            </LinearLayout>
-
-            <!--Storage-->
-            <LinearLayout
-                android:id="@+id/storageMessageContainer"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="\u25BA Storage"
-                        android:textColor="@android:color/black"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16sp" />
-
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Enables the user to store covid certificates to the phone storage."
-                    android:textSize="14sp" />
-
-
-            </LinearLayout>
+                android:layout_marginTop="16.25dp"
+                android:text="@string/permission_consent_data"
+                android:textAlignment="textStart"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
