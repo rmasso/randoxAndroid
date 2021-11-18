@@ -126,9 +126,26 @@ class ProfileFragment : Fragment() {
 
                 if (result.resultState == Recognizer.Result.State.Valid) {
                     val docImage = result.fullDocumentFrontImage?.convertToBitmap()
+                    val mrzResult = result.mrzResult
                     docImage?.let {
                         list[list.size - 1].usr_image = it.toBase64String()
                     }
+
+
+                    mrzResult?.let { mrzCodeResult ->
+                        val fullName = "${mrzCodeResult.secondaryId} ${mrzCodeResult.primaryId}"
+
+                        val dateOfBirth = with(mrzCodeResult.dateOfBirth.date) {
+                           String.format("%02d-%02d-%04d",this?.day,this?.month,this?.year)
+                        }
+                        val passport = mrzCodeResult.documentNumber
+                        with(list[list.size - 1]) {
+                            usr_firstname = fullName
+                            usr_birth = dateOfBirth
+                            usr_passport = passport
+                        }
+                    }
+
                     setData(list.size - 1)
 
 
@@ -150,8 +167,8 @@ class ProfileFragment : Fragment() {
         binding.add.setOnClickListener() {
             binding.passportScanInfo.visibility = View.VISIBLE
             val p = TProfileModel()
-            p.usr_sex= resources.getStringArray(R.array.genders)[0]
-            p.ethnicity= resources.getStringArray(R.array.ethnicity)[0]
+            p.usr_sex = resources.getStringArray(R.array.genders)[0]
+            p.ethnicity = resources.getStringArray(R.array.ethnicity)[0]
             list.add(p)
             shouldEnableFormFields(true)
         }

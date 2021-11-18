@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
 import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.LinkMovementMethod
@@ -186,6 +187,7 @@ class RegisterActivity : AppCompatActivity() {
                 // result is valid, you can use it however you wish
                 if (result.resultState == Recognizer.Result.State.Valid) {
                     val docImage = result.fullDocumentFrontImage?.convertToBitmap()
+                    val mrzResult = result.mrzResult
                     docImage?.let {
                         usr_img = it.toBase64String()
                         image.visibility = View.VISIBLE
@@ -193,7 +195,22 @@ class RegisterActivity : AppCompatActivity() {
                             .load(Base64.decode(usr_img, Base64.DEFAULT))
                             .placeholder(R.drawable.profile)
                             .into(binding.image)
+                    }
 
+                    mrzResult?.let { mrzCodeResult->
+
+                        val firstName= mrzCodeResult.secondaryId
+                        val lastName= mrzCodeResult.primaryId
+                        val dateOfBirth=  with(mrzCodeResult.dateOfBirth.date){
+                            String.format("%02d-%02d-%04d",this?.day,this?.month,this?.year)
+                         }
+                        val passport= mrzCodeResult.documentNumber
+                        with(binding){
+                            fname.text= Editable.Factory.getInstance().newEditable(firstName)
+                            sname.text= Editable.Factory.getInstance().newEditable(lastName)
+                            dob.text= Editable.Factory.getInstance().newEditable(dateOfBirth)
+                            pnumber.text= Editable.Factory.getInstance().newEditable(passport)
+                        }
                     }
 
                 }
