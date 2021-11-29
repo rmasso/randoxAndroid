@@ -1,6 +1,7 @@
 package com.demit.certifly.Fragments
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,7 @@ class CertificateTypeFragment(val userProfile:TProfileModel) : Fragment(),View.O
                 binding.btnPurchase.visibility=View.GONE
             }
         }
+        binding.pcrLink.movementMethod= LinkMovementMethod()
     }
 
     override fun onResume() {

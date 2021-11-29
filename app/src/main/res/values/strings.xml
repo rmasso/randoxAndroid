@@ -107,4 +107,6 @@
 <u><b>Storage permission</b></u> is required in order to enable the user to store his/her certificate on the device.</string>
     <string name="agree_and_continue">Agree and Continue</string>
     <string name="web_terms_privacy">By continuing, you agree to the Randox Certifly <a href="https://www.randoxhealth.com/covid-19-terms-and-conditions">Terms of Service</a>. Please Note: The <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> describes how data is handled in this service.</string>
+    <string name="is_available_day_2">Not currently available due to change in UK travel guidance.</string>
+    <string name="buy_pcr_test">Please purchase your Day 2  PCR test at <font color= '#0000FF'><a href="https://fly.randox.com/">https://fly.randox.com/</a></font> using coupon code &quot;Certifly&quot;.</string>
 </resources>
