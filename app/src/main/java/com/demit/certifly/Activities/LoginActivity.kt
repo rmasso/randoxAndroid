@@ -237,7 +237,7 @@ class LoginActivity : AppCompatActivity() {
         private const val BASE_URL = Constants.url
         val retrofit: Retrofit
             get() {
-                val okHttpClient = OkHttpClient().newBuilder()
+                val okHttpClient =OkHttpClient().newBuilder()
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
@@ -263,6 +263,7 @@ class LoginActivity : AppCompatActivity() {
             .setMessage(R.string.you_have_to_grant_permissions)
             .setPositiveButton(R.string.ok, positiveClickListener)
             .setNegativeButton(R.string.no_close_the_app, negativeClickListener)
+            .setCancelable(false)
             .create()
 
         //avoid memory leaks
