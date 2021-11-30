@@ -46,30 +46,49 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/et_bg"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="@dimen/_16sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/heading">
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/fit_to_travel_switch"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/fit_to_travel_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:enabled="false" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/_16sdp"
+                        android:fontFamily="@font/poppinsmedium"
+                        android:includeFontPadding="false"
+                        android:text="@string/fit_to_travel"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_14sdp" />
+
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/fit_to_travel_message"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/_16sdp"
-                    android:fontFamily="@font/poppinsmedium"
+                    android:fontFamily="@font/poppinslight"
                     android:includeFontPadding="false"
-                    android:text="@string/fit_to_travel"
+                    android:text="@string/is_available"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_14sdp" />
-
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible" />
             </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/container_2days"
@@ -84,7 +103,6 @@
                 app:layout_constraintTop_toBottomOf="@id/container_fit2travel">
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -110,13 +128,15 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/day_2_message"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppinslight"
-                    android:textColor="@color/black"
                     android:includeFontPadding="false"
-                    android:text="@string/is_available_day_2"
-                    android:textSize="@dimen/_12sdp" />
+                    android:text="@string/is_available"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_12sdp"
+                    android:visibility="visible" />
             </LinearLayout>
 
             <TextView

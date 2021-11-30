@@ -2,14 +2,17 @@ package com.demit.certifly.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
+import com.demit.certifly.Extras.Global
+import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Fragments.*
 import com.demit.certifly.Interfaces.DashboardInterface
 import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityDashboardBinding
 
-class DashboardActivity : AppCompatActivity() ,DashboardInterface{
-    lateinit var binding : ActivityDashboardBinding;
+class DashboardActivity : AppCompatActivity(), DashboardInterface {
+    lateinit var binding: ActivityDashboardBinding;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDashboardBinding.inflate(layoutInflater)
@@ -20,17 +23,30 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         click()
     }
 
-    fun bnavclick(){
+    override fun onBackPressed() {
+        if (Global.should_go_home) {
+            var backStackEntryCount = supportFragmentManager.backStackEntryCount
+            while (backStackEntryCount > 0) {
+                supportFragmentManager.popBackStack()
+                backStackEntryCount--
+            }
+            setp(0)
+            Global.should_go_home = false
+        } else
+            super.onBackPressed()
+    }
+
+    fun bnavclick() {
         binding.bottomnav.setOnItemSelectedListener {
-            if(it.itemId == R.id.home){
+            if (it.itemId == R.id.home) {
                 changefragment(HomeFragment(this))
-            }else if(it.itemId == R.id.profile){
+            } else if (it.itemId == R.id.profile) {
                 changefragment(ProfileFragment())
-            }else if(it.itemId == R.id.certi){
+            } else if (it.itemId == R.id.certi) {
                 changefragment(CertificatesFragment())
-            }else if(it.itemId == R.id.register){
+            } else if (it.itemId == R.id.register) {
                 changefragment(YtestFragment(this))
-            }else if(it.itemId == R.id.faq){
+            } else if (it.itemId == R.id.faq) {
                 changefragment(FaqFragment())
             }
             true
@@ -40,20 +56,22 @@ class DashboardActivity : AppCompatActivity() ,DashboardInterface{
         }
     }
 
-    fun click(){
+    fun click() {
         binding.scanb.setOnClickListener {
             setp(2)
         }
     }
-    fun changefragment(fragment : Fragment){
-        supportFragmentManager.beginTransaction().replace(R.id.fragcontainer,fragment).commit()
+
+    fun changefragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction().replace(R.id.fragcontainer, fragment).commit()
     }
 
     override fun setpage(page: Int) {
         setp(page)
     }
-    fun setp(page: Int){
-        val ids : MutableList<Int> = ArrayList();
+
+    fun setp(page: Int) {
+        val ids: MutableList<Int> = ArrayList();
         ids.add(R.id.home)
         ids.add(R.id.certi)
         ids.add(R.id.register)

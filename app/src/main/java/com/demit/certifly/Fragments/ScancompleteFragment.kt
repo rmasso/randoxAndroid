@@ -11,7 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import com.demit.certifly.Activities.CaptureActivity
+import com.demit.certifly.Extras.DetachableClickListener
+import com.demit.certifly.Extras.Global
 import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Models.CertificateModel
@@ -26,7 +29,7 @@ import java.util.*
 class ScancompleteFragment(
     val selectedProfile: TProfileModel,
     val additionalData: Map<String, String>?,
-    val swabDateTime:String
+    val swabDateTime: String
 ) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
@@ -73,6 +76,8 @@ class ScancompleteFragment(
             if (this::certificateModel.isInitialized) {
                 sweet.show("Please Wait")
                 submitCertificate(certificateModel)
+            } else {
+                Toast.makeText(requireContext(), "Please scan device", Toast.LENGTH_SHORT).show()
             }
         }
         binding.rescan.setOnClickListener {
@@ -89,7 +94,7 @@ class ScancompleteFragment(
         val token = Shared(requireContext()).getString("token")
 
         val certificateModel = CertificateModel(
-            token = token,
+            token = "token",
             usr_id = selectedProfile.usr_id,
             cert_name = "${selectedProfile.usr_firstname} ${selectedProfile.usr_surname}",
             cert_email = selectedProfile.email,
@@ -109,7 +114,7 @@ class ScancompleteFragment(
                 vaccine_name = dataMap["vaccine_name"]!!
                 is_fully_vaccinated_14days_uk = dataMap["is_fully_vaccinated_14days_uk"]!!
                 pfl_code = dataMap["two_day_booking_ref"]!!
-                transport_type= dataMap["transport_type"]!!
+                transport_type = dataMap["transport_type"]!!
                 isolation_address_line1 = dataMap["isolation_address_line1"]!!
                 isolation_address_line2 = dataMap["isolation_address_line2"]!!
                 town = dataMap["town"]!!
@@ -128,25 +133,21 @@ class ScancompleteFragment(
     }
 
     private fun submitCertificate(certificateModel: CertificateModel) {
+
         ApiHelper.isQrValid(certificateModel.token, certificateModel.cert_device_id)
             .observe(viewLifecycleOwner) { validityResponse ->
                 if (validityResponse == "0") {
-
                     ApiHelper.createNewCertificate(certificateModel)
                         .observe(viewLifecycleOwner) { response ->
                             // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
                             Log.d("++res++", response)
                             sweet.dismiss()
-                            if (response != "Something went wrong")
+                            if (response != "Something went wrong"&&response!="\nLastID:{\"ret\":100}")
                                 activity?.supportFragmentManager?.beginTransaction()
                                     ?.replace(R.id.fragcontainer, ScansubmitFragment())
                                     ?.addToBackStack("")?.commit()
                             else {
-                                Toast.makeText(
-                                    requireContext(),
-                                    validityResponse,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                showAlertDialog()
                             }
 
                         }
@@ -166,5 +167,26 @@ class ScancompleteFragment(
 
                 }
             }
+    }
+
+    private fun showAlertDialog() {
+
+        val positiveClickListener = DetachableClickListener.wrap { dialog, _ ->
+            Global.should_go_home = true
+            requireActivity().onBackPressed()
+        }
+
+
+        val dialog = AlertDialog.Builder(requireActivity())
+            .setTitle("Error")
+            .setMessage("Submission failed.")
+            .setPositiveButton("Ok", positiveClickListener)
+            .setCancelable(false)
+            .create()
+
+        //avoid memory leaks
+        positiveClickListener.clearOnDetach(dialog)
+
+        dialog.show()
     }
 }
