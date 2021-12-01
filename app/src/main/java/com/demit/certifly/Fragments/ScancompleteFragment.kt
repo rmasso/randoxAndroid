@@ -94,7 +94,7 @@ class ScancompleteFragment(
         val token = Shared(requireContext()).getString("token")
 
         val certificateModel = CertificateModel(
-            token = "token",
+            token = token,
             usr_id = selectedProfile.usr_id,
             cert_name = "${selectedProfile.usr_firstname} ${selectedProfile.usr_surname}",
             cert_email = selectedProfile.email,
@@ -142,7 +142,7 @@ class ScancompleteFragment(
                             // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
                             Log.d("++res++", response)
                             sweet.dismiss()
-                            if (response != "Something went wrong"&&response!="\nLastID:{\"ret\":100}")
+                            if (response != "Something went wrong"&&!response.contains("100"))
                                 activity?.supportFragmentManager?.beginTransaction()
                                     ?.replace(R.id.fragcontainer, ScansubmitFragment())
                                     ?.addToBackStack("")?.commit()
