@@ -8,6 +8,7 @@ class Constants {
         const val adminToken = "fcy_9fb620fd5a2f9ded119397db3a6d164a";
         const val DEFAULT_APP_FOLDER="Randox"
         const val VIDEO_ID_HOW_IT_WORKS="3y5m-ByKMZ8"
+        const val TEST_EMAIL="hammad041994@gmail.com"
 
     }
 }

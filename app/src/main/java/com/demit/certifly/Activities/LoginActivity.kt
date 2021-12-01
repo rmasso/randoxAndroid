@@ -44,8 +44,9 @@ class LoginActivity : AppCompatActivity() {
     lateinit var binding: ActivityLoginBinding
     lateinit var sweet: Sweet
     val permissions = arrayListOf<String>()
-    var isPasswordShown=false
+    var isPasswordShown = false
     private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,20 +70,20 @@ class LoginActivity : AppCompatActivity() {
 
         binding.passwordVisibilityToggle.setOnClickListener {
             //We have to show password to user in form of plain text
-            binding.password.transformationMethod =  if(!isPasswordShown){
+            binding.password.transformationMethod = if (!isPasswordShown) {
                 binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_off_eye)
-                isPasswordShown=true
+                isPasswordShown = true
                 HideReturnsTransformationMethod.getInstance()
 
-            }else{
+            } else {
                 binding.passwordVisibilityToggle.setImageResource(R.drawable.ic_visibility_on_eye)
-                isPasswordShown=false
+                isPasswordShown = false
                 PasswordTransformationMethod.getInstance()
             }
             binding.password.setSelection(binding.password.length())
         }
 
-        binding.appVersion.text= "v${BuildConfig.VERSION_NAME}"
+        binding.appVersion.text = "v${BuildConfig.VERSION_NAME}"
 
     }
 
@@ -141,7 +142,11 @@ class LoginActivity : AppCompatActivity() {
         binding.btnForgot.setOnClickListener {
             if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
                 Toast.makeText(this, "Invalid Email.", Toast.LENGTH_SHORT).show()
+            } else if (binding.email.text.toString().equals(Constants.TEST_EMAIL, true)) {
+                Toast.makeText(this, "Test credentials can't be reset", Toast.LENGTH_SHORT)
+                    .show()
             } else {
+
                 sweet.show("Please Wait")
                 ApiHelper.forgetPassword(
                     Shared(this@LoginActivity).getString("token"),
@@ -237,7 +242,7 @@ class LoginActivity : AppCompatActivity() {
         private const val BASE_URL = Constants.url
         val retrofit: Retrofit
             get() {
-                val okHttpClient =OkHttpClient().newBuilder()
+                val okHttpClient = OkHttpClient().newBuilder()
                     .connectTimeout(60, TimeUnit.SECONDS)
                     .readTimeout(60, TimeUnit.SECONDS)
                     .writeTimeout(60, TimeUnit.SECONDS)
