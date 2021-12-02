@@ -108,8 +108,110 @@
 \u25BA Device QR code that helps us to identify that the device used by the user is genuine and also it is registered with our system.\n
 \u25BA AI capability, to predict and locate position of our test device.\n
 <u><b>Storage permission</b></u> is required in order to enable the user to store his/her certificate on the device.</string>
-    <string name="agree_and_continue">Agree and Continue</string>
+    <string name="agree_and_continue">Continue</string>
     <string name="web_terms_privacy">By continuing, you agree to the Randox Certifly <a href="https://www.randoxhealth.com/covid-19-terms-and-conditions">Terms of Service</a>. Please Note: The <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> describes how data is handled in this service.</string>
     <string name="is_available">Not currently available due to change in UK travel guidance.</string>
-    <string name="buy_pcr_test">Please purchase your Day 2  PCR test at <font color= '#0000FF'><a href="https://fly.randox.com/">https://fly.randox.com/</a></font> using coupon code &quot;Certifly&quot;.</string>
+    <string name="buy_pcr_test">Please purchase your Day 2  PCR test at <font color='#0000FF'><a href="https://fly.randox.com/">https://fly.randox.com/</a></font> using coupon code &quot;Certifly&quot;.</string>
+    <string name="description"><b>Updated November 2021</b>\nThis Privacy Policy (the “Policy”) describes our practices with respect to collection, use, disclosure and protection of your information when you use Randox CertiFly mobile application (the “App”). Note that this Policy is only valid on our App, not any third-party networks, even if they are referenced on our App. It is your responsibility to familiarize yourself and comply with any relevant third-party networks. </string>
+    <string name="data_security_heading">Data Security</string>
+    <string name="data_security_content">The security of your data is of utmost importance to us. Only our administrators are allowed to access our App’s password-protected server where any personal information which can help improve your experience, such as how often you perform workouts, what your weekly goals are, etc. We utilize SSL. Nevertheless, any transmission of information over the Internet has its inherent risks, so we cannot guarantee the absolute security of your personal information. Transmit personal information over the Internet at your own risk. We shall not be liable for circumvention of security measures or privacy settings on the App. It is your responsibility to keep your login credentials, if any, confidential. </string>
+    <string name="data_collection_heading">Collection of User Data</string>
+    <string name="data_collection_content">We will collect personal data as part of our online testing kit registration process. Registration is essential for all testing and reporting of results to proceed, and it is essential that you complete these details, and confirm your acceptance of this policy, personally.\n
+
+        We will ask you to allow us to access the mobile device’s <b>camera</b> and <b>storage</b>.\n <b><u>Camera permission</u></b>  is required in order to register with the app by doing so it allows the user to scan his/her passport and we can verify the identity. We also use <b>Camera permission</b> for covid-19 rapid test device image scanning that is used in the creation process of Covide-19 certificate. The information we get from the device is QR code that helps us to identify that the device used by the user is genuine and also it is registered with our system.\n
+        <b><u>Storage permission</u></b> is required in order to enable the user to store his/her certificate on the device.\n
+
+        <b>The information we collect during registration includes:</b>\n
+
+    \u25BAThe unique registration number (URN) on your test kit (it is very important that this is recorded correctly to ensure that your sample is correctly matched to your online registration);\n
+    \u25BAYour name;\n
+    \u25BAYour date of birth;\n
+    \u25BAYour gender;\n
+    \u25BAYour email address (it is very important that this is recorded correctly so that your results are sent to the right email address);\n
+    \u25BAYour country / nationality;\n
+    \u25BAYour telephone number;\n
+    \u25BAThe date your sample was collected;\n
+    \u25BAYour full home address (including postcode);\n
+    \u25BAYour national insurance number (optional);\n
+    \u25BAYour NHS / employee number (if applicable).\n
+    \u25BAYour Vaccination Status\n
+    \u25BAPassport image scan for identity verification\n
+
+We will not collect any information which we, or relevant third parties, do not need.\n
+
+Once your swab sample has been returned to us, and it has been tested for COVID-19, our systems will automatically generate a report which shows our findings (the Report). This Report will include some of the personal details that you have provided to us about yourself. We will also hold this information in a centralised database.\n
+
+Please note that there are limitations inherent in the sample collection and testing process, which are explained in our terms and conditions here: https://www.randoxhealth.com/covid-19-terms-and-conditions, and in the test instructions that were provided to you when you received your test kit.\n
+
+It is important that the personal data we hold about you is accurate and current, and we cannot be held responsible for incorrect data that is provided by you. Please keep us informed if your personal data changes during your relationship with us.\n
+
+If you fail to properly provide all requested data or provide incorrect data we may be unable to provide testing or notify you of your results. There is also a risk that third parties could be inadvertently provided with your data if, for example, you have not correctly entered your email address, or your email servers are compromised.\n </string>
+    <string name="use_of_data_heading">Use of Data</string>
+    <string name="use_of_data_content">We will only use your personal data when the law allows us to. Most commonly, we will use your personal data on one or more of the following grounds:\n
+
+    \u25BATo provide the services and/or information that are part of functionality of the App.\n
+    \u25BATo communicate with you regarding changes to your account or our App\n
+    \u25BATo accomplish any other purpose for which the information was provided.\n
+    \u25BAWhere we need to perform the contract that we have entered into with you (in the case of Randox Health in respect of private tests).\n
+    \u25BAWhere it is necessary for our legitimate interests (or those of a third party) and your interests and fundamental rights do not override those interests\n
+    \u25BAWhere we need to comply with a legal obligation (including the terms of our contract with the DOH, in the case of Randox Labs in respect of NHS tests).\n
+
+We do not rely on consent as a basis for processing your personal data, unless you have requested a private COVID-19 test from Randox Health, in which case you may withdraw your consent to processing at any time by contacting us using the details below. Any payments made for testing are non-refundable, as explained in our terms and conditions here: <a href ="https://www.randoxhealth.com/covid-19-terms-and-conditions">https://www.randoxhealth.com/covid-19-terms-and-conditions</a>.\n
+
+Where we are using your personal data that identifies your health data, we are doing that either on the basis of your explicit consent, your vital interests, for public interest, medical diagnostic reasons or preventative or occupational health reasons.\n
+
+Generally, Randox will use the data you provide to test your swab samples for COVID-19 and notify the results to you as the registered user of the kit via the Report. A copy of the Report will be sent by email to the email address you provided to us when you signed up through our registration portal.\n
+
+After your sample has been posted to us, please make sure to regularly check your emails (including any junk or spam folder) for any email attaching the Report. Please note that we are not responsible for the security of any domains in respect of email addresses you have given us. If you believe you have received a Report in error, please contact us at covid19@randoxhealth.com immediately.\n
+
+Additional information, including home address, is necessary for notifying the relevant public health or other Government authorities of the results of your test, if we are requested to do so.\n
+
+As a controller or processor of personal data, Randox and its affiliated companies must process your information fairly and lawfully. We will also process your data in accordance with the instructions of the DOH and the terms of our contract, in the case of Randox Labs.\n
+
+We also collect, use and share Aggregated Data for any purpose. Aggregated Data could be derived from your data but is not considered personal data as this it will not directly or indirectly reveal your identity.\n
+
+We will not use any personal data that we collect for marketing purposes unless you have separately signed up to receive marketing communications from us.\n </string>
+    <string name="disclosure_0f_data_heading">Disclosure of Data</string>
+    <string name="disclosure_0f_data_content">Randox will not generally share personal data about you with other organisations or people, unless permitted or required by law, you have provided consent, or a third party is required to perform our obligations of contract (in such circumstances, the third party will be bound by similar data protection requirements). Nor do we transfer your personal data outside of the UK.\n
+
+That said, please note that your data (including your test results) may be available to other companies within the Randox groups of companies, to Microsoft (who host our registration platform, as noted above) and to relevant health or other governmental authorities for the purposes of, among other things, contact tracing and infection control.\n
+
+We may also share your data with third parties to whom we may choose to sell, transfer or merge parts of our business or our assets. Alternatively, we may seek to acquire other businesses or merge with them. If a change happens to our business, then the new owners may use your personal data in the same way as set out in this privacy policy.\n
+
+Where possible, we require all third parties to respect the security of your personal data and to treat it in accordance with the law. We do not allow our third-party service providers to use your personal data for their own purposes and we only permit them to process your personal data for specified purposes and in accordance with our instructions.\n</string>
+    <string name="cookie_policy_heading">Cookie Policy</string>
+    <string name="cookie_policy_content">Cookies are small bits of text data placed on your device when you visit sites. Cookies record data about your activity, such as which pages you view and what you click on. Cookies assist our App to recognize your device when you return. For example, cookies can help us to remember your preferences, username, analyse the performance of our App and recommend content that may be most relevant to your interests. Here are the reasons we may use cookies:\n
+
+    \u25BAAnalytics. This type of cookies shows us which pages users view, which links are popular, etc. These cookies only provide anonymized information that does not identify anybody personally. This information is then bundled with the similar information from the other users, so that we can analyse the general usage patterns.\n
+    \u25BAEssential cookies. These are necessary to provide the services that you have asked for. Without these essential cookies, our App would not be able to operate. They are necessary to enable users to navigate through the App and use its main features. E.g., essential cookies identify registered users so that they can access member-only areas of the site. Essential cookies keep users logged in. If a subscriber disables essential cookies, that subscriber won’t be able to get to all of the content that a subscription entitles them to. These cookies don\'t collect information that could be utilized for the purposes of marketing or figuring out what places on the internet you have visited.\n
+    \u25BATo show relevant advertising. If we allow ads on our App, they can contain cookies in order to provide ads most relevant to your interests. They can also help limit the number of times you see a particular ad and to assess the effectiveness of the advertising campaign.\n
+    \u25BATo improve your browsing experience. This type of cookies enables the site to remember users’ preferences and settings, such as geographic region or language. They can also be used to restrict the number of times an ad is shown, to remember which forms you have already filled in, so that you don’t have to do it again. There is a way to turn off cookies by going to your browser’s Help or Settings menu. However, keep in mind that disabling cookies may limit your use of the App and/or delay or affect the way in which it operates.\n </string>
+    <string name="children_privacy_heading">Children\'s Privacy</string>
+    <string name="children_privacy_content">We do not knowingly collect any personal information about children under the age of 16. Our App is not directed to children under the age of 16. If we become aware that a child under 16 has provided any personal info, it will be erased from our database as soon as reasonably possible, except when we need to keep that information for legal purposes or to notify a parent or guardian. However, portions of this data may remain in back-up archives or web logs even after we erase it from our databases. If a parent or guardian believes that a child has sent us personal information, send us an e-mail.\n </string>
+    <string name="eu_rights_heading">EU Users’ Rights</string>
+    <string name="eu_rights_content">This section of our Privacy Policy applies to the users of our App in the EU. We would like to inform you about your GDPR rights and how we safeguard them.\n
+
+Your GDPR rights to be informed, to access, rectify, erase or restrict the processing of your personal information. You have the right to obtain free information about what personal data we have obtained about you, where it is stored, for how long, for what purposes it is used, to whom it was disclosed. You have the right to have us, without undue delay, rectify of inaccurate personal data concerning you. That means you can request we change your personal data in our records, or have your incomplete personal data completed. You have the “right to be forgotten,” i.e. to have us delete your personal information, without undue delay, if the data is no longer necessary in relation to the purposes for which it was collected. However, GDPR gives us the right to refuse erasure if we can demonstrate compelling legitimate grounds for keeping your information.\n
+
+GDPR gives you the right to restrict processing if any of the following applies:\n
+
+        <b>1.</b>If you contest the accuracy of your personal data, we will restrict processing it for a period enabling us to verify its accuracy.\n\n
+    <b>2.</b>The processing is unlawful and you oppose its erasure and request instead the restriction of its use.\n\n
+        <b>3.</b>We no longer need your personal data for the purposes of the processing, but you require us to restrict processing for the establishment, exercise or defense of legal claims.\n\n
+        <b>4.</b>You have objected to processing pursuant to Article 21(1) of the GDPR pending the verification whether our legitimate grounds override yours.\n\n
+    <b>5.</b>Right to data portability. Upon request, we will provide you your personal data in our possession, in a structured, commonly used and machine-readable format. You have the right to transmit that data to another controller if doing so does not adversely affect the rights and freedoms of others.\n\n
+        <b>6.</b>Right to object. You can object, on grounds relating your particular situation, at any time, to processing of your personal information, if based on point (e) or (f) of Article 6(1) of the GDPR. We will then have to stop processing, unless we can demonstrate compelling legitimate grounds for the processing. If you object to the processing for direct marketing purposes, we will have to stop processing for these purposes.\n\n
+        <b>7.</b>Right to withdraw consent. GDPR grants you the right to withdraw your earlier given consent, if any, to processing of your personal data at any time. Rights related to automated decision making. As a responsible business, we do not rely on any automated decision making, such as profiling.\n </string>
+    <string name="personal_info_heading">Personal Data Correction</string>
+    <string name="personal_info_content">You can view and edit some of your account information yourself after logging in. If you terminate account, we may retain some information for as long as necessary to evaluate App usage, troubleshoot issues, resolve disputes and collect any fees owed.\n
+
+Please contact DPO@Randox.com for the first instance, if you wish to:\n
+
+    \u25BAWithdraw your consent\n
+    \u25BASee your personal data or to exercise any of the rights mentioned previously\n
+    \u25BAMake a compliant about how we have handled your personal data\n
+
+If you are not satisfied with our response to any query you raise with us, or you believe we are processing your personal data in a way which is inconsistent with the law, you can complain to the ICO office helpline: <b>0303 123 1113</b>\n</string>
+
+
 </resources>
