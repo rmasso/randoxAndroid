@@ -146,9 +146,7 @@ class RegisterActivity : AppCompatActivity() {
 
         }
         binding.subInfo.cancel.setOnClickListener {
-            //binding.passportScanInfo.visibility = View.GONE
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            onBackPressed()
         }
 
         binding.dob.setOnClickListener {
@@ -170,6 +168,12 @@ class RegisterActivity : AppCompatActivity() {
             binding.password.setSelection(binding.password.length())
         }
 
+    }
+
+
+    override fun onBackPressed() {
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -197,19 +201,19 @@ class RegisterActivity : AppCompatActivity() {
                             .into(binding.image)
                     }
 
-                    mrzResult?.let { mrzCodeResult->
+                    mrzResult?.let { mrzCodeResult ->
 
-                        val firstName= mrzCodeResult.secondaryId
-                        val lastName= mrzCodeResult.primaryId
-                        val dateOfBirth=  with(mrzCodeResult.dateOfBirth.date){
-                            String.format("%02d-%02d-%04d",this?.day,this?.month,this?.year)
-                         }
-                        val passport= mrzCodeResult.documentNumber
-                        with(binding){
-                            fname.text= Editable.Factory.getInstance().newEditable(firstName)
-                            sname.text= Editable.Factory.getInstance().newEditable(lastName)
-                            dob.text= Editable.Factory.getInstance().newEditable(dateOfBirth)
-                            pnumber.text= Editable.Factory.getInstance().newEditable(passport)
+                        val firstName = mrzCodeResult.secondaryId
+                        val lastName = mrzCodeResult.primaryId
+                        val dateOfBirth = with(mrzCodeResult.dateOfBirth.date) {
+                            String.format("%02d-%02d-%04d", this?.day, this?.month, this?.year)
+                        }
+                        val passport = mrzCodeResult.documentNumber
+                        with(binding) {
+                            fname.text = Editable.Factory.getInstance().newEditable(firstName)
+                            sname.text = Editable.Factory.getInstance().newEditable(lastName)
+                            dob.text = Editable.Factory.getInstance().newEditable(dateOfBirth)
+                            pnumber.text = Editable.Factory.getInstance().newEditable(passport)
                         }
                     }
 
