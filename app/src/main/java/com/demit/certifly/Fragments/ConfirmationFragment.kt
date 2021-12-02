@@ -96,13 +96,14 @@ class ConfirmationFragment(
         val min = Calendar.getInstance(TimeZone.getTimeZone("GMT"))
         min.timeInMillis = max.timeInMillis - 1800000
 
-
         timePickerDialog.setMaxTime(Timepoint(max[Calendar.HOUR_OF_DAY], max[Calendar.MINUTE]))
-        timePickerDialog.setMinTime(
-            min[Calendar.HOUR_OF_DAY],
-            min[Calendar.MINUTE],
-            min[Calendar.SECOND]
-        )
+        if(min.before(max)) {
+            timePickerDialog.setMinTime(
+                min[Calendar.HOUR_OF_DAY],
+                min[Calendar.MINUTE],
+                min[Calendar.SECOND]
+            )
+        }
 
         timePickerDialog.show(requireActivity().supportFragmentManager, "Time Picker")
     }

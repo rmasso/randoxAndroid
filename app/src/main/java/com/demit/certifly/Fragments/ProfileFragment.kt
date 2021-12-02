@@ -125,10 +125,14 @@ class ProfileFragment : Fragment() {
                 // result is valid, you can use it however you wish
 
                 if (result.resultState == Recognizer.Result.State.Valid) {
+                    val p = TProfileModel()
+                    p.usr_sex = resources.getStringArray(R.array.genders)[0]
+                    p.ethnicity = resources.getStringArray(R.array.ethnicity)[0]
+                    shouldEnableFormFields(true)
                     val docImage = result.fullDocumentFrontImage?.convertToBitmap()
                     val mrzResult = result.mrzResult
                     docImage?.let {
-                        list[list.size - 1].usr_image = it.toBase64String()
+                        p.usr_image = it.toBase64String()
                     }
 
 
@@ -139,12 +143,13 @@ class ProfileFragment : Fragment() {
                            String.format("%02d-%02d-%04d",this?.day,this?.month,this?.year)
                         }
                         val passport = mrzCodeResult.documentNumber
-                        with(list[list.size - 1]) {
+                        with(p) {
                             usr_firstname = fullName
                             usr_birth = dateOfBirth
                             usr_passport = passport
                         }
                     }
+                    list.add(p)
 
                     setData(list.size - 1)
 
@@ -166,11 +171,6 @@ class ProfileFragment : Fragment() {
     fun clicks() {
         binding.add.setOnClickListener() {
             binding.passportScanInfo.visibility = View.VISIBLE
-            val p = TProfileModel()
-            p.usr_sex = resources.getStringArray(R.array.genders)[0]
-            p.ethnicity = resources.getStringArray(R.array.ethnicity)[0]
-            list.add(p)
-            shouldEnableFormFields(true)
         }
 
         binding.dob.setOnClickListener {
@@ -193,7 +193,7 @@ class ProfileFragment : Fragment() {
                 if (context != null)
                     Toast.makeText(context, "Passport Number can't be empty", Toast.LENGTH_SHORT)
                         .show()
-            } else if (binding.address.text.trim() == "") {
+            } else if (binding.address.text.trim().isEmpty()) {
                 if (context != null)
                     Toast.makeText(context, "Address Can't be Empty", Toast.LENGTH_SHORT)
                         .show()
