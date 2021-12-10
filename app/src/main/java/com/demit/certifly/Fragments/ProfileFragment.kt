@@ -15,13 +15,17 @@ import android.text.method.LinkMovementMethod
 import android.util.Base64
 import android.util.Log
 import android.util.Patterns
+import android.view.KeyEvent
+import android.view.KeyEvent.KEYCODE_BACK
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -51,6 +55,7 @@ import com.microblink.entities.recognizers.RecognizerBundle
 import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecognizer
 import com.microblink.uisettings.ActivityRunner
 import com.microblink.uisettings.BlinkIdUISettings
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_profile.view.*
 
 import org.json.JSONObject
@@ -87,7 +92,7 @@ class ProfileFragment : Fragment() {
 
 
 
-        getProfiles();
+        getProfiles()
         adapter = ProfileAdapter()
         binding.rv.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -97,8 +102,10 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        clicks()
         enable =
-            requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).getBoolean("should_take_to_settings", false)
+            requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE)
+                .getBoolean("should_take_to_settings", false)
         val text =
             "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
                     " and agree to the  Terms and Conditions. </a>"
@@ -125,21 +132,30 @@ class ProfileFragment : Fragment() {
             cameraRequestLauncher =
                 registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                     if (isGranted) {
-                        requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                        requireActivity().getSharedPreferences(
+                            "app",
+                            AppCompatActivity.MODE_PRIVATE
+                        ).edit()
                             .putBoolean("should_take_to_settings", false).apply()
                         startScanning()
                     } else {
                         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
                             if (!shouldShowRequestPermissionRationale(PermissionUtil.CAMERA_PERMISSION)) {
                                 enable = true
-                                requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                                requireActivity().getSharedPreferences(
+                                    "app",
+                                    AppCompatActivity.MODE_PRIVATE
+                                ).edit()
                                     .putBoolean("should_take_to_settings", true).apply()
                             }
 
                         } else {
                             //Android 11 and up
                             enable = true
-                            requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                            requireActivity().getSharedPreferences(
+                                "app",
+                                AppCompatActivity.MODE_PRIVATE
+                            ).edit()
                                 .putBoolean("should_take_to_settings", true).apply()
                         }
 
@@ -179,7 +195,7 @@ class ProfileFragment : Fragment() {
                         val fullName = "${mrzCodeResult.secondaryId} ${mrzCodeResult.primaryId}"
 
                         val dateOfBirth = with(mrzCodeResult.dateOfBirth.date) {
-                           String.format("%02d-%02d-%04d",this?.day,this?.month,this?.year)
+                            String.format("%02d-%02d-%04d", this?.day, this?.month, this?.year)
                         }
                         val passport = mrzCodeResult.documentNumber
                         with(p) {
@@ -203,10 +219,8 @@ class ProfileFragment : Fragment() {
 
                 }
             }
-        }
-
-        else if(requestCode==CAMERA_REQUEST_CODE){
-            if(PermissionUtil.hasCameraPermission(requireContext())){
+        } else if (requestCode == CAMERA_REQUEST_CODE) {
+            if (PermissionUtil.hasCameraPermission(requireContext())) {
                 requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
                     .putBoolean("should_take_to_settings", false).apply()
                 startScanning()
@@ -215,13 +229,67 @@ class ProfileFragment : Fragment() {
 
     }
 
+
     fun clicks() {
+        if (isMarshMallowOrAbove()) {
+            binding.scroll.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY > oldScrollY + 12 && binding.editBtn.isExtended) {
+                    binding.editBtn.shrink()
+                }
+
+                // the delay of the extension of the FAB is set for 12 items
+                if (scrollY < oldScrollY - 12 && !binding.editBtn.isExtended) {
+                    binding.editBtn.extend()
+                }
+
+                // if the nestedScrollView is at the first item of the list then the
+                // extended floating action should be in extended state
+                if (scrollY == 0) {
+                    binding.editBtn.extend()
+                }
+            }
+        }
+        view?.let { view ->
+            with(view) {
+                isFocusableInTouchMode = true
+                requestFocus()
+                setOnKeyListener { _, keyCode, event ->
+                    if (event.action == KeyEvent.ACTION_UP && keyCode == KEYCODE_BACK) {
+                        if (binding.passportScanInfo.visibility == View.VISIBLE) {
+                            binding.passportScanInfo.visibility = View.GONE
+                            shouldShowEditFab(true)
+                            false
+                        } else {
+                            requireActivity().onBackPressed()
+                        }
+                        true
+
+                    } else
+                        false
+
+                }
+            }
+        }
+
         binding.add.setOnClickListener() {
             binding.passportScanInfo.visibility = View.VISIBLE
+            shouldShowEditFab(false)
         }
 
         binding.dob.setOnClickListener {
             openDatePicker()
+        }
+
+        binding.editBtn.setOnClickListener {
+            val editFragment = ProfileEditFragment.getInstance(list[index])
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragcontainer,
+                    editFragment
+                )
+                .addToBackStack("")
+                .commit()
         }
 
         binding.save.setOnClickListener {
@@ -299,6 +367,7 @@ class ProfileFragment : Fragment() {
         }
         binding.subInfo.cancel.setOnClickListener {
             binding.passportScanInfo.visibility = View.GONE
+            shouldShowEditFab(true)
         }
     }
 
@@ -584,13 +653,15 @@ class ProfileFragment : Fragment() {
             }
             enable -> {
                 val permissionSettingsDialog =
-                    PermissionInfoDialog(true,
+                    PermissionInfoDialog(
+                        true,
                         Constants.DIALOG_TYPE_CAMERA_PASSPORT
                     ) { btnClickId, dialog ->
                         when (btnClickId) {
                             R.id.btn_settings -> {
-                                val intent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                val uri = Uri.fromParts("package", requireContext().packageName, null);
+                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                val uri =
+                                    Uri.fromParts("package", requireContext().packageName, null);
                                 intent.data = uri;
                                 startActivityForResult(intent, 1001)
                                 dialog.dismiss()
@@ -600,15 +671,19 @@ class ProfileFragment : Fragment() {
                             }
                         }
                     }
-                permissionSettingsDialog.isCancelable=false
-                permissionSettingsDialog.show(requireActivity().supportFragmentManager,"permission_dialog")
+                permissionSettingsDialog.isCancelable = false
+                permissionSettingsDialog.show(
+                    requireActivity().supportFragmentManager,
+                    "permission_dialog"
+                )
 
 
             }
             else -> {
                 //Show some cool ui to the user explaining why we use this permission
                 val permissionDialog =
-                    PermissionInfoDialog(false,
+                    PermissionInfoDialog(
+                        false,
                         Constants.DIALOG_TYPE_CAMERA_PASSPORT
                     ) { btnClickId, dialog ->
                         when (btnClickId) {
@@ -621,8 +696,8 @@ class ProfileFragment : Fragment() {
                             }
                         }
                     }
-                permissionDialog.isCancelable=false
-                permissionDialog.show(requireActivity().supportFragmentManager,"permission_dialog")
+                permissionDialog.isCancelable = false
+                permissionDialog.show(requireActivity().supportFragmentManager, "permission_dialog")
 
             }
         }
@@ -676,7 +751,7 @@ class ProfileFragment : Fragment() {
                     "User registered successfully",
                     Toast.LENGTH_SHORT
                 ).show()
-                list[index].usr_id = "1"
+                getProfiles()
                 shouldEnableFormFields(false)
             } else {
                 Toast.makeText(
@@ -724,8 +799,8 @@ class ProfileFragment : Fragment() {
                             list[0].checked = true;
                         }
                         adapter.notifyDataSetChanged()
-                        clicks()
                         fielddata()
+
                     }
                 } catch (e: Exception) {
                     e.printStackTrace()
@@ -824,7 +899,11 @@ class ProfileFragment : Fragment() {
 
             val shouldHideSaveBtn = if (!enable) View.GONE else View.VISIBLE
             save.visibility = shouldHideSaveBtn
-
+            shouldShowEditFab(!enable)
         }
+    }
+
+    private fun shouldShowEditFab(show: Boolean) {
+        binding.editBtn.visibility = if (show) View.VISIBLE else View.GONE
     }
 }

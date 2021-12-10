@@ -27,6 +27,8 @@ object ApiHelper {
         val FORGET_PASSWORD = "forgot_password.php"
         val PLF_FIT_VERIFICATION = "verify_pfl_fit.php"
         val TEST_TYPE_AVAILABILITY = "getTypeStatus.php"
+        val MODIFY_FAMILY_USER="modifyFamily.php"
+        val MODIFY_MAIN_USER="modifyUser.php"
     }
 
     fun createNewCertificate(certificateModel: CertificateModel): LiveData<String> {
@@ -93,6 +95,30 @@ object ApiHelper {
                     Log.d("++err++", "${anError?.message}")
                 }
             })
+
+        return apiResponseLiveData
+    }
+
+    fun updateFamilyUser(profileMap:Map<String,String>,isMainUser:Boolean):LiveData<String>{
+        val apiResponseLiveData = MutableLiveData<String>()
+        val endPoint= if(isMainUser) ApiEndPoint.MODIFY_MAIN_USER else ApiEndPoint.MODIFY_FAMILY_USER
+
+        AndroidNetworking.post("${Constants.url}$endPoint")
+            .addBodyParameter(profileMap)
+            .setTag("update_user")
+            .setPriority(Priority.MEDIUM)
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    apiResponseLiveData.postValue(response?.getString("ret"))
+                }
+
+                override fun onError(anError: ANError?) {
+                    apiResponseLiveData.postValue("Something went wrong")
+                    Log.d("++err++", "${anError?.message}")
+                }
+            })
+
 
         return apiResponseLiveData
     }
