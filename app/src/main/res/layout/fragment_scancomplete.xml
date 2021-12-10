@@ -86,11 +86,12 @@
             android:visibility="visible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/textlight"
+            android:textColor="@color/black"
             android:layout_marginTop="@dimen/_10sdp"
             android:fontFamily="@font/poppinsregular"
             android:text="Once you have submitted the scan for certification this test can no longer be used."
-            android:textSize="@dimen/_8sdp"
+            android:textAlignment="center"
+            android:textSize="@dimen/_10sdp"
             />
 
     </LinearLayout>

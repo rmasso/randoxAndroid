@@ -9,9 +9,11 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.provider.Settings
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
@@ -20,6 +22,8 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -29,6 +33,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.demit.certifly.Extras.Constants
+import com.demit.certifly.Extras.PermissionUtil
+import com.demit.certifly.Fragments.PermissionInfoDialog
 import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityCaptureBinding
 import com.demit.certifly.extensions.*
@@ -55,9 +62,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var outputDirectory: File
     private lateinit var currentPhotoPath: String
     private lateinit var binding: ActivityCaptureBinding
-    private val REQUEST_CODE_PERMISSIONS = 72
     val SCAN_RESULT = 150
-    private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
     lateinit var cameraProvider: ProcessCameraProvider
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
 
@@ -69,38 +74,60 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var originalImage: Bitmap
     lateinit var croppedDevice: String
 
+    //Camera Permission Variables
+    lateinit var cameraRequestLauncher: ActivityResultLauncher<String>
+    var enable = false
+    private val CAMERA_REQUEST_CODE = 1001
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_capture)
+        enable =
+            getSharedPreferences("app", MODE_PRIVATE).getBoolean("should_take_to_settings", false)
         initBottomSheet()
         attachClickListener()
         initBarcode()
-        // Request camera permissions
-        if (allPermissionsGranted()) {
-            startCamera()
-        } else {
-            ActivityCompat.requestPermissions(
-                this, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
-            )
+        if (PermissionUtil.isMarshMallowOrAbove()) {
+            cameraRequestLauncher =
+                registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                    if (isGranted) {
+                        getSharedPreferences("app", MODE_PRIVATE).edit()
+                            .putBoolean("should_take_to_settings", false).apply()
+                        startCamera()
+                    } else {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                            if (!shouldShowRequestPermissionRationale(PermissionUtil.CAMERA_PERMISSION)) {
+                                enable = true
+                                getSharedPreferences("app", MODE_PRIVATE).edit()
+                                    .putBoolean("should_take_to_settings", true).apply()
+                            }
+                            finish()
+
+                        } else {
+                            //Android 11 and up
+                            enable = true
+                            getSharedPreferences("app", MODE_PRIVATE).edit()
+                                .putBoolean("should_take_to_settings", true).apply()
+                            finish()
+                        }
+
+                    }
+
+                }
         }
+        requestCameraPermission()
         outputDirectory = createImageFile()
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int, permissions: Array<String>, grantResults:
-        IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == REQUEST_CODE_PERMISSIONS) {
-            if (allPermissionsGranted()) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode==CAMERA_REQUEST_CODE){
+            if(PermissionUtil.hasCameraPermission(this)){
+                getSharedPreferences("app", MODE_PRIVATE).edit()
+                    .putBoolean("should_take_to_settings", false).apply()
                 startCamera()
-            } else {
-                Toast.makeText(
-                    this,
-                    "Permissions not granted by the user.",
-                    Toast.LENGTH_SHORT
-                ).show()
+            }else{
                 finish()
             }
         }
@@ -147,6 +174,54 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
 
     //Method Helpers
+    private fun requestCameraPermission() {
+        when {
+            PermissionUtil.hasCameraPermission(this) -> {
+                startCamera()
+            }
+            enable -> {
+                val permissionSettingsDialog =
+                    PermissionInfoDialog(true, Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN) { btnClickId, dialog ->
+                        when (btnClickId) {
+                            R.id.btn_settings -> {
+                                val intent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                val uri = Uri.fromParts("package", packageName, null);
+                                intent.data = uri;
+                                startActivityForResult(intent, 1001)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                                finish()
+                            }
+                        }
+                    }
+                permissionSettingsDialog.isCancelable=false
+                permissionSettingsDialog.show(supportFragmentManager,"permission_dialog")
+
+
+            }
+            else -> {
+                //Show some cool ui to the user explaining why we use this permission
+                val permissionDialog =
+                    PermissionInfoDialog(false, Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN) { btnClickId, dialog ->
+                        when (btnClickId) {
+                            R.id.btn_allow -> {
+                                cameraRequestLauncher.launch(PermissionUtil.CAMERA_PERMISSION)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                                finish()
+                            }
+                        }
+                    }
+                permissionDialog.isCancelable=false
+                permissionDialog.show(supportFragmentManager,"permission_dialog")
+
+            }
+        }
+    }
 
     //Camera Helper
     private fun startCamera() {
@@ -353,11 +428,6 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-    private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
-        ContextCompat.checkSelfPermission(
-            baseContext, it
-        ) == PackageManager.PERMISSION_GRANTED
-    }
 
 
     @Throws(IOException::class)

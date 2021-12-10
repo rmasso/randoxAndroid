@@ -13,7 +13,7 @@ import com.demit.certifly.databinding.FragmentConductTestBinding
 
 class FragmentConductTest(
     val selectedProfile: TProfileModel,
-    val additionalData: Map<String, String>?
+    val additionalData: Map<String, String>?,
 ) : Fragment() {
     lateinit var binding: FragmentConductTestBinding
     override fun onCreateView(

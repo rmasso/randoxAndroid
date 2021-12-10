@@ -70,7 +70,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        usr_sex ?: "",
+                        cert_sex ?: "",
                         20f,
                         Font.NORMAL
                     )
@@ -285,7 +285,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        usr_sex ?: "",
+                        cert_sex ?: "",
                         20f,
                         Font.NORMAL
                     )

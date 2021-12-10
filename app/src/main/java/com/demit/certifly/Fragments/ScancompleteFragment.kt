@@ -127,6 +127,7 @@ class ScancompleteFragment(
                 Country_of_departure = dataMap["Country_of_departure"]!!
             }
         }
+        certificateModel.swap_timestamp= swabDateTime
 
 
         return certificateModel

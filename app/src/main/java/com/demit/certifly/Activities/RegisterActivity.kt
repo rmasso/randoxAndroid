@@ -2,9 +2,11 @@ package com.demit.certifly.Activities
 
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
@@ -15,15 +17,22 @@ import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
 import com.demit.certifly.Extras.Constants
+import com.demit.certifly.Extras.Constants.Companion.DIALOG_TYPE_CAMERA_PASSPORT
 import com.demit.certifly.Extras.Functions
+import com.demit.certifly.Extras.PermissionUtil.CAMERA_PERMISSION
+import com.demit.certifly.Extras.PermissionUtil.hasCameraPermission
+import com.demit.certifly.Extras.PermissionUtil.isMarshMallowOrAbove
 import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
+import com.demit.certifly.Fragments.PermissionInfoDialog
 import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityProfileBinding
 import com.demit.certifly.extensions.toBase64String
@@ -45,15 +54,23 @@ class RegisterActivity : AppCompatActivity() {
     //Blink Id Variables
     private lateinit var mRecognizer: BlinkIdCombinedRecognizer
     private lateinit var mRecognizerBundle: RecognizerBundle
-    var isPasswordShown = false
-    private var usr_img = ""
     private val MY_REQUEST_CODE = 801
+
+    //Camera Permission Variables
+    lateinit var cameraRequestLauncher: ActivityResultLauncher<String>
+    var enable = false
+    var isPasswordShown = false
+    private val CAMERA_REQUEST_CODE = 1001
+
+    private var usr_img = ""
     lateinit var sweet: Sweet
     lateinit var binding: ActivityProfileBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        enable =
+            getSharedPreferences("app", MODE_PRIVATE).getBoolean("should_take_to_settings", false)
         sweet = Sweet(this)
         clicks()
         mRecognizer = BlinkIdCombinedRecognizer()
@@ -74,6 +91,33 @@ class RegisterActivity : AppCompatActivity() {
         else
             Html.fromHtml(text)
         binding.link.text = htmlOut
+
+        if (isMarshMallowOrAbove()) {
+            cameraRequestLauncher =
+                registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                    if (isGranted) {
+                        getSharedPreferences("app", MODE_PRIVATE).edit()
+                            .putBoolean("should_take_to_settings", false).apply()
+                        startScanning()
+                    } else {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                            if (!shouldShowRequestPermissionRationale(CAMERA_PERMISSION)) {
+                                enable = true
+                                getSharedPreferences("app", MODE_PRIVATE).edit()
+                                    .putBoolean("should_take_to_settings", true).apply()
+                            }
+
+                        } else {
+                            //Android 11 and up
+                            enable = true
+                            getSharedPreferences("app", MODE_PRIVATE).edit()
+                                .putBoolean("should_take_to_settings", true).apply()
+                        }
+
+                    }
+
+                }
+        }
     }
 
     private fun clicks() {
@@ -142,7 +186,12 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.subInfo.verify.setOnClickListener {
-            startScanning()
+            // startScanning()
+            if (isMarshMallowOrAbove()) {
+                requestCameraPermission()
+            } else {
+                startScanning()
+            }
 
         }
         binding.subInfo.cancel.setOnClickListener {
@@ -169,6 +218,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
     }
+
 
 
     override fun onBackPressed() {
@@ -224,6 +274,14 @@ class RegisterActivity : AppCompatActivity() {
 
             }
         }
+
+        else if(requestCode==CAMERA_REQUEST_CODE){
+            if(hasCameraPermission(this)){
+                getSharedPreferences("app", MODE_PRIVATE).edit()
+                    .putBoolean("should_take_to_settings", false).apply()
+                startScanning()
+            }
+        }
     }
 
     private fun startScanning() {
@@ -234,6 +292,53 @@ class RegisterActivity : AppCompatActivity() {
 
         // Start activity
         ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
+    }
+
+    private fun requestCameraPermission() {
+        when {
+            hasCameraPermission(this) -> {
+                startScanning()
+            }
+            enable -> {
+                val permissionSettingsDialog =
+                    PermissionInfoDialog(true, DIALOG_TYPE_CAMERA_PASSPORT) { btnClickId,dialog ->
+                        when (btnClickId) {
+                            R.id.btn_settings -> {
+                                val intent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                val uri = Uri.fromParts("package", packageName, null);
+                                intent.data = uri;
+                                startActivityForResult(intent, 1001)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                permissionSettingsDialog.isCancelable=false
+                permissionSettingsDialog.show(supportFragmentManager,"permission_dialog")
+
+
+            }
+            else -> {
+                //Show some cool ui to the user explaining why we use this permission
+                val permissionDialog =
+                    PermissionInfoDialog(false, DIALOG_TYPE_CAMERA_PASSPORT) { btnClickId,dialog ->
+                        when (btnClickId) {
+                            R.id.btn_allow -> {
+                                cameraRequestLauncher.launch(CAMERA_PERMISSION)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                permissionDialog.isCancelable=false
+                permissionDialog.show(supportFragmentManager,"permission_dialog")
+
+            }
+        }
     }
 
     fun register() {
@@ -355,4 +460,5 @@ class RegisterActivity : AppCompatActivity() {
         datePicker.show(supportFragmentManager, "date_picker")
 
     }
+
 }

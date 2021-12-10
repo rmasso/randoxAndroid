@@ -45,15 +45,15 @@ class LoginActivity : AppCompatActivity() {
     lateinit var sweet: Sweet
     val permissions = arrayListOf<String>()
     var isPasswordShown = false
-    private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
+//    private lateinit var permissionResultLauncher: ActivityResultLauncher<Array<String>>
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-            checkPermissions()
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            checkPermissions()*/
         sweet = Sweet(this)
         clicks()
         val sharedPreferences = Shared(this)
@@ -62,11 +62,11 @@ class LoginActivity : AppCompatActivity() {
         binding.email.setText(email)
         binding.password.setText(password)
 
-        permissionResultLauncher =
+       /* permissionResultLauncher =
             registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { grantResultsMap ->
                 if (grantResultsMap.containsValue(false))
                     showAlertDialog()
-            }
+            }*/
 
         binding.passwordVisibilityToggle.setOnClickListener {
             //We have to show password to user in form of plain text
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun checkPermissions() {
+    /*private fun checkPermissions() {
 
         if (ContextCompat.checkSelfPermission(
                 this,
@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
             permissionDialog.isCancelable = false
             permissionDialog.show(supportFragmentManager, "permission_dialog")
         }
-    }
+    }*/
 
 
     private fun clicks() {
@@ -252,7 +252,7 @@ class LoginActivity : AppCompatActivity() {
             }
     }
 
-    private fun showAlertDialog() {
+    /*private fun showAlertDialog() {
 
         val positiveClickListener = DetachableClickListener.wrap { _, _ ->
             permissionResultLauncher.launch(
@@ -275,5 +275,5 @@ class LoginActivity : AppCompatActivity() {
         positiveClickListener.clearOnDetach(builder)
         negativeClickListener.clearOnDetach(builder)
         builder.show()
-    }
+    }*/
 }

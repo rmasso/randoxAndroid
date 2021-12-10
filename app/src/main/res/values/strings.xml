@@ -109,6 +109,9 @@
 \u25BA AI capability, to predict and locate position of our test device.\n
 <u><b>Storage permission</b></u> is required in order to enable the user to store his/her certificate on the device.</string>
     <string name="agree_and_continue">Continue</string>
+    <string name="allow">Allow</string>
+    <string name="settings">Settings</string>
+    <string name="not_now">Not now</string>
     <string name="web_terms_privacy">By continuing, you agree to the Randox Certifly <a href="https://www.randoxhealth.com/covid-19-terms-and-conditions">Terms of Service</a>. Please Note: The <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> describes how data is handled in this service.</string>
     <string name="is_available">Not currently available due to change in UK travel guidance.</string>
     <string name="buy_pcr_test">Please purchase your Day 2  PCR test at <font color='#0000FF'><a href="https://fly.randox.com/">https://fly.randox.com/</a></font> using coupon code &quot;Certifly&quot;.</string>
@@ -212,6 +215,15 @@ Please contact DPO@Randox.com for the first instance, if you wish to:\n
     \u25BAMake a compliant about how we have handled your personal data\n
 
 If you are not satisfied with our response to any query you raise with us, or you believe we are processing your personal data in a way which is inconsistent with the law, you can complain to the ICO office helpline: <b>0303 123 1113</b>\n</string>
+    <string name="camera_permission_header">Camera access required</string>
+    <string name="camera_permission_content_passport">Please allow to use Camera to scan your passport, this is used for identity verification.</string>
+    <string name="camera_permission_content_passport_settings">Please allow to use Camera to scan your passport, this is used for identity verification. Tap Settings > Permissions, and turn Camera on.</string>
+    <string name="camera_permission_content_device_scan">Please allow to use Camera to capture your test device image, this is used to verify the result of your test.</string>
+    <string name="camera_permission_content_device_settings">Please allow to use Camera to capture your test device image, this is used to verify the result of your test. Tap Settings > Permissions, and turn Camera on.</string>
+
+    <string name="storage_permission_header">Storage access required</string>
+    <string name="storage_permission_content">Please allow storage of personal data to be stored on the device during use.</string>
+    <string name="storage_permission_content_settings">Please allow storage of personal data to be stored on the device during use. Tap Settings > Permissions, and turn Storage on.</string>
 
 
 </resources>

@@ -4,8 +4,10 @@ import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -18,6 +20,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,10 +33,8 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.bumptech.glide.Glide
-import com.demit.certifly.Extras.Constants
-import com.demit.certifly.Extras.Functions
-import com.demit.certifly.Extras.Shared
-import com.demit.certifly.Extras.Sweet
+import com.demit.certifly.Extras.*
+import com.demit.certifly.Extras.PermissionUtil.isMarshMallowOrAbove
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
 import com.demit.certifly.data.ApiHelper
@@ -68,6 +71,13 @@ class ProfileFragment : Fragment() {
     private lateinit var mRecognizerBundle: RecognizerBundle
     private val MY_REQUEST_CODE = 801
     private var isFromAdapterClick: Boolean = false
+
+    //Camera Permission Variables
+    lateinit var cameraRequestLauncher: ActivityResultLauncher<String>
+    var enable = false
+    private val CAMERA_REQUEST_CODE = 1001
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,6 +97,8 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        enable =
+            requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).getBoolean("should_take_to_settings", false)
         val text =
             "<a href='https://www.randoxhealth.com/covid-19-terms-and-conditions'> I agree to the accuracy of the submitted data\n" +
                     " and agree to the  Terms and Conditions. </a>"
@@ -108,6 +120,33 @@ class ProfileFragment : Fragment() {
         binding.gender.setSelection(0)
         binding.ethnicity.setSelection(0)
         shouldEnableFormFields(false)
+
+        if (isMarshMallowOrAbove()) {
+            cameraRequestLauncher =
+                registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+                    if (isGranted) {
+                        requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                            .putBoolean("should_take_to_settings", false).apply()
+                        startScanning()
+                    } else {
+                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
+                            if (!shouldShowRequestPermissionRationale(PermissionUtil.CAMERA_PERMISSION)) {
+                                enable = true
+                                requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                                    .putBoolean("should_take_to_settings", true).apply()
+                            }
+
+                        } else {
+                            //Android 11 and up
+                            enable = true
+                            requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                                .putBoolean("should_take_to_settings", true).apply()
+                        }
+
+                    }
+
+                }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -163,6 +202,14 @@ class ProfileFragment : Fragment() {
 
 
                 }
+            }
+        }
+
+        else if(requestCode==CAMERA_REQUEST_CODE){
+            if(PermissionUtil.hasCameraPermission(requireContext())){
+                requireActivity().getSharedPreferences("app", AppCompatActivity.MODE_PRIVATE).edit()
+                    .putBoolean("should_take_to_settings", false).apply()
+                startScanning()
             }
         }
 
@@ -243,8 +290,12 @@ class ProfileFragment : Fragment() {
         }
 
         binding.subInfo.verify.setOnClickListener {
-            startScanning()
-
+            //startScanning()
+            if (isMarshMallowOrAbove()) {
+                requestCameraPermission()
+            } else {
+                startScanning()
+            }
         }
         binding.subInfo.cancel.setOnClickListener {
             binding.passportScanInfo.visibility = View.GONE
@@ -524,6 +575,57 @@ class ProfileFragment : Fragment() {
 
         // Start activity
         ActivityRunner.startActivityForResult(this, MY_REQUEST_CODE, settings)
+    }
+
+    private fun requestCameraPermission() {
+        when {
+            PermissionUtil.hasCameraPermission(requireContext()) -> {
+                startScanning()
+            }
+            enable -> {
+                val permissionSettingsDialog =
+                    PermissionInfoDialog(true,
+                        Constants.DIALOG_TYPE_CAMERA_PASSPORT
+                    ) { btnClickId, dialog ->
+                        when (btnClickId) {
+                            R.id.btn_settings -> {
+                                val intent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                val uri = Uri.fromParts("package", requireContext().packageName, null);
+                                intent.data = uri;
+                                startActivityForResult(intent, 1001)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                permissionSettingsDialog.isCancelable=false
+                permissionSettingsDialog.show(requireActivity().supportFragmentManager,"permission_dialog")
+
+
+            }
+            else -> {
+                //Show some cool ui to the user explaining why we use this permission
+                val permissionDialog =
+                    PermissionInfoDialog(false,
+                        Constants.DIALOG_TYPE_CAMERA_PASSPORT
+                    ) { btnClickId, dialog ->
+                        when (btnClickId) {
+                            R.id.btn_allow -> {
+                                cameraRequestLauncher.launch(PermissionUtil.CAMERA_PERMISSION)
+                                dialog.dismiss()
+                            }
+                            R.id.btn_not_now -> {
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+                permissionDialog.isCancelable=false
+                permissionDialog.show(requireActivity().supportFragmentManager,"permission_dialog")
+
+            }
+        }
     }
 
     fun familyregister() {

@@ -29,7 +29,8 @@ data class CertificateModel(
     var country_territory_part_journey:String="",
     var last_date_department:String="",
     var Country_of_departure:String="",
-    val companyName:String="Randox"
+    val companyName:String="Randox",
+    var swap_timestamp:String="",
 
 
 

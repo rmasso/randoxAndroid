@@ -9,7 +9,7 @@ data class AllCertificatesModel(
     val usr_id:String,
     val usr_birth:String,
     val usr_phone:String,
-    val usr_sex:String,
+    val cert_sex:String,
     val cert_usr_id:String,
     val cert_usr_parent_id:String,
     val cert_email: String,

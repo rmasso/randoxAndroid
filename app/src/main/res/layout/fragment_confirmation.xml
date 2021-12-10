@@ -141,6 +141,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_75sdp"
         android:background="@drawable/button_bg"
         android:fontFamily="@font/poppinsmedium"
         android:includeFontPadding="false"

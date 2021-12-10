@@ -54,7 +54,8 @@ class ConfirmationFragment(
             binding.timeContent.isEnabled = true
             val now = Calendar.getInstance()
             timePickerDialog = TimePickerDialog.newInstance({ view, hourOfDay, minute, second ->
-                binding.timeContent.text = String.format("%02d:%02d:%02d",hourOfDay,minute,second)
+                binding.timeContent.text =
+                    String.format("%02d:%02d:%02d", hourOfDay, minute, second)
             }, now[Calendar.HOUR_OF_DAY], now[Calendar.MINUTE], now[Calendar.SECOND], true)
         }
 
@@ -63,14 +64,13 @@ class ConfirmationFragment(
 
     private fun manageClicks() {
         binding.btnNext.setOnClickListener {
-            if(binding.timeContent.text==""){
+            if (binding.timeContent.text == "") {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.confirm_time),
                     Toast.LENGTH_SHORT
                 ).show()
-            }
-            else if (!binding.radio.isChecked) {
+            } else if (!binding.radio.isChecked) {
                 Toast.makeText(
                     requireContext(),
                     getString(R.string.confirm_test),
@@ -78,9 +78,12 @@ class ConfirmationFragment(
                 ).show()
             } else {
                 requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragcontainer, ScancompleteFragment(selectedProfile, additionalData,
-                   "${binding.dateContent.text} ${binding.timeContent.text}"
-                        ))
+                    .replace(
+                        R.id.fragcontainer, ScancompleteFragment(
+                            selectedProfile, additionalData,
+                            "${binding.dateContent.text} ${binding.timeContent.text}"
+                        )
+                    )
                     .addToBackStack("")
                     .commit()
             }
@@ -97,13 +100,13 @@ class ConfirmationFragment(
         min.timeInMillis = max.timeInMillis - 1800000
 
         timePickerDialog.setMaxTime(Timepoint(max[Calendar.HOUR_OF_DAY], max[Calendar.MINUTE]))
-        if(min.before(max)) {
-            timePickerDialog.setMinTime(
-                min[Calendar.HOUR_OF_DAY],
-                min[Calendar.MINUTE],
-                min[Calendar.SECOND]
-            )
-        }
+
+        timePickerDialog.setMinTime(
+            min[Calendar.HOUR_OF_DAY],
+            min[Calendar.MINUTE],
+            min[Calendar.SECOND]
+        )
+
 
         timePickerDialog.show(requireActivity().supportFragmentManager, "Time Picker")
     }

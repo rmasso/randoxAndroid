@@ -36,6 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo"
+                app:layout_constraintVertical_bias="0.0"
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
@@ -91,6 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_20sdp"
+                android:layout_marginBottom="@dimen/_75sdp"
                 android:fontFamily="@font/poppinslight"
                 android:includeFontPadding="false"
                 android:paddingHorizontal="4dp"
@@ -99,6 +101,7 @@
                 android:textAlignment="center"
                 android:textColor="@color/sblue"
                 android:textSize="@dimen/_14sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btn_start" />
