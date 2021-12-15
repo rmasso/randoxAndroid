@@ -12,6 +12,8 @@ class Constants {
         const val DIALOG_TYPE_CAMERA_PASSPORT = 1
         const val DIALOG_TYPE_CAMERA_DEVICE_SCAN = 2
         const val DIALOG_TYPE_STORAGE = 3
+        const val TERMS_FIT_TO_TRAVEL=10
+        const val TERMS_UK_DAY_2=11
 
     }
 }

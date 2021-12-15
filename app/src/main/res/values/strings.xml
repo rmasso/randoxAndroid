@@ -8,6 +8,7 @@
     <string name="certificate_type_heading">Please choose test type:</string>
     <string name="fit_to_travel">Fit to travel</string>
     <string name="days_2">UK Day 2 arrival</string>
+    <string name="agree_text">Agree</string>
     <string name="how_many_days_you_were_vaccinated">Has it been 14 or more days since you have been fully vaccinated in a UK approved vaccination program ?</string>
     <array name="genders">
         <item>Male</item>
@@ -224,6 +225,9 @@ If you are not satisfied with our response to any query you raise with us, or yo
     <string name="storage_permission_header">Storage access required</string>
     <string name="storage_permission_content">Please allow storage of personal data to be stored on the device during use.</string>
     <string name="storage_permission_content_settings">Please allow storage of personal data to be stored on the device during use. Tap Settings > Permissions, and turn Storage on.</string>
-
+    <string name="uk_day2_terms_heading">UK Government Day 2 arrival scheme</string>
+    <string name="uk_day2_terms_content"><font color="#ff5916">\u2605</font> Only for UK Government Day 2 arrival scheme\n<font color="#ff5916">\u2605</font> Only used AFTER your arrival into the UK\n<font color="#ff5916">\u2605</font> Needs your Passenger Locator Form booking reference\n<font color="#ff5916">\u2605</font> NOT for general travel\n<font color="#ff5916">\u2605</font> NOT a pre-departure test\n</string>
+    <string name="fit_travel_terms_heading">Fit to Travel- Pre-Departure</string>
+    <string name="fit_travel_terms_content"><font color="#ff5916">\u2605</font> NOT for UK Government Day 2 arrival scheme\n<font color="#ff5916">\u2605</font> Only used BEFORE your travel\n<font color="#ff5916">\u2605</font> Can be used before arriving into the UK\n<font color="#ff5916">\u2605</font> Can be used before departing the UK(if applicable)\n<font color="#ff5916">\u2605</font> Needs your Purchase Order  reference\n</string>
 
 </resources>

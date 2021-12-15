@@ -9,6 +9,8 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.demit.certifly.Extras.Constants.Companion.TERMS_FIT_TO_TRAVEL
+import com.demit.certifly.Extras.Constants.Companion.TERMS_UK_DAY_2
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
@@ -82,16 +84,11 @@ class CertificateTypeFragment(val userProfile: TProfileModel) : Fragment(), View
                 requireActivity().onBackPressed()
             }
             R.id.btn_purchase -> {
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragcontainer, PlfFitFragment(userProfile)).addToBackStack("")
-                    .commit()
+                gotoTermsFragment(TERMS_FIT_TO_TRAVEL)
             }
             R.id.btn_fill_form -> {
 
-                requireActivity().supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragcontainer, DataCaptureFragment(userProfile))
-                    .addToBackStack("")
-                    .commit()
+                gotoTermsFragment(TERMS_UK_DAY_2)
             }
         }
 
@@ -127,6 +124,33 @@ class CertificateTypeFragment(val userProfile: TProfileModel) : Fragment(), View
                 Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
             }
         })
+    }
+
+    private fun gotoTermsFragment(termsType: Int) {
+        val nextFragment: Fragment? = when (termsType) {
+            TERMS_FIT_TO_TRAVEL -> {
+                val args = Bundle()
+                args.putInt("test_type", TERMS_FIT_TO_TRAVEL)
+                args.putSerializable("user_profile", userProfile)
+                TestTermsFragment().apply {
+                    this.arguments = args
+                }
+            }
+            TERMS_UK_DAY_2 -> {
+                val args = Bundle()
+                args.putInt("test_type", TERMS_UK_DAY_2)
+                args.putSerializable("user_profile", userProfile)
+                TestTermsFragment().apply {
+                    this.arguments = args
+                }
+            }
+            else -> null
+        }
+        nextFragment?.let {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragcontainer, nextFragment).addToBackStack("")
+                .commit()
+        }
     }
 
 }
