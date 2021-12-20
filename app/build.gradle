@@ -108,5 +108,9 @@ dependencies {
     //Expandable Layout
     implementation "com.github.skydoves:expandablelayout:1.0.7"
 
+    //Qr generator
+    implementation('com.journeyapps:zxing-android-embedded:4.3.0') { transitive = false }
+    implementation 'com.google.zxing:core:3.3.0'
+
 
 }

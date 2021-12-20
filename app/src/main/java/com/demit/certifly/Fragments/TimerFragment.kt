@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_confirmation.*
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<String, String>?) : Fragment() {
+class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<String, String>?,val plfCode:String?) : Fragment() {
     lateinit var binding: FragmentTimerBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,7 +47,7 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fragcontainer,
-                                ConfirmationFragment(selectedProfile,additionalData,gmtTimeString)
+                                ConfirmationFragment(selectedProfile,additionalData,gmtTimeString,plfCode)
                             )
                             .commit()
                     }

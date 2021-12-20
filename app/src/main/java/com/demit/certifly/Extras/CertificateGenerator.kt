@@ -1,18 +1,22 @@
 package com.demit.certifly.Extras
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.demit.certifly.Models.AllCertificatesModel
+import com.google.zxing.BarcodeFormat
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.FontSelector
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import com.itextpdf.text.pdf.draw.LineSeparator
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.io.ByteArrayOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
 
 object CertificateGenerator {
 
@@ -24,7 +28,7 @@ object CertificateGenerator {
         //Following is the output stream that will hold the pdf
         val baos = ByteArrayOutputStream()
         //Here we are creating a pdf document with a4 paper size
-        val doc = Document(PageSize.A4)
+        val doc = Document(PageSize.A3)
         try {
             //Initializing the Pdf writer
             PdfWriter.getInstance(doc, baos)
@@ -38,63 +42,89 @@ object CertificateGenerator {
                 stream.close()
                 companyLogo.alignment = Element.ALIGN_JUSTIFIED_ALL
 
+                //Dynamic qr generation.
+                val dob = usr_birth ?: ""
+                val dateOfReport = cert_proc_stop ?: ""
+                val bmp2 = getQrCode(
+                    cert_device_id?.takeLast(13),
+                    cert_name ?: "",
+                    getFormatDateFromString(dob, false),
+                    getFormatDateFromString(dateOfReport, true),
+                    getCovidStatus(cert_manual_approved).dropLast(1)
+                )
 
-                //Getting the header Logo image from assets
-                val ims2 = context.assets.open("randox_qr.png")
-                val bmp2 = BitmapFactory.decodeStream(ims2)
                 val stream2 = ByteArrayOutputStream()
-                bmp2.compress(Bitmap.CompressFormat.PNG, 100, stream2)
+                bmp2?.compress(Bitmap.CompressFormat.PNG, 100, stream2)
                 val qr = Image.getInstance(stream2.toByteArray())
                 stream2.close()
                 qr.alignment = Element.ALIGN_RIGHT
-
-
-
-
-
 
                 //Line Separator
                 val logo_line_seperator = getLineSeparator(2f, 100f)
 
                 //Header Information Table
-                val headerTable = PdfPTable(3)
+                val headerTable = PdfPTable(2)
                 headerTable.widthPercentage = 100F
-                headerTable.setWidths(floatArrayOf(2f, 1f, 1f))
+                headerTable.setWidths(floatArrayOf(2f, 2f))
                 //Row1
-                headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
-                headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
-
-                //Row2
-                headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("Randox Health London Ltd", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        cert_sex ?: "",
+                        "URN: " + cert_device_id?.takeLast(13),
                         20f,
                         Font.NORMAL
                     )
                 )
+                // headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
+
+                //Row2
+                headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("Gender: " + cert_sex ?: "", 20f, Font.NORMAL))
+                /*  headerTable.addCell(
+                      getCell(
+                          cert_sex ?: "",
+                          20f,
+                          Font.NORMAL
+                      )
+                  )*/
 
 
                 //Row3
                 headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp?:"", 20f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Swab Date: " + "$cert_timestamp GMT" ?: "",
+                        20f,
+                        Font.NORMAL
+                    )
+                )
+                // headerTable.addCell(getCell("$cert_timestamp GMT" ?: "", 20f, Font.NORMAL))
                 //Row4
                 headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_proc_stop?:"", 20f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Date of Report: " + "$cert_proc_stop GMT" ?: "",
+                        20f,
+                        Font.NORMAL
+                    )
+                )
+                // headerTable.addCell(getCell("$cert_proc_stop GMT" ?: "", 20f, Font.NORMAL))
 
                 //Row5
                 headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Passport Number:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_passport?:"", 20f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Passport Number: " + cert_passport ?: "",
+                        20f,
+                        Font.NORMAL
+                    )
+                )
+                //headerTable.addCell(getCell(cert_passport ?: "", 20f, Font.NORMAL))
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", 20f, Font.NORMAL))
                 headerTable.addCell(getCell("", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("", 20f, Font.NORMAL))
+                //    headerTable.addCell(getCell("", 20f, Font.NORMAL))
 
 
                 //Line Separator
@@ -108,10 +138,11 @@ object CertificateGenerator {
                 fs.addFont(font)
                 val phrase = fs.process("Results report / Certificate")
                 val reportHeading = Paragraph(phrase)
+                reportHeading.alignment = Element.ALIGN_CENTER
 
                 //Report Body
                 val bodyContent =
-                    "Dear ${certificate.cert_name?:""} , Date of Birth: ${usr_birth?:""} Contact Number: ${usr_phone?:""}\n\n" +
+                    "Dear ${certificate.cert_name ?: ""} , Date of Birth: ${usr_birth ?: ""} Contact Number: ${usr_phone ?: ""}\n\n" +
                             "Your coronavirus (COVID-19) test result is "
 
 
@@ -132,9 +163,9 @@ object CertificateGenerator {
 
                 body.add(phraseStatusChunk)
 
-                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) +
-                        "For more advice:\n" +
-                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) + "\n"
+                /*  "For more advice:\n" +
+                  "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"*/
 
                 val phraseSubBodyChunk = Chunk(bodSubContent, fontBody)
                 body.add(phraseSubBodyChunk)
@@ -176,33 +207,34 @@ object CertificateGenerator {
                 testInfoPara.leading = 26f
 
                 //Whom the result was generated section
-                val interpretedHeading = Chunk("Results interpreted by:", fontBody)
-                interpretedHeading.setUnderline(1.5f, -2f)
+                val interpretedHeading = Chunk("Results interpreted by:\n", fontBody)
+                // interpretedHeading.setUnderline(1.5f, -2f)
 
                 val interpreterName = Chunk("Mr M Hussain\n", fontBody)
-                interpreterName.setUnderline(1.5f, -2f)
+                //interpreterName.setUnderline(1.5f, -2f)
                 val designation =
                     Chunk(
                         "European Health Technology Ltd - UKAS Reference Number 22776\n",
                         fontBody
                     )
-                designation.setUnderline(1.5f, -2f)
+                //designation.setUnderline(1.5f, -2f)
 
 
                 val street = Chunk("167-169 Great Portland Street\n", fontBody)
-                street.setUnderline(1.5f, -2f)
+                //street.setUnderline(1.5f, -2f)
 
                 val floor = Chunk("5th Floor\n", fontBody)
-                floor.setUnderline(1.5f, -2f)
+                //floor.setUnderline(1.5f, -2f)
 
                 val city = Chunk("London\n", fontBody)
-                city.setUnderline(1.5f, -2f)
+                //city.setUnderline(1.5f, -2f)
 
                 val area = Chunk("W1W 5PE", fontBody)
-                area.setUnderline(1.5f, -2f)
+                //area.setUnderline(1.5f, -2f)
 
                 //Tester Info
                 val testerDetailPara = Paragraph()
+                testerDetailPara.add(interpretedHeading)
                 testerDetailPara.add(interpreterName)
                 testerDetailPara.add(designation)
                 testerDetailPara.add(street)
@@ -213,7 +245,7 @@ object CertificateGenerator {
 
                 //Disclaimer
                 val disclaimerText =
-                    "Self-Collection are provided by Randox Health. This report shall not be reproduced in full without approval of Randox Health London Ltd. The test dates of all the results will be between the collection date and report date stated within this report."
+                    "Self-Collection kits are provided by Randox Health. This report shall not be reproduced except in full without approval of Randox Health London Ltd. The test dates of all results will be between the collection date and report date stated within this report."
 
                 val fsDisclaimer = FontSelector()
                 val fontDisclaimerBody = FontFactory.getFont(FontFactory.HELVETICA, 18f)
@@ -240,7 +272,6 @@ object CertificateGenerator {
                 doc.add(Paragraph("\n\n"))
                 doc.add(body)
                 doc.add(testInfoPara)
-                doc.add(interpretedHeading)
                 doc.add(Paragraph("\n\n"))
                 doc.add(testerDetailPara)
                 doc.add(Paragraph("\n\n"))
@@ -265,51 +296,75 @@ object CertificateGenerator {
         //Following is the output stream that will hold the pdf
         var baos = ByteArrayOutputStream()
         //Here we are creating a pdf document with a4 paper size
-        val doc = Document(PageSize.A4)
+        val doc = Document(PageSize.A3)
         try {
             with(certificate) {
                 //Initializing the Pdf writer
                 PdfWriter.getInstance(doc, baos)
 
                 //Header Information Table
-                val headerTable = PdfPTable(3)
+                val headerTable = PdfPTable(2)
                 headerTable.widthPercentage = 100F
-                headerTable.setWidths(floatArrayOf(2f, 1f, 1f))
+                headerTable.setWidths(floatArrayOf(2f, 2f))
                 //Row1
                 headerTable.addCell(getCell("Randox Health London Ltd", 22f, Font.NORMAL))
-                headerTable.addCell(getCell("URN:", 22f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
-
-                //Row2
-                headerTable.addCell(getCell("Finsbury House,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Gender:", 20f, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        cert_sex ?: "",
-                        20f,
+                        "URN: " + cert_device_id?.takeLast(13),
+                        22f,
                         Font.NORMAL
                     )
                 )
+                // headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
+
+                //Row2
+                headerTable.addCell(getCell("Finsbury House,", 22f, Font.NORMAL))
+                headerTable.addCell(getCell("Gender: " + cert_sex ?: "", 22f, Font.NORMAL))
+                /*  headerTable.addCell(
+                      getCell(
+                          cert_sex ?: "",
+                          20f,
+                          Font.NORMAL
+                      )
+                  )*/
 
 
                 //Row3
-                headerTable.addCell(getCell("23 Finsbury Circus,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Swab Date:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_timestamp?:"", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("23 Finsbury Circus,", 22f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Swab Date: " + "$cert_timestamp GMT" ?: "",
+                        22f,
+                        Font.NORMAL
+                    )
+                )
+                // headerTable.addCell(getCell("$cert_timestamp GMT" ?: "", 20f, Font.NORMAL))
                 //Row4
-                headerTable.addCell(getCell("London,", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Date of Report:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_proc_stop?:"", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("London,", 22f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Date of Report: " + "$cert_proc_stop GMT" ?: "",
+                        22f,
+                        Font.NORMAL
+                    )
+                )
+                // headerTable.addCell(getCell("$cert_proc_stop GMT" ?: "", 20f, Font.NORMAL))
 
                 //Row5
-                headerTable.addCell(getCell("EC2M 7EA", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("Passport Number:", 20f, Font.NORMAL))
-                headerTable.addCell(getCell(cert_passport?:"", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("EC2M 7EA", 22f, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Passport Number: " + cert_passport ?: "",
+                        22f,
+                        Font.NORMAL
+                    )
+                )
+                //headerTable.addCell(getCell(cert_passport ?: "", 20f, Font.NORMAL))
 
                 //Row6
-                headerTable.addCell(getCell("+44 (0)2894422413", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("", 20f, Font.NORMAL))
-                headerTable.addCell(getCell("", 20f, Font.NORMAL))
+                headerTable.addCell(getCell("+44 (0)2894422413", 22f, Font.NORMAL))
+                headerTable.addCell(getCell("", 22f, Font.NORMAL))
+                //    headerTable.addCell(getCell("", 20f, Font.NORMAL))
 
 
                 //Line Separator
@@ -323,10 +378,11 @@ object CertificateGenerator {
                 fs.addFont(font)
                 val phrase = fs.process("Results report / Certificate")
                 val reportHeading = Paragraph(phrase)
+                reportHeading.alignment = Element.ALIGN_CENTER
 
                 //Report Body
                 val bodyContent =
-                    "Dear ${certificate.cert_name?:""} , Date of Birth: ${usr_birth?:""} Contact Number: ${usr_phone?:""}\n\n" +
+                    "Dear ${certificate.cert_name ?: ""} , Date of Birth: ${usr_birth ?: ""} Contact Number: ${usr_phone ?: ""}\n\n" +
                             "Your coronavirus (COVID-19) test result is "
 
 
@@ -347,9 +403,9 @@ object CertificateGenerator {
 
                 body.add(phraseStatusChunk)
 
-                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) +
+                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) + "\n\n"/*
                         "For more advice:\n" +
-                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"*/
 
                 val phraseSubBodyChunk = Chunk(bodSubContent, fontBody)
                 body.add(phraseSubBodyChunk)
@@ -403,20 +459,20 @@ object CertificateGenerator {
 
     private fun getMessageForCovidStatus(status: String): String {
         return when (status) {
-            "N" -> " meaning you did not have the virus when the test was done.\n" +
+            "N" -> " meaning you did not have the virus when the test was done.\n" /*+
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"
+                    "Contact 112 or 999 for a medical emergency.\n\n"*/
             "P" -> " meaning you had the virus when the test was done.\n\n" +
-                    "You must self-isolate straight away.\n" +
+                    "You must self-isolate straight away.\n" /*+
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"
+                    "Contact 112 or 999 for a medical emergency.\n\n"*/
             "R" -> " meaning you had the virus when the test was done.\n\n" +
-                    "You must self-isolate straight away.\n" +
+                    "You must self-isolate straight away.\n" /*+
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"
-            else -> " You’ll have to have another test.\n" +
+                    "Contact 112 or 999 for a medical emergency.\n\n"*/
+            else -> " You’ll have to have another test.\n"/* +
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"
+                    "Contact 112 or 999 for a medical emergency.\n\n"*/
         }
     }
 
@@ -427,5 +483,33 @@ object CertificateGenerator {
             "R" -> "Positive,"
             else -> "Unclear,"
         }
+    }
+
+    private fun getQrCode(
+        urn: String,
+        name: String,
+        dateOfBirth: String,
+        dateOfReport: String,
+        covidTestResult: String
+    ): Bitmap? {
+        return try {
+            val barcodeEncoder = BarcodeEncoder()
+            val content =
+                "Confirmation this is a genuine Randox Health Result Certificate for COVID-19 PCR Test.\n\nURN: $urn\n\nName: $name\n\nDate of Birth: $dateOfBirth\n\nDate of Report: $dateOfReport\n\nResult: $covidTestResult"
+            barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 130, 130)
+        } catch (exception: Exception) {
+            null
+        }
+
+
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun getFormatDateFromString(date: String, showTime: Boolean): String {
+        val formatType = if (showTime) "dd-MM-yyyy HH:mm" else "dd-MM-yyyy"
+        val format = SimpleDateFormat(formatType)
+        val formattedDate = format.parse(date)
+        val resultFormat = if (showTime) "dd-MMM-yyyy HH:mm" else "dd-MMM-yyyy"
+        return formattedDate?.let { SimpleDateFormat(resultFormat).format(it) } ?: run { "" }
     }
 }
