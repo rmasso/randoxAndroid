@@ -29,7 +29,8 @@ import java.util.*
 class ScancompleteFragment(
     val selectedProfile: TProfileModel,
     val additionalData: Map<String, String>?,
-    val swabDateTime: String
+    val swabDateTime: String,
+    val plfCode:String?
 ) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
@@ -128,6 +129,9 @@ class ScancompleteFragment(
             }
         }
         certificateModel.swap_timestamp= swabDateTime
+        plfCode?.let {
+            certificateModel.pfl_code= plfCode
+        }
 
 
         return certificateModel

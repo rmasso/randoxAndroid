@@ -67,7 +67,7 @@ class PlfFitFragment(val selectedProfile: TProfileModel) : Fragment() {
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fragcontainer,
-                                FragmentConductTest(selectedProfile,null)
+                                FragmentConductTest(selectedProfile,null,binding.purchaseOrder.text.toString().trim())
                             )
                             .addToBackStack("")
                             .commit()

@@ -22,7 +22,8 @@ import java.util.*
 class ConfirmationFragment(
     val selectedProfile: TProfileModel,
     val additionalData: Map<String, String>?,
-    val time: String?
+    val time: String?,
+    val plfCode: String?
 ) : Fragment() {
     lateinit var binding: FragmentConfirmationBinding
     val currentDate = SimpleDateFormat("dd-MM-yyyy").format(Date())
@@ -81,7 +82,8 @@ class ConfirmationFragment(
                     .replace(
                         R.id.fragcontainer, ScancompleteFragment(
                             selectedProfile, additionalData,
-                            "${binding.dateContent.text} ${binding.timeContent.text}"
+                            "${binding.dateContent.text} ${binding.timeContent.text}",
+                            plfCode
                         )
                     )
                     .addToBackStack("")

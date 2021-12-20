@@ -228,7 +228,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
                             R.id.fragcontainer,
-                            FragmentConductTest(selectedProfile,dataMap)
+                            FragmentConductTest(selectedProfile,dataMap,null)
                         )
                         .addToBackStack("")
                         .commit()

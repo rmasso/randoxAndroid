@@ -14,6 +14,7 @@ import com.demit.certifly.databinding.FragmentConductTestBinding
 class FragmentConductTest(
     val selectedProfile: TProfileModel,
     val additionalData: Map<String, String>?,
+    val plfCode:String?
 ) : Fragment() {
     lateinit var binding: FragmentConductTestBinding
     override fun onCreateView(
@@ -34,7 +35,7 @@ class FragmentConductTest(
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragcontainer,
-                    TimerFragment(selectedProfile,additionalData)
+                    TimerFragment(selectedProfile,additionalData,plfCode)
                 )
                 .addToBackStack("")
                 .commit()
@@ -43,7 +44,7 @@ class FragmentConductTest(
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(
                     R.id.fragcontainer,
-                    ConfirmationFragment(selectedProfile,additionalData,null)
+                    ConfirmationFragment(selectedProfile,additionalData,null,plfCode)
                 )
                 .addToBackStack("")
                 .commit()
