@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
 class CertificateAdapter(
     private val context: Context,
     private val certificateList: List<AllCertificatesModel>,
-    private val onDismiss: DialogDismissInterface
+    private val onDismiss: DialogDismissInterface,
+    private val deleteCertificate:(certificateId:String)->Unit
 ) : CardStackAdapter(context) {
     @SuppressLint("SetTextI18n")
     override fun createView(position: Int, container: ViewGroup?): View {
@@ -56,6 +57,12 @@ class CertificateAdapter(
                 startActivity(previewIntent)
             }
 
+
+
+        }
+
+        itemView.delete_btn.setOnClickListener {
+            deleteCertificate(certificateList[position].cert_id)
         }
         return itemView
     }

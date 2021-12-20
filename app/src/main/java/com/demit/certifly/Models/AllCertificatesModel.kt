@@ -6,6 +6,7 @@ import java.io.Serializable
 
 data class AllCertificatesModel(
     val cert_name: String,
+    val cert_id:String,
     val usr_id:String,
     val usr_birth:String,
     val usr_phone:String,

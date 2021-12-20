@@ -21,6 +21,7 @@ object ApiHelper {
 
     private object ApiEndPoint {
         val CREATE_NEW_CERTIFICATE = "setCert.php"
+        val DELETE_CERTIFICATE="cert_soft_del.php"
         val VALIDATE_QRCODE = "getQrVerification.php"
         val FAMILY_REGISTER = "FamilyRegistration.php"
         val PLF_VERIFICATION = "getPLFVerificationRandox.php"
@@ -49,6 +50,30 @@ object ApiHelper {
                     Log.d("++err++", "${anError?.message}")
                 }
             })
+
+        return apiResponseLiveData
+    }
+
+    fun deleteCertificate(token:String,certificateId:String):LiveData<String>{
+        val apiResponseLiveData = MutableLiveData<String>()
+        AndroidNetworking.post("${Constants.url}${ApiEndPoint.DELETE_CERTIFICATE}")
+            .addBodyParameter("token",token)
+            .addBodyParameter("cert_id",certificateId)
+            .addBodyParameter("companyName","Randox")
+            .setTag("Delete_Certificate")
+            .setPriority(Priority.HIGH)
+            .build()
+            .getAsJSONObject(object:JSONObjectRequestListener{
+                override fun onResponse(response: JSONObject?) {
+                    apiResponseLiveData.postValue(response?.getString("success"))
+                }
+
+                override fun onError(anError: ANError?) {
+                    apiResponseLiveData.postValue("Something went wrong")
+                }
+
+            })
+
 
         return apiResponseLiveData
     }

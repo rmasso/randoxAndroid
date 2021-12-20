@@ -18,6 +18,7 @@ import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Interfaces.DialogDismissInterface
 import com.demit.certifly.Models.AllCertificatesModel
 import com.demit.certifly.adapters.CertificateAdapter
+import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.FragmentCertificatesBinding
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -61,7 +62,7 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
                 try {
                     val obj = JSONObject(it)
                     val s = obj.getString("ret")
-                    Log.d("++res++",s)
+                    Log.d("++res++", s)
                     if (s == "100") {
                         if (context != null) {
                             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
@@ -81,7 +82,9 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
                                 requireActivity(),
                                 sliderItem,
                                 this@CertificatesFragment
-                            )
+                            ) { deleteCertId ->
+                                deleteCertificate(deleteCertId)
+                            }
                         } else {
                             binding.noCertificateMessage.visibility = View.VISIBLE
                             sweet.dismiss()
@@ -120,6 +123,21 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
         if (context != null) {
             Volley.newRequestQueue(context).add(request)
         }
+    }
+
+    private fun deleteCertificate(certId: String) {
+        sweet.show("Deleting Certificate")
+        ApiHelper.deleteCertificate(Shared(requireContext()).getString("token"), certId)
+            .observe(viewLifecycleOwner, { response ->
+                if (response == "200") {
+                    sweet.dismiss()
+                    binding.cardStack.removeAdapter()
+                    getCertificates()
+                } else {
+                    sweet.dismiss()
+                    Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
 
