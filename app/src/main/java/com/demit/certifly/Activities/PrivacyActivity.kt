@@ -20,7 +20,12 @@ class PrivacyActivity : AppCompatActivity() {
         attachClicks()
     }
 
+    override fun onBackPressed() {
+        return
+    }
+
     private fun initPrivacyData() {
+        binding.descriptionContent.movementMethod= LinkMovementMethod()
         with(binding) {
             dataSecurityExpandable.parentLayout.data_heading.text =
                 getString(R.string.data_security_heading)
@@ -171,7 +176,7 @@ class PrivacyActivity : AppCompatActivity() {
             }
 
             agreeBtn.setOnClickListener {
-                Shared(this@PrivacyActivity).setString("is_first_time","yes")
+                Shared(this@PrivacyActivity).setString("is_first_time", "yes")
                 startActivity(Intent(this@PrivacyActivity, LoginActivity::class.java))
                 finish()
             }

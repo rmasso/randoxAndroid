@@ -3,103 +3,114 @@
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_dialog"
+        android:padding="@dimen/_20sdp"
+        >
 
-
-        <LinearLayout
-            android:id="@+id/mainContent"
-            android:layout_width="0dp"
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_dialog"
-            android:orientation="vertical"
-            android:padding="@dimen/_20sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toTopOf="@id/content"
+            android:src="@mipmap/ic_launcher_logo"
+            app:layout_constraintVertical_chainStyle="packed"
+            />
+
+
+
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/app_name"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16.25dp"
                 android:textColor="@android:color/black"
-                android:text="@string/permission_heading"
-                android:textAlignment="center"
+                android:layout_marginStart="@dimen/dp8"
+                android:text="@string/app_name"
                 android:textSize="16sp"
                 android:fontFamily="@font/poppinsbold"
                 android:includeFontPadding="false"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
-                android:background="#8a000000" />
-
-            <ScrollView
-                android:id="@+id/parent"
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:background="@android:color/white"
-                android:clipToPadding="true"
-                android:fillViewport="true"
-                android:fitsSystemWindows="true"
-                android:orientation="vertical"
-                android:overScrollMode="never"
-                android:scrollbars="vertical">
-
-                <include layout="@layout/permission_content"
-                    android:id="@+id/contentContainer"
-                    />
-
-
-            </ScrollView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
-                android:background="#8a000000" />
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_agree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/agree_and_continue"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:includeFontPadding="false"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:background="@drawable/button_bg"
-                app:layout_constraintTop_toBottomOf="@id/booking_ref_edit"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@id/logo"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/logo"
+                app:layout_constraintBottom_toTopOf="@id/sub_text"
+                app:layout_constraintVertical_chainStyle="packed"
                 />
-            <TextView
-                android:id="@+id/link"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16.25dp"
-                android:text="@string/web_terms_privacy"
-                android:textAlignment="center"
-                android:textSize="12sp" />
 
-
-
-
-        </LinearLayout>
-
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/permission_randox"
-            app:layout_constraintBottom_toTopOf="@id/mainContent"
+        <TextView
+            android:id="@+id/sub_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#8a000000"
+            android:text="will need to access"
+            android:textSize="12sp"
+            android:fontFamily="@font/poppinsmedium"
+            android:includeFontPadding="false"
+            app:layout_constraintStart_toStartOf="@id/app_name"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/app_name"
+            app:layout_constraintBottom_toBottomOf="@id/logo"
+            />
+
+        <ScrollView
+            android:id="@+id/content"
+            android:layout_width="0dp"
+            android:layout_height="180dp"
+            android:background="@android:color/white"
+            android:clipToPadding="true"
+            android:fillViewport="true"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@id/logo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/mainContent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_agree"
+            >
+
+            <include layout="@layout/permission_content"
+                android:id="@+id/contentContainer"
+                />
+
+
+        </ScrollView>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_agree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/agree_and_continue"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14sdp"
+            android:fontFamily="@font/poppinsmedium"
+            android:includeFontPadding="false"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:background="@drawable/button_bg"
+            app:layout_constraintTop_toBottomOf="@id/content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/link"
+            />
+        <TextView
+            android:id="@+id/link"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16.25dp"
+            android:text="@string/web_terms_privacy"
+            android:textAlignment="center"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/btn_agree"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
+
+
+
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

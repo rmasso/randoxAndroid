@@ -1,5 +1,7 @@
 package com.demit.certifly.Fragments
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,15 +11,15 @@ import android.view.ViewGroup
 import com.demit.certifly.Interfaces.DashboardInterface
 import com.demit.certifly.databinding.FragmentHomeBinding
 
-class HomeFragment(val dinterface : DashboardInterface) : Fragment() {
+class HomeFragment(val dinterface: DashboardInterface) : Fragment() {
 
-    lateinit var binding : FragmentHomeBinding
+    lateinit var binding: FragmentHomeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
-        Log.d("sss" , "1");
+        Log.d("sss", "1");
         clicks()
         return binding.root
     }
@@ -29,12 +31,16 @@ class HomeFragment(val dinterface : DashboardInterface) : Fragment() {
         binding.register.setOnClickListener {
             dinterface.setpage(2)
         }
-        binding.faqs.setOnClickListener{
-            dinterface.setpage(3)
+        binding.privacy.setOnClickListener {
+            openBrowser()
         }
-        binding.profile.setOnClickListener {
-            dinterface.setpage(4)
-        }
+    }
+
+    private fun openBrowser() {
+        val url = "https://www.randoxhealth.com/randox-certifly-privacy-policy"
+        val privacyIntent = Intent(Intent.ACTION_VIEW);
+        privacyIntent.data = Uri.parse(url);
+        startActivity(privacyIntent)
     }
 
 }

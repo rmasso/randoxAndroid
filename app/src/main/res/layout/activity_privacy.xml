@@ -34,12 +34,13 @@
 
         <TextView
             android:id="@+id/heading"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp16"
             android:fontFamily="@font/poppinsbold"
             android:includeFontPadding="false"
-            android:text="Privacy Policy"
+            android:text="Randox Certifly Privacy Policy"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="22sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -320,11 +321,11 @@
     </ScrollView>
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/agree_btn"
+            style="@style/Widget.MaterialComponents.ExtendedFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:layout_gravity="bottom|right"
-            android:contentDescription="save button"
             android:text="@string/agree_and_continue"
             tools:ignore="RtlHardcoded" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

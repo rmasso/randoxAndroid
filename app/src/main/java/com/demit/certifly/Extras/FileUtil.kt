@@ -55,14 +55,6 @@ object FileUtil {
                 var fileOutputStream: FileOutputStream?
                 try {
                     val pdfFile = File(folder, "$filename.pdf")
-                    if (pdfFile.exists()) {
-                        Toast.makeText(
-                            context,
-                            "Can't save Certificate because it already exists!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        return
-                    }
                     pdfFile.createNewFile()
                     fileOutputStream = FileOutputStream(pdfFile)
                     fileOutputStream.write(pdfBytes)

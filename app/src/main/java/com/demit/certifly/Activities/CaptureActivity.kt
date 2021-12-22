@@ -287,6 +287,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val bitmap = getCapturedImage()
+                    try {
+                        val file = File(currentPhotoPath)
+                        if (file.exists())
+                            file.delete()
+                    }catch(ex:Exception){
+                        ex.printStackTrace()
+                    }
                     showOrHideBottomSheet(true)
                     binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
                     binding.sheetContainer.qrText.text =

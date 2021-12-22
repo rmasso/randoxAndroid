@@ -109,14 +109,14 @@
 \u25BA Device QR code that helps us to identify that the device used by the user is genuine and also it is registered with our system.\n
 \u25BA AI capability, to predict and locate position of our test device.\n
 <u><b>Storage permission</b></u> is required in order to enable the user to store his/her certificate on the device.</string>
-    <string name="agree_and_continue">Continue</string>
+    <string name="agree_and_continue">Accept</string>
     <string name="allow">Allow</string>
     <string name="settings">Settings</string>
     <string name="not_now">Not now</string>
     <string name="web_terms_privacy">By continuing, you agree to the Randox Certifly <a href="https://www.randoxhealth.com/covid-19-terms-and-conditions">Terms of Service</a>. Please Note: The <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> describes how data is handled in this service.</string>
     <string name="is_available">Not currently available due to change in UK travel guidance.</string>
     <string name="buy_pcr_test">Please purchase your Day 2  PCR test at <font color='#0000FF'><a href="https://fly.randox.com/">https://fly.randox.com/</a></font> using coupon code &quot;Certifly&quot;.</string>
-    <string name="description"><b>Updated November 2021</b>\nThis Privacy Policy (the “Policy”) describes our practices with respect to collection, use, disclosure and protection of your information when you use Randox CertiFly mobile application (the “App”). Note that this Policy is only valid on our App, not any third-party networks, even if they are referenced on our App. It is your responsibility to familiarize yourself and comply with any relevant third-party networks. </string>
+    <string name="description"><b>Updated November 2021</b>\nThis <a href="https://www.randoxhealth.com/randox-certifly-privacy-policy">Privacy Policy</a> (the “Policy”) describes our practices with respect to collection, use, disclosure and protection of your information when you use Randox CertiFly mobile application (the “App”). Note that this Policy is only valid on our App, not any third-party networks, even if they are referenced on our App. It is your responsibility to familiarize yourself and comply with any relevant third-party networks. </string>
     <string name="data_security_heading">Data Security</string>
     <string name="data_security_content">The security of your data is of utmost importance to us. Only our administrators are allowed to access our App’s password-protected server where any personal information which can help improve your experience, such as how often you perform workouts, what your weekly goals are, etc. We utilize SSL. Nevertheless, any transmission of information over the Internet has its inherent risks, so we cannot guarantee the absolute security of your personal information. Transmit personal information over the Internet at your own risk. We shall not be liable for circumvention of security measures or privacy settings on the App. It is your responsibility to keep your login credentials, if any, confidential. </string>
     <string name="data_collection_heading">Collection of User Data</string>
@@ -229,5 +229,10 @@ If you are not satisfied with our response to any query you raise with us, or yo
     <string name="uk_day2_terms_content"><font color="#ff5916">\u2605</font> Only for UK Government Day 2 arrival scheme\n<font color="#ff5916">\u2605</font> Only used AFTER your arrival into the UK\n<font color="#ff5916">\u2605</font> Needs your Passenger Locator Form booking reference\n<font color="#ff5916">\u2605</font> NOT for general travel\n<font color="#ff5916">\u2605</font> NOT a pre-departure test\n</string>
     <string name="fit_travel_terms_heading">Fit to Travel- Pre-Departure</string>
     <string name="fit_travel_terms_content"><font color="#ff5916">\u2605</font> NOT for UK Government Day 2 arrival scheme\n<font color="#ff5916">\u2605</font> Only used BEFORE your travel\n<font color="#ff5916">\u2605</font> Can be used before arriving into the UK\n<font color="#ff5916">\u2605</font> Can be used before departing the UK(if applicable)\n<font color="#ff5916">\u2605</font> Needs your Purchase Order  reference\n</string>
+    <string name="privacy_policy">Privacy policy</string>
+    <string name="camera_permission"><b><u>Register with app</u></b>\nIf you want to register with our app, then you have to grant camera permission for scanning your passport, this is used for identity verification.\n\n<b><u>Fit to fly and Day2 testing services</u></b>\nIf you want to use our Fit to fly and Day2 testing services, then you have to grant camera permission for capturing your COVID-19 rapid test device image, this is used to verify the result of your test and prepare your COVID-19 travel certificate.</string>
+    <string name="storage_permission"><b><u>Saving COVID-19 travel certificate on device</u></b>\nIf you want to save the COVID-19 travel certificate on your smartphone device, then you have to grant storage permission for saving your selected certificate on your device.</string>
 
+    <string name="camera">Camera</string>
+    <string name="storage">Storage</string>
 </resources>

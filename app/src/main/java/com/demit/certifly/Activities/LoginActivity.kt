@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
+import android.text.method.LinkMovementMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.util.Patterns
@@ -84,7 +86,29 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.appVersion.text = "v${BuildConfig.VERSION_NAME}"
+        binding.privacy.text= getText(R.string.privacy_policy)
+        binding.privacy.setOnClickListener {
+            openBrowser()
+        }
 
+        if (Shared(this@LoginActivity).getString("has_agreed") != "yes"){
+            val permissionDialog= PermissionDialog{id->
+                if(id==R.id.btn_agree){
+                    Shared(this@LoginActivity).setString("has_agreed","yes")
+                }
+            }.apply {
+                isCancelable=false
+            }
+            permissionDialog.show(supportFragmentManager,"consent_dialog")
+        }
+
+    }
+
+    private fun openBrowser() {
+        val url = "https://www.randoxhealth.com/randox-certifly-privacy-policy"
+        val privacyIntent = Intent(Intent.ACTION_VIEW);
+        privacyIntent.data = Uri.parse(url);
+        startActivity(privacyIntent)
     }
 
     /*private fun checkPermissions() {
