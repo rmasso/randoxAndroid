@@ -132,13 +132,13 @@ object CertificateGenerator {
 
                 //Report Heading
                 val fs = FontSelector()
-                val font = FontFactory.getFont(FontFactory.HELVETICA, 28f)
-                font.color = BaseColor.GRAY
+                val font = FontFactory.getFont(FontFactory.HELVETICA, 25f)
+                font.color = BaseColor(11,0,90)
                 font.style = Font.BOLD
                 fs.addFont(font)
                 val phrase = fs.process("Results report / Certificate")
                 val reportHeading = Paragraph(phrase)
-                reportHeading.alignment = Element.ALIGN_CENTER
+                reportHeading.alignment = Element.ALIGN_LEFT
 
                 //Report Body
                 val bodyContent =
@@ -147,16 +147,16 @@ object CertificateGenerator {
 
 
                 val fsBody = FontSelector()
-                val fontBody = FontFactory.getFont(FontFactory.HELVETICA, 23f)
+                val fontBody = FontFactory.getFont(FontFactory.HELVETICA, 20f)
                 fontBody.color = BaseColor.BLACK
                 fontBody.style = Font.ITALIC
                 fsBody.addFont(fontBody)
                 val phraseBody = fsBody.process(bodyContent)
                 val body = Paragraph(phraseBody)
-                body.leading = 24f
+                body.leading = 21f
 
 
-                val fontStatus = FontFactory.getFont(FontFactory.HELVETICA, 23f)
+                val fontStatus = FontFactory.getFont(FontFactory.HELVETICA, 20f)
                 fontStatus.color = BaseColor.BLACK
                 fontStatus.style = Font.BOLD
                 val phraseStatusChunk = Chunk(getCovidStatus(cert_manual_approved), fontStatus)
@@ -172,7 +172,7 @@ object CertificateGenerator {
 
 
                 //Test Information Table
-                val fontTestInfoContent = FontFactory.getFont(FontFactory.HELVETICA, 23f)
+                val fontTestInfoContent = FontFactory.getFont(FontFactory.HELVETICA, 21f)
                 fontTestInfoContent.color = BaseColor.BLACK
                 fontTestInfoContent.style = Font.BOLD
                 val testMethodHeading = Chunk("Test method: ", fontBody)
@@ -204,7 +204,7 @@ object CertificateGenerator {
                 testInfoPara.add(targetContent)
                 testInfoPara.add(sampleTypeHeading)
                 testInfoPara.add(sampleTypeContent)
-                testInfoPara.leading = 26f
+                testInfoPara.leading = 22f
 
                 //Whom the result was generated section
                 val interpretedHeading = Chunk("Results interpreted by:\n", fontBody)
@@ -241,7 +241,7 @@ object CertificateGenerator {
                 testerDetailPara.add(floor)
                 testerDetailPara.add(city)
                 testerDetailPara.add(area)
-                testerDetailPara.leading = 28f
+                testerDetailPara.leading = 25f
 
                 //Disclaimer
                 val disclaimerText =
@@ -254,7 +254,7 @@ object CertificateGenerator {
                 fsDisclaimer.addFont(fontDisclaimerBody)
                 val phraseDisclaimer = fsDisclaimer.process(disclaimerText)
                 val disclaimer = Paragraph(phraseDisclaimer)
-                disclaimer.leading = 19f
+                disclaimer.leading = 16f
 
                 //Generating the pdf file with the above mentioned values
                 doc.open()
@@ -267,14 +267,14 @@ object CertificateGenerator {
                 doc.add(headerTable)
                 doc.add(Paragraph("\n"))
                 doc.add(headTableLineSeparator)
-                doc.add(Paragraph("\n\n\n"))
-                doc.add(reportHeading)
                 doc.add(Paragraph("\n\n"))
+                doc.add(reportHeading)
+                doc.add(Paragraph("\n"))
                 doc.add(body)
                 doc.add(testInfoPara)
-                doc.add(Paragraph("\n\n"))
+                doc.add(Paragraph("\n"))
                 doc.add(testerDetailPara)
-                doc.add(Paragraph("\n\n"))
+                doc.add(Paragraph("\n"))
                 doc.add(disclaimer)
 
                 //Closing the document and byte array output stream to avoid memory leakage
@@ -373,12 +373,12 @@ object CertificateGenerator {
                 //Report Heading
                 val fs = FontSelector()
                 val font = FontFactory.getFont(FontFactory.HELVETICA, 28f)
-                font.color = BaseColor.GRAY
+                font.color = BaseColor(11,0,90)
                 font.style = Font.BOLD
                 fs.addFont(font)
                 val phrase = fs.process("Results report / Certificate")
                 val reportHeading = Paragraph(phrase)
-                reportHeading.alignment = Element.ALIGN_CENTER
+                reportHeading.alignment = Element.ALIGN_LEFT
 
                 //Report Body
                 val bodyContent =
@@ -403,9 +403,9 @@ object CertificateGenerator {
 
                 body.add(phraseStatusChunk)
 
-                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) + "\n\n"/*
+                val bodSubContent = getMessageForCovidStatus(cert_manual_approved) + "\n\n"
                         "For more advice:\n" +
-                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"*/
+                        "if you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
 
                 val phraseSubBodyChunk = Chunk(bodSubContent, fontBody)
                 body.add(phraseSubBodyChunk)
@@ -459,20 +459,24 @@ object CertificateGenerator {
 
     private fun getMessageForCovidStatus(status: String): String {
         return when (status) {
-            "N" -> " meaning you did not have the virus when the test was done.\n" /*+
+            "N" -> " meaning you did not have the virus when the test was done.\n" +
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"*/
-            "P" -> " meaning you had the virus when the test was done.\n\n" +
-                    "You must self-isolate straight away.\n" /*+
+                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
+                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+            "P" -> " meaning you had the virus when the test was done.\n" +
+                    "You must self-isolate straight away.\n"+
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"*/
-            "R" -> " meaning you had the virus when the test was done.\n\n" +
-                    "You must self-isolate straight away.\n" /*+
+                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
+                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+            "R" -> "meaning you had the virus when the test was done.\n" +
+                    "You must self-isolate straight away.\n"+
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"*/
-            else -> " You’ll have to have another test.\n"/* +
+                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
+                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
+            else -> "\nYou’ll have to have another test.\n" +
                     "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\n\n"*/
+                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
+                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
         }
     }
 
@@ -481,7 +485,7 @@ object CertificateGenerator {
             "N" -> "Negative,"
             "P" -> "Positive,"
             "R" -> "Positive,"
-            else -> "Unclear,"
+            else -> "Unclear."
         }
     }
 
