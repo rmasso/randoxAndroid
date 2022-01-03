@@ -17,8 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_60sdp"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="@dimen/_25sdp"
-            android:layout_marginBottom="@dimen/_30sdp"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:layout_marginTop="@dimen/_25sdp"
+            android:layout_marginEnd="@dimen/_25sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
             android:src="@drawable/logo" />
 
 

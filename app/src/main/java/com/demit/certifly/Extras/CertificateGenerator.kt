@@ -495,7 +495,7 @@ object CertificateGenerator {
         return try {
             val barcodeEncoder = BarcodeEncoder()
             val content =
-                "Confirmation this is a genuine Randox Health Result Certificate for COVID-19 PCR Test.\n\nURN: $urn\n\nName: $name\n\nDate of Birth: $dateOfBirth\n\nDate of Report: $dateOfReport\n\nResult: $covidTestResult"
+                "Confirmation this is a genuine Randox Health Result Certificate for COVID-19 LFT Test.\n\nURN: $urn\n\nName: $name\n\nDate of Birth: $dateOfBirth\n\nDate of Report: $dateOfReport\n\nResult: $covidTestResult"
             barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 130, 130)
         } catch (exception: Exception) {
             null
