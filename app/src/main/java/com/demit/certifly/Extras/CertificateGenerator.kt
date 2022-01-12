@@ -141,10 +141,16 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if(is_viccinated.isNotEmpty()){
-                    headerTable.addCell(getCell("Booking ref Number: $pfl_code" ?: "", FONT_SIZE_CONTENT, Font.NORMAL))
-                }else
-                headerTable.addCell(getCell("", FONT_SIZE_CONTENT, Font.NORMAL))
+                if (is_viccinated.isNotEmpty()) {
+                    headerTable.addCell(
+                        getCell(
+                            "Booking ref Number: $pfl_code" ?: "",
+                            FONT_SIZE_CONTENT,
+                            Font.NORMAL
+                        )
+                    )
+                } else
+                    headerTable.addCell(getCell("", FONT_SIZE_CONTENT, Font.NORMAL))
                 //    headerTable.addCell(getCell("", 20f, Font.NORMAL))
 
 
@@ -157,10 +163,10 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-              val title=  if(is_viccinated.isNotEmpty())
-                  "Day 2 Lateral Flow Test Certificate"
-                  else
-                  "Results report / Certificate"
+                val title = if (is_viccinated.isNotEmpty())
+                    "Day 2 Lateral Flow Test Certificate"
+                else
+                    "Results report / Certificate"
 
 
                 val phrase = fs.process(title)
@@ -181,7 +187,7 @@ object CertificateGenerator {
                 val body = Paragraph(phraseBody)
                 // body.leading = 21f
 
-                val bodSubContent = getParagraphCovidStatus(cert_manual_approved)
+                val bodSubContent = getParagraphCovidStatus("P")
 
                 body.add(bodSubContent)
                 body.spacingAfter = 12f
@@ -324,7 +330,13 @@ object CertificateGenerator {
                 headerTable.widthPercentage = 100F
                 headerTable.setWidths(floatArrayOf(2f, 2f))
                 //Row1
-                headerTable.addCell(getCell("Randox Health London Ltd", FONT_SIZE_CONTENT, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Randox Health London Ltd",
+                        FONT_SIZE_CONTENT,
+                        Font.NORMAL
+                    )
+                )
                 headerTable.addCell(
                     getCell(
                         "URN: " + cert_device_id?.takeLast(13),
@@ -335,7 +347,13 @@ object CertificateGenerator {
                 // headerTable.addCell(getCell(cert_device_id?.takeLast(13), 22f, Font.NORMAL))
                 //Row2
                 headerTable.addCell(getCell("Finsbury House,", FONT_SIZE_CONTENT, Font.NORMAL))
-                headerTable.addCell(getCell("Gender: " + cert_sex ?: "", FONT_SIZE_CONTENT, Font.NORMAL))
+                headerTable.addCell(
+                    getCell(
+                        "Gender: " + cert_sex ?: "",
+                        FONT_SIZE_CONTENT,
+                        Font.NORMAL
+                    )
+                )
                 /*  headerTable.addCell(
                       getCell(
                           cert_sex ?: "",
@@ -379,9 +397,15 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if(is_viccinated.isNotEmpty()){
-                    headerTable.addCell(getCell("Booking ref Number: $pfl_code" ?: "", FONT_SIZE_CONTENT, Font.NORMAL))
-                }else
+                if (is_viccinated.isNotEmpty()) {
+                    headerTable.addCell(
+                        getCell(
+                            "Booking ref Number: $pfl_code" ?: "",
+                            FONT_SIZE_CONTENT,
+                            Font.NORMAL
+                        )
+                    )
+                } else
                     headerTable.addCell(getCell("", FONT_SIZE_CONTENT, Font.NORMAL))
 
 
@@ -394,14 +418,13 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-                val title=  if(is_viccinated.isNotEmpty())
+                val title = if (is_viccinated.isNotEmpty())
                     "Day 2 Lateral Flow Test Certificate"
                 else
                     "Results report / Certificate"
                 val phrase = fs.process(title)
                 val reportHeading = Paragraph(phrase)
                 reportHeading.alignment = Element.ALIGN_CENTER
-
 
 
                 //Report Body
@@ -490,42 +513,71 @@ object CertificateGenerator {
 
     private fun getParagraphCovidStatus(status: String): Paragraph {
         val para = Paragraph()
+        para.font = FontFactory.getFont(FontFactory.TIMES_ROMAN, FONT_SIZE_CONTENT)
+        para.font.style= Font.NORMAL
+        para.font.color= BaseColor.BLACK
 
         when (status) {
             "N" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
-                para.add(" You did not have the virus when the test was done. You are not required to quarantine.\n\n" +
-                        "You should self-isolate again if you get symptoms of coronavirus (COVID-19) - get an NHS coronavirus (COVID-19) test from ")
-                  val anchor1= getAnchor("www.gov.uk/get-coronavirus-test","www.gov.uk/get-coronavirus-test")
-                  para.add(anchor1)
+                para.add(
+                    " You did not have the virus when the test was done. You are not required to quarantine.\n\n" +
+                            "You should self-isolate again if you get symptoms of coronavirus (COVID-19) - get an NHS coronavirus (COVID-19) test from "
+                )
+                val anchor1 =
+                    getAnchor("www.gov.uk/get-coronavirus-test", "www.gov.uk/get-coronavirus-test")
+                para.add(anchor1)
                 para.add(" and self-isolate until you get the results.\n\n")
                 para.add("For advice on when you might need to self-isolate and what to do, go to ")
-                val anchor2= getAnchor("www.nhs.uk/conditions/coronavirus-covid-19","www.nhs.uk/conditions/coronavirus-covid-19")
+                val anchor2 = getAnchor(
+                    "www.nhs.uk/conditions/coronavirus-covid-19",
+                    "www.nhs.uk/conditions/coronavirus-covid-19"
+                )
                 para.add(anchor2)
                 para.add(" and read \"Self-isolation and treating symptoms\".\n\n")
             }
-            "P"->{
+            "P" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
                 para.add(" This means that you probably have the virus. Even if you have not had symptoms of coronavirus, you must now self-isolate for 10 days from the day after your test date.\n\n")
                 para.add("You must obtain, take and return a free follow up PCR test from NHS T&T to confirm this. You can access your confirmatory PCR test by visiting ")
-                para.add(getAnchor("www.gov.uk/get-coronavirus-test","www.gov.uk/get-coronavirus-test"))
+                para.add(
+                    getAnchor(
+                        "www.gov.uk/get-coronavirus-test",
+                        "www.gov.uk/get-coronavirus-test"
+                    )
+                )
                 para.add(" This test will be free of charge will be sent to you as a home test kit, you MUST take this test for this purpose. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
                 para.add("You may be contacted for contact tracing and to check that you, and those who you live or are traveling with, are self-isolating.\nYou must not travel, including to leave the UK, during self-isolation.\nContact 111 if you need medical help. In emergency  dial 999.\nFor more advice:\n If you reside in the United Kingdom, go to ")
-                para.add(getAnchor("https://www.gov.uk/coronavirus","https://www.gov.uk/coronavirus"))
+                para.add(
+                    getAnchor(
+                        "https://www.gov.uk/coronavirus",
+                        "https://www.gov.uk/coronavirus"
+                    )
+                )
                 para.add("\n\n")
             }
 
-            "R"->{
+            "R" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
                 para.add(" This means that you probably have the virus. Even if you have not had symptoms of coronavirus, you must now self-isolate for 10 days from the day after your test date.\n\n")
                 para.add("You must obtain, take and return a free follow up PCR test from NHS T&T to confirm this. You can access your confirmatory PCR test by visiting ")
-                para.add(getAnchor("www.gov.uk/get-coronavirus-test","www.gov.uk/get-coronavirus-test"))
+                para.add(
+                    getAnchor(
+                        "www.gov.uk/get-coronavirus-test",
+                        "www.gov.uk/get-coronavirus-test"
+                    )
+                )
                 para.add(" This test will be free of charge will be sent to you as a home test kit, you MUST take this test for this purpose. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
                 para.add("You may be contacted for contact tracing and to check that you, and those who you live or are traveling with, are self-isolating.\nYou must not travel, including to leave the UK, during self-isolation.\nContact 111 if you need medical help. In emergency  dial 999.\nFor more advice:\n If you reside in the United Kingdom, go to ")
-                para.add(getAnchor("https://www.gov.uk/coronavirus","https://www.gov.uk/coronavirus"))
+                para.add(
+                    getAnchor(
+                        "https://www.gov.uk/coronavirus",
+                        "https://www.gov.uk/coronavirus"
+                    )
+                )
                 para.add("\n\n")
 
             }
@@ -533,7 +585,8 @@ object CertificateGenerator {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
                 para.add(" It is not possible to say if you had the virus when the test was done.\n\nYou must take another test or self-isolate for 10 days from the day after your test date. You may be contacted to check that you are self-isolating.\nFor more advice:\nIf you reside in the United Kingdom, go to ")
-               val anchor= getAnchor("https://www.gov.uk/coronavirus","https://www.gov.uk/coronavirus")
+                val anchor =
+                    getAnchor("https://www.gov.uk/coronavirus", "https://www.gov.uk/coronavirus")
                 para.add(anchor)
                 para.add("\n\n")
             }
@@ -579,8 +632,8 @@ object CertificateGenerator {
         return formattedDate?.let { SimpleDateFormat(resultFormat).format(it) } ?: run { "" }
     }
 
-    private fun getAnchor(name:String,address:String):Anchor{
-        val link = FontFactory.getFont(FontFactory.TIMES_ROMAN)
+    private fun getAnchor(name: String, address: String): Anchor {
+        val link = FontFactory.getFont(FontFactory.TIMES_ROMAN, FONT_SIZE_CONTENT)
         link.color = BaseColor(0, 0, 255)
         val anchor = Anchor(name, link)
         anchor.reference = address
