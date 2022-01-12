@@ -24,5 +24,7 @@ data class AllCertificatesModel(
     val cert_timestamp:String,
     val cert_proc_stop:String,
     val cert_deviceToken:String,
-    val cert_uuid: String
+    val cert_uuid: String,
+    val is_viccinated: String,
+    val pfl_code:String
 ) : Serializable
