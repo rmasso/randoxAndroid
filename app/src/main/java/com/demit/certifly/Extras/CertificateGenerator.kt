@@ -187,7 +187,7 @@ object CertificateGenerator {
                 val body = Paragraph(phraseBody)
                 // body.leading = 21f
 
-                val bodSubContent = getParagraphCovidStatus("P")
+                val bodSubContent = getParagraphCovidStatus(cert_manual_approved)
 
                 body.add(bodSubContent)
                 body.spacingAfter = 12f
