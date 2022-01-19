@@ -492,25 +492,6 @@ object CertificateGenerator {
         return cell
     }
 
-    private fun getMessageForCovidStatus(status: String): String {
-        return when (status) {
-            "N" -> " You did not have the virus when the test was done. You are not required to quarantine.\nYou should self-isolate again if you get symptoms of coronavirus (COVID-19) - get an NHS coronavirus (COVID-19) test from www.gov.uk/get-coronavirus-test and self-isolate until you get the results.\n" +
-                    "For advice on when you might need to self-isolate and what to do, go to www.nhs.uk/conditions/coronavirus-covid-19 and read \"Self-isolation and treating symptoms\".\n\n"
-            "P" -> " meaning you had the virus when the test was done.\n" +
-                    "You must self-isolate straight away.\n" +
-                    "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
-                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
-            "R" -> "meaning you had the virus when the test was done.\n" +
-                    "You must self-isolate straight away.\n" +
-                    "Please continue to follow your local government guidelines.\n" +
-                    "Contact 112 or 999 for a medical emergency.\nFor more advice: \n" +
-                    "If you reside in the United Kingdom, go to https://www.gov.uk/coronavirus\n\n"
-            else -> " It is not possible to say if you had the virus when the test was done.\n\nYou must take another test or self-isolate for 10 days from the day after your test date. You may be contacted to check that you are self-isolating.\nFor more advice:\n" +
-                    "If you reside in the United Kingdom, go to "
-        }
-    }
-
     private fun getParagraphCovidStatus(status: String): Paragraph {
         val para = Paragraph()
         para.font = FontFactory.getFont(FontFactory.TIMES_ROMAN, FONT_SIZE_CONTENT)
@@ -522,8 +503,7 @@ object CertificateGenerator {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
                 para.add(
-                    " You did not have the virus when the test was done. You are not required to quarantine.\n\n" +
-                            "You should self-isolate again if you get symptoms of coronavirus (COVID-19) - get an NHS coronavirus (COVID-19) test from "
+                    " You did not have the virus when the test was done.\n\nYou are not required to self-isolate.\n\nYou should self-isolate again if you get symptoms of coronavirus (COVID-19) – get an NHS coronavirus (COVID-19) test from "
                 )
                 val anchor1 =
                     getAnchor("www.gov.uk/get-coronavirus-test", "www.gov.uk/get-coronavirus-test")
@@ -535,59 +515,44 @@ object CertificateGenerator {
                     "www.nhs.uk/conditions/coronavirus-covid-19"
                 )
                 para.add(anchor2)
-                para.add(" and read \"Self-isolation and treating symptoms\".\n\n")
+                para.add(" and read \'Self-isolation and treating symptoms\'")
             }
             "P" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
-                para.add(" This means that you probably have the virus. Even if you have not had symptoms of coronavirus, you must now self-isolate for 10 days from the day after your test date.\n\n")
-                para.add("You must obtain, take and return a free follow up PCR test from NHS T&T to confirm this. You can access your confirmatory PCR test by visiting ")
+                para.add(" This means that you probably have the virus.\n\nEven if you have not had symptoms of coronavirus you must now self-isolate for 10 days from the day after your test date.\n\n")
+                para.add("You must obtain, take and return a free follow up polymerase chain reaction (PCR) test from NHS Test and Trace to confirm this. You can obtain your confirmatory PCR test by visiting ")
                 para.add(
                     getAnchor(
                         "www.gov.uk/get-coronavirus-test",
                         "www.gov.uk/get-coronavirus-test"
                     )
                 )
-                para.add(" This test will be free of charge will be sent to you as a home test kit, you MUST take this test for this purpose. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
-                para.add("You may be contacted for contact tracing and to check that you, and those who you live or are traveling with, are self-isolating.\nYou must not travel, including to leave the UK, during self-isolation.\nContact 111 if you need medical help. In emergency  dial 999.\nFor more advice:\n If you reside in the United Kingdom, go to ")
-                para.add(
-                    getAnchor(
-                        "https://www.gov.uk/coronavirus",
-                        "https://www.gov.uk/coronavirus"
-                    )
-                )
-                para.add("\n\n")
+                para.add(" or by calling 119.\n\n")
+                para.add("This test will be free of charge and will be sent to you as a home test kit.\n\nYou must take this test in accordance with this notice. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
+                para.add("You may be contacted for contact tracing and to check that you, and those who you live or are travelling with, are self-isolating.\n\nYou must not travel, including to leave the UK, during self-isolation.\n\nContact 111 if you need medical help. In an emergency dial 999.\n\n")
             }
 
             "R" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
-                para.add(" This means that you probably have the virus. Even if you have not had symptoms of coronavirus, you must now self-isolate for 10 days from the day after your test date.\n\n")
-                para.add("You must obtain, take and return a free follow up PCR test from NHS T&T to confirm this. You can access your confirmatory PCR test by visiting ")
+                para.add(" This means that you probably have the virus.\n\nEven if you have not had symptoms of coronavirus you must now self-isolate for 10 days from the day after your test date.\n\n")
+                para.add("You must obtain, take and return a free follow up polymerase chain reaction (PCR) test from NHS Test and Trace to confirm this. You can obtain your confirmatory PCR test by visiting ")
                 para.add(
                     getAnchor(
                         "www.gov.uk/get-coronavirus-test",
                         "www.gov.uk/get-coronavirus-test"
                     )
                 )
-                para.add(" This test will be free of charge will be sent to you as a home test kit, you MUST take this test for this purpose. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
-                para.add("You may be contacted for contact tracing and to check that you, and those who you live or are traveling with, are self-isolating.\nYou must not travel, including to leave the UK, during self-isolation.\nContact 111 if you need medical help. In emergency  dial 999.\nFor more advice:\n If you reside in the United Kingdom, go to ")
-                para.add(
-                    getAnchor(
-                        "https://www.gov.uk/coronavirus",
-                        "https://www.gov.uk/coronavirus"
-                    )
-                )
-                para.add("\n\n")
+                para.add(" or by calling 119.\n\n")
+                para.add("This test will be free of charge and will be sent to you as a home test kit.\n\nYou must take this test in accordance with this notice. If this confirmatory test is negative, you no longer need to self-isolate.\n\n")
+                para.add("You may be contacted for contact tracing and to check that you, and those who you live or are travelling with, are self-isolating.\n\nYou must not travel, including to leave the UK, during self-isolation.\n\nContact 111 if you need medical help. In an emergency dial 999.\n\n")
 
             }
             else -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
-                para.add(" It is not possible to say if you had the virus when the test was done.\n\nYou must take another test or self-isolate for 10 days from the day after your test date. You may be contacted to check that you are self-isolating.\nFor more advice:\nIf you reside in the United Kingdom, go to ")
-                val anchor =
-                    getAnchor("https://www.gov.uk/coronavirus", "https://www.gov.uk/coronavirus")
-                para.add(anchor)
+                para.add(" It is not possible to say if you had the virus when the test was done.\nYou must self-isolate for 10 days from the day after your test date.\nYou may choose to take another test, and if it comes back with a negative result, you no longer need to self-isolate. You may be contacted to check that you are self-isolating.")
                 para.add("\n\n")
             }
         }
