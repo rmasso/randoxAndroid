@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clipToPadding="false"
     android:layout_marginBottom="@dimen/_16sdp"
     android:background="@color/bwhite"
     android:paddingStart="@dimen/_16sdp"
@@ -17,46 +18,62 @@
         android:layout_height="@dimen/_72sdp"
         android:layout_marginTop="@dimen/_25sdp"
         android:src="@drawable/logo"
+        app:layout_constraintBottom_toTopOf="@id/slider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_chainStyle="packed" />
 
-    <ImageView
-        android:id="@+id/youtube_player"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/slider"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="fitXY"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/page_indicator"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent="0.25"
-        />
-
-    <TextView
-        android:id="@+id/heading"
+        app:layout_constraintHeight_percent="0.3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo"
+         />
+    
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/page_indicator"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/poppinsmedium"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:backgroundTint="@android:color/transparent"
+        app:layout_constraintTop_toBottomOf="@id/slider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/faq_text"
+        app:tabBackground="@drawable/tab_selector"
+        app:tabGravity="center"
+        app:tabIndicatorHeight="0dp"
+        app:tabRippleColor="@android:color/transparent"
+        />
+
+
+    <TextView
+        android:id="@+id/faq_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/poppinslight"
         android:includeFontPadding="false"
-        android:text="@string/faq_heading"
-        android:textAlignment="center"
+        android:text="@string/faq_info"
         android:textColor="@color/black"
         android:textSize="@dimen/_14sdp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/page_indicator"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/youtube_player" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_faq"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/_32sdp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/heading" />
+        />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

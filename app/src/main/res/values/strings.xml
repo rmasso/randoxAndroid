@@ -235,4 +235,12 @@ If you are not satisfied with our response to any query you raise with us, or yo
 
     <string name="camera">Camera</string>
     <string name="storage">Storage</string>
+    <string name="faq_info">For more FAQ please visit <a href="https://covid.randox.com/covid-19-testing-frequently-asked-questions/">Randox Faq</a></string>
+
+    <string-array name="faq_video_ids">
+        <item>3y5m-ByKMZ8</item>
+        <item>O6VXxeZ8bhQ</item>
+        <item>axQRSPZ098k</item>
+        <item>JzsFJfPj-5I</item>
+    </string-array>
 </resources>
