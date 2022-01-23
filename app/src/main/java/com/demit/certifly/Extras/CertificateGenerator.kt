@@ -515,7 +515,7 @@ object CertificateGenerator {
                     "www.nhs.uk/conditions/coronavirus-covid-19"
                 )
                 para.add(anchor2)
-                para.add(" and read \'Self-isolation and treating symptoms\'")
+                para.add(" and read \'Self-isolation and treating symptoms\'\n\nContact 111 if you need medical help. In an emergency dial 999.\n\n")
             }
             "P" -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
@@ -552,8 +552,8 @@ object CertificateGenerator {
             else -> {
                 para.add("Your coronavirus (COVID-19) test result is ")
                 para.add(getBoldText(status))
-                para.add(" It is not possible to say if you had the virus when the test was done.\nYou must self-isolate for 10 days from the day after your test date.\nYou may choose to take another test, and if it comes back with a negative result, you no longer need to self-isolate. You may be contacted to check that you are self-isolating.")
-                para.add("\n\n")
+                para.add(" It is not possible to say if you had the virus when the test was done.\n\nYou must self-isolate for 10 days from the day after your test date.\n\nYou may choose to take another test, and if it comes back with a negative result, you no longer need to self-isolate. You may be contacted to check that you are self-isolating.\n\nContact 111 if you need medical help. In an emergency dial 999.\n\n")
+
             }
         }
 
