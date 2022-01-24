@@ -6,14 +6,14 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
 import com.demit.certifly.Models.AllCertificatesModel
-import com.google.zxing.BarcodeFormat
+
 import com.itextpdf.text.*
 import com.itextpdf.text.pdf.FontSelector
 import com.itextpdf.text.pdf.PdfPCell
 import com.itextpdf.text.pdf.PdfPTable
 import com.itextpdf.text.pdf.PdfWriter
 import com.itextpdf.text.pdf.draw.LineSeparator
-import com.journeyapps.barcodescanner.BarcodeEncoder
+import net.glxn.qrgen.android.QRCode
 import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -577,10 +577,9 @@ object CertificateGenerator {
         covidTestResult: String
     ): Bitmap? {
         return try {
-            val barcodeEncoder = BarcodeEncoder()
             val content =
                 "Confirmation this is a genuine Randox Health Result Certificate for COVID-19 LFT Test.\n\nURN: $urn\n\nName: $name\n\nDate of Birth: $dateOfBirth\n\nDate of Report: $dateOfReport\n\nResult: $covidTestResult"
-            barcodeEncoder.encodeBitmap(content, BarcodeFormat.QR_CODE, 40, 40)
+            QRCode.from(content).withSize(40,40).bitmap()
         } catch (exception: Exception) {
             null
         }

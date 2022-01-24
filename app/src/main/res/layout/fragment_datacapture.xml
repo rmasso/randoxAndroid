@@ -532,116 +532,116 @@
 
 
 
-<!--
+            <!--
 
-            <TextView
-                android:id="@+id/nhs_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:includeFontPadding="false"
-                android:text="NHS Number (if applicable)"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/departure_picker_container" />
-
-
-            <EditText
-                android:id="@+id/nhs_number_edit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/et_bg"
-                android:hint=""
-                android:inputType="textNoSuggestions"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                app:layout_constraintTop_toBottomOf="@id/nhs_number" />
+                        <TextView
+                            android:id="@+id/nhs_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:includeFontPadding="false"
+                            android:text="NHS Number (if applicable)"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/departure_picker_container" />
 
 
+                        <EditText
+                            android:id="@+id/nhs_number_edit"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@drawable/et_bg"
+                            android:hint=""
+                            android:inputType="textNoSuggestions"
+                            android:paddingHorizontal="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/_10sdp"
+                            app:layout_constraintTop_toBottomOf="@id/nhs_number" />
 
 
-            <TextView
-                android:id="@+id/transited_header"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp16"
-                android:fontFamily="@font/poppinsmedium"
-                android:includeFontPadding="false"
-                android:text="Any country or territory you transited through as part of this journey"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/nhs_number_edit" />
 
-            <LinearLayout
-                android:id="@+id/transited_picker_container"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:background="@drawable/et_bg"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/transited_header">
 
-                <TextView
-                    android:id="@+id/transited_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="@dimen/_15sdp"
-                    android:hint=""
-                    android:layout_gravity="center_vertical"
-                    android:textColor="@color/black"
-                    />
-            </LinearLayout>
+                        <TextView
+                            android:id="@+id/transited_header"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp16"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:includeFontPadding="false"
+                            android:text="Any country or territory you transited through as part of this journey"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/nhs_number_edit" />
 
-            <TextView
-                android:id="@+id/last_date_departed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:fontFamily="@font/poppinsmedium"
-                android:includeFontPadding="false"
-                android:text="Last date departed from or transited through a non exempt country or territory"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/transited_picker_container" />
+                        <LinearLayout
+                            android:id="@+id/transited_picker_container"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:background="@drawable/et_bg"
+                            android:paddingHorizontal="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/_10sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/transited_header">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppinsmedium"
-                android:includeFontPadding="false"
-                android:text=" *"
-                android:textColor="@color/orange"
-                android:textSize="@dimen/_14sdp"
-                app:layout_constraintBottom_toBottomOf="@id/last_date_departed"
-                app:layout_constraintStart_toEndOf="@id/last_date_departed"
-                app:layout_constraintTop_toTopOf="@id/last_date_departed" />
-            <TextView
-                android:id="@+id/last_date_departed_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/et_bg"
-                android:paddingHorizontal="@dimen/_15sdp"
-                android:paddingVertical="@dimen/_10sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:text=""
-                android:textSize="@dimen/_15sdp"
-                android:hint=""
-                android:textColor="@color/black"
-                app:layout_constraintTop_toBottomOf="@id/last_date_departed"
-                />-->
+                            <TextView
+                                android:id="@+id/transited_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text=""
+                                android:textSize="@dimen/_15sdp"
+                                android:hint=""
+                                android:layout_gravity="center_vertical"
+                                android:textColor="@color/black"
+                                />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/last_date_departed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_16sdp"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:includeFontPadding="false"
+                            android:text="Last date departed from or transited through a non exempt country or territory"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/transited_picker_container" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppinsmedium"
+                            android:includeFontPadding="false"
+                            android:text=" *"
+                            android:textColor="@color/orange"
+                            android:textSize="@dimen/_14sdp"
+                            app:layout_constraintBottom_toBottomOf="@id/last_date_departed"
+                            app:layout_constraintStart_toEndOf="@id/last_date_departed"
+                            app:layout_constraintTop_toTopOf="@id/last_date_departed" />
+                        <TextView
+                            android:id="@+id/last_date_departed_text"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/et_bg"
+                            android:paddingHorizontal="@dimen/_15sdp"
+                            android:paddingVertical="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:text=""
+                            android:textSize="@dimen/_15sdp"
+                            android:hint=""
+                            android:textColor="@color/black"
+                            app:layout_constraintTop_toBottomOf="@id/last_date_departed"
+                            />-->
 
             <TextView
                 android:id="@+id/book_ref_header"
