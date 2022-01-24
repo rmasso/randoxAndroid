@@ -40,10 +40,10 @@ import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityCaptureBinding
 import com.demit.certifly.extensions.*
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.mlkit.vision.barcode.Barcode
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
