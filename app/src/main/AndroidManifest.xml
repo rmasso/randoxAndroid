@@ -38,21 +38,21 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.CertificatePreviewActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.CaptureActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
 
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
@@ -65,7 +65,7 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.DashboardActivity"
             android:configChanges="orientation"
@@ -73,7 +73,7 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.LoginActivity"
             android:configChanges="orientation"
@@ -81,14 +81,14 @@
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            />
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation"
             android:exported="true"
             android:screenOrientation="portrait"
             android:launchMode="singleTop"
-            >
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -42,8 +42,8 @@ class PermissionDialog(val onButtonClick: (id: Int) -> Unit) : DialogFragment(),
 
     override fun onStart() {
         super.onStart()
-        val width = resources.displayMetrics.widthPixels * 0.90
-        dialog!!.window!!.setLayout(width.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        dialog!!.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
 

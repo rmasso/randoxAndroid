@@ -14,7 +14,7 @@ android {
         applicationId "com.demit.certifly"
         minSdk 21
         targetSdk 31
-        versionCode 12
+        versionCode 13
         versionName "1.8"
         multiDexEnabled = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
