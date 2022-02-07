@@ -14,6 +14,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
+import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
@@ -33,6 +34,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.demit.certifly.Extras.Constants
 import com.demit.certifly.Extras.PermissionUtil
 import com.demit.certifly.Fragments.PermissionInfoDialog
@@ -154,11 +156,19 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        val result = Intent()
-                        result.putExtra("device", croppedDevice)
-                        result.putExtra("qr", qrValue)
-                        setResult(SCAN_RESULT, result)
-                        finish()
+                        if(TextUtils.isEmpty(croppedDevice)){
+                            Toast.makeText(
+                                this,
+                                "Image quality is poor. Rescan the device",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }else {
+                            val result = Intent()
+                            result.putExtra("device", croppedDevice)
+                            result.putExtra("qr", qrValue)
+                            setResult(SCAN_RESULT, result)
+                            finish()
+                        }
                     }
                 }
 
@@ -515,11 +525,12 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
         val imgWithResult = bitmap.drawDetectionResult(bitmap, resultToDisplay)
         runOnUiThread {
             if (resultToDisplay.isNotEmpty()) {
-                val cropImage =
-                    bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
-                binding.sheetContainer.scannedImage.setImageBitmap(cropImage)
+                croppedDevice = bitmap.toBase64String()
+                val cropImage = bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
+             Glide.with(this@CaptureActivity)
+                 .load(cropImage)
+                 .into(binding.sheetContainer.scannedImage)
 
-                croppedDevice = cropImage.toBase64String()
             } else {
 
                 Toast.makeText(this@CaptureActivity, "No Device Detected", Toast.LENGTH_LONG).show()

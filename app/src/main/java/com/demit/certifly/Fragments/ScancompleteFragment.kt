@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import com.bumptech.glide.Glide
 import com.demit.certifly.Activities.CaptureActivity
 import com.demit.certifly.Extras.DetachableClickListener
 import com.demit.certifly.Extras.Global
@@ -30,7 +31,7 @@ class ScancompleteFragment(
     val selectedProfile: TProfileModel,
     val additionalData: Map<String, String>?,
     val swabDateTime: String,
-    val plfCode:String?
+    val plfCode: String?
 ) : Fragment() {
     val SCAN_RESULT = 150
     lateinit var binding: FragmentScancompleteBinding
@@ -58,9 +59,9 @@ class ScancompleteFragment(
                     val qrCode = it.getStringExtra("qr")
                     croppedImage?.let { image ->
                         val imageBytes = Base64.decode(image, Base64.DEFAULT)
-                        val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
-
-                        binding.scannedImage.setImageBitmap(bitmap)
+                        Glide.with(requireContext())
+                            .load(imageBytes)
+                            .into(binding.scannedImage)
                         certificateModel = createNewCertificate(image, qrCode!!)
                     }
 
@@ -128,9 +129,9 @@ class ScancompleteFragment(
                 Country_of_departure = dataMap["Country_of_departure"]!!
             }
         }
-        certificateModel.swap_timestamp= swabDateTime
+        certificateModel.swap_timestamp = swabDateTime
         plfCode?.let {
-            certificateModel.pfl_code= plfCode
+            certificateModel.pfl_code = plfCode
         }
 
 
@@ -147,7 +148,7 @@ class ScancompleteFragment(
                             // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
                             Log.d("++res++", response)
                             sweet.dismiss()
-                            if (response != "Something went wrong"&&!response.contains("100"))
+                            if (response != "Something went wrong" && !response.contains("100"))
                                 activity?.supportFragmentManager?.beginTransaction()
                                     ?.replace(R.id.fragcontainer, ScansubmitFragment())
                                     ?.addToBackStack("")?.commit()
