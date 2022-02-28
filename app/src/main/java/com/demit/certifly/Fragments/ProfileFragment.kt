@@ -92,7 +92,7 @@ class ProfileFragment : Fragment() {
 
 
 
-        getProfiles()
+        fetchUserProfiles()
         adapter = ProfileAdapter()
         binding.rv.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -163,6 +163,12 @@ class ProfileFragment : Fragment() {
 
                 }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(this::sweet.isInitialized)
+            sweet.dismiss()
     }
 
     @SuppressLint("SetTextI18n")
@@ -295,59 +301,42 @@ class ProfileFragment : Fragment() {
         binding.save.setOnClickListener {
             Log.d("++index", list[index].usr_image)
             if (list[index].usr_image == "") {
-                if (context != null)
-                    Toast.makeText(context, "Please Scan Passport", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please Scan Passport", Toast.LENGTH_SHORT).show()
             } else if (binding.fname.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Firstname can't be empty", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Firstname can't be empty", Toast.LENGTH_SHORT).show()
             } else if (binding.dob.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Date of birth can't be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Date of birth can't be empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (binding.pnumber.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Passport Number can't be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Passport Number can't be empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (binding.address.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Address Can't be Empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Address Can't be Empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (binding.city.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "City can't be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "City can't be empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (binding.zip.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Zip Code can't be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Zip Code can't be empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (binding.phone.text.trim().toString().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Phone Number can't be empty", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Phone Number can't be empty", Toast.LENGTH_SHORT)
                         .show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.trim()).matches()) {
-                if (context != null)
-                    Toast.makeText(context, "Invalid Email Address", Toast.LENGTH_SHORT).show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.trim())
-                    .matches()
-            ) {
-                if (context != null)
-                    Toast.makeText(context, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
-                        .show()
-            } else if (binding.email.text.trim() != binding.confirmEmail.text.trim()) {
-                if (context != null)
-                    Toast.makeText(
-                        context,
-                        "Email and Confirm Email should match",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(requireContext(), "Invalid Email Address", Toast.LENGTH_SHORT).show()
+            } else if (!binding.email.text.toString().trim().equals(binding.confirmEmail.text.toString().trim(),true)) {
+                Toast.makeText(
+                    requireContext(),
+                    "Email and Confirm Email should match",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             } else if (binding.ethnicity.selectedItemPosition == 0) {
-                if (context != null)
-                    Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
+                    Toast.makeText(requireContext(), "Choose Ethnicity", Toast.LENGTH_SHORT)
                         .show()
             } else if (!binding.radio.isChecked) {
                 Toast.makeText(
-                    context,
+                    requireContext(),
                     "Please Confirm that you agree with our Terms&conditions",
                     Toast.LENGTH_SHORT
                 )
@@ -717,8 +706,7 @@ class ProfileFragment : Fragment() {
 
 
         val map: MutableMap<String, String> = HashMap()
-        map["usr_email"] = list[index].email.trim()
-        map["token"] = Shared(requireContext()).getString("token")
+        map["email"] = list[index].email.trim()
         val fullName = list[index].usr_firstname.trim()
         val idx = fullName.lastIndexOf(' ')
         if (idx != -1) {
@@ -730,6 +718,8 @@ class ProfileFragment : Fragment() {
             map["usr_surname"] = ""
         }
 
+        map["usr_name"]= fullName
+
         map["usr_birth"] = list[index].usr_birth.trim()
         map["usr_home"] = list[index].usr_home.trim()
         map["usr_addressLine2"] = list[index].usr_addressLine2.trim()
@@ -740,23 +730,24 @@ class ProfileFragment : Fragment() {
         map["usr_phone"] = list[index].usr_phone.trim()
         map["usr_passport_image"] = list[index].usr_image
         map["usr_ethnicity"] = list[index].ethnicity
+        map["usr_admin"] = "N"
         map["usr_sex"] =
             resources.getStringArray(R.array.genders)[binding.gender.selectedItemPosition]
-        map["companyName"] = "Randox"
-        ApiHelper.postFamilyUser(map).observe(viewLifecycleOwner) { response ->
+        map["company_type"] = "RandoxNew"
+        ApiHelper.createFamilyUser(Shared(requireContext()).getString("token"),map).observe(viewLifecycleOwner) { response ->
             sweet.dismiss()
-            if (response == "0") {
+            if (response.success) {
                 Toast.makeText(
                     context,
-                    "User registered successfully",
+                    response.message,
                     Toast.LENGTH_SHORT
                 ).show()
-                getProfiles()
+                fetchUserProfiles()
                 shouldEnableFormFields(false)
             } else {
                 Toast.makeText(
                     context,
-                    "Something went wrong",
+                    response.message,
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -765,84 +756,29 @@ class ProfileFragment : Fragment() {
     }
 
 
-    fun getProfiles() {
+    @SuppressLint("NotifyDataSetChanged")
+    fun fetchUserProfiles() {
         sweet.show("Getting profiles")
-
-        val url = Functions.concat(Constants.url, "getProfile.php");
-        val request: StringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener {
+        ApiHelper.fetchUserProfiles(Shared(requireContext()).getString("token"))
+            .observe(viewLifecycleOwner, { response ->
                 sweet.dismiss()
-                Log.d("sss", it.toString())
+                response.users?.let {
+                    list = it.toMutableList()
+                    if (list.size > 0) {
+                        for (item in list)
+                            item.usr_firstname += if(item.usr_surname!=null&&item.usr_surname!="null")" ${item.usr_surname}" else ""
 
-                try {
-                    val obj = JSONObject(it)
-                    val s = obj.getString("ret");
-                    if (s == "100") {
-                        if (context != null) {
-                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    } else {
-                        val gson = Gson()
-                        val listType = object : TypeToken<List<TProfileModel?>?>() {}.type
-                        val sliderItem: MutableList<TProfileModel> =
-                            gson.fromJson(obj.get("ret").toString(), listType)
-                        list = sliderItem
-                        if (list.size > 0) {
-                            for (item in list)
-                                item.usr_firstname += " ${item.usr_surname}"
-
-                            index = 0
-                            setData(index)
-                            list[0].checked = true;
-                        }
-                        adapter.notifyDataSetChanged()
-                        fielddata()
-
+                        index = 0
+                        setData(index)
+                        list[0].checked = true;
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    sweet.dismiss()
-                    if (context != null) {
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    adapter.notifyDataSetChanged()
+                    fielddata()
+                } ?: run {
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG).show()
                 }
-            },
-            Response.ErrorListener {
-                sweet.dismiss()
-                if (context != null) {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        ) {
-            override fun getParams(): MutableMap<String, String> {
-                val map: MutableMap<String, String> = HashMap();
-                if (context != null) {
-                    map["token"] = Shared(context!!).getString("token")!!
-                }
-                return map
-            }
 
-            override fun getCacheEntry(): Cache.Entry? {
-                return super.getCacheEntry()
-            }
-        }
-
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
-        )
-        request.setShouldCache(false)
-        if (context != null) {
-            val queue = Volley.newRequestQueue(context)
-            queue.cache.clear()
-            queue.add(request)
-        }
+            })
     }
 
     private fun openDatePicker() {

@@ -4,7 +4,6 @@ package com.demit.certifly.Activities
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
@@ -19,14 +18,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import com.android.volley.DefaultRetryPolicy
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.demit.certifly.Extras.Constants
 import com.demit.certifly.Extras.Constants.Companion.DIALOG_TYPE_CAMERA_PASSPORT
-import com.demit.certifly.Extras.Functions
 import com.demit.certifly.Extras.PermissionUtil.CAMERA_PERMISSION
 import com.demit.certifly.Extras.PermissionUtil.hasCameraPermission
 import com.demit.certifly.Extras.PermissionUtil.isMarshMallowOrAbove
@@ -34,6 +28,7 @@ import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Fragments.PermissionInfoDialog
 import com.demit.certifly.R
+import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.ActivityProfileBinding
 import com.demit.certifly.extensions.toBase64String
 import com.google.android.material.datepicker.CalendarConstraints
@@ -45,8 +40,6 @@ import com.microblink.entities.recognizers.blinkid.generic.BlinkIdCombinedRecogn
 import com.microblink.uisettings.ActivityRunner
 import com.microblink.uisettings.BlinkIdUISettings
 import kotlinx.android.synthetic.main.activity_profile.*
-import kotlinx.android.synthetic.main.view_profile.view.*
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -136,12 +129,7 @@ class RegisterActivity : AppCompatActivity() {
                     .show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.trim()).matches()) {
                 Toast.makeText(this, "Invalid Email Address", Toast.LENGTH_SHORT).show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.trim())
-                    .matches()
-            ) {
-                Toast.makeText(this, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
-                    .show()
-            } else if (binding.email.text.trim() != binding.confirmEmail.text.trim()) {
+            }  else if (!binding.email.text.toString().trim().equals(binding.confirmEmail.text.toString().trim(),true)) {
                 Toast.makeText(
                     this,
                     "Email and Confirm Email should match",
@@ -156,7 +144,7 @@ class RegisterActivity : AppCompatActivity() {
             } else if (binding.phone.text.trim().toString().isEmpty()) {
                 Toast.makeText(this, "Phone Number Missing", Toast.LENGTH_SHORT)
                     .show()
-            } else if (binding.address.text.trim().toString() == "") {
+            } else if (binding.address.text.trim().toString().isEmpty()) {
                 Toast.makeText(this, "Address Missing", Toast.LENGTH_SHORT)
                     .show()
             } else if (binding.city.text.trim().isEmpty()) {
@@ -176,7 +164,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
                     .show()
             } else {
-                register()
+                signup()
             }
         }
 
@@ -341,93 +329,60 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun register() {
-        sweet.show("Registering User")
-        val url = Functions.concat(Constants.url, "UserRegistration.php");
-        val request: StringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener {
-                sweet.dismiss()
-                Log.d("sss", it.toString())
-
-                try {
-                    val obj = JSONObject(it)
-                    val s = obj.getString("ret");
-                    if (s == "100") {
-                        Toast.makeText(this, "User already registered", Toast.LENGTH_SHORT)
-                            .show()
-
-                    } else {
-                        Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT)
-                            .show()
-                        val sharedPreferences = Shared(this)
-                        sharedPreferences.setString("email", binding.email.text.trim().toString())
-                        sharedPreferences.setString(
-                            "password",
-                            binding.password.text.trim().toString()
-                        )
-                        startActivity(Intent(this, LoginActivity::class.java))
-                        finish()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                    sweet.dismiss()
-
-                    Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            },
-            Response.ErrorListener {
-                sweet.dismiss()
-
-
-//                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show()
-                Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
-
+    fun signup() {
+        val map: MutableMap<String, String> = HashMap()
+        map["email"] = binding.email.text.toString().trim()
+        map["password"] = binding.password.text.toString().trim()
+        map["usr_parent_id"] = "0"
+        map["usr_name"] = binding.fname.text.toString().trim()
+        map["usr_firstname"] = binding.fname.text.toString().trim()
+        map["usr_surname"] = binding.sname.text.toString().trim()
+        map["usr_birth"] = binding.dob.text.toString().trim()
+        map["usr_home"] = binding.address.text.toString().trim()
+        map["usr_addressLine2"] = binding.address2.text.toString().trim()
+        map["usr_admin"] = "N"
+        map["usr_city"] = binding.city.text.toString().trim()
+        map["usr_zip"] = binding.zip.text.toString().trim()
+        map["usr_passport"] = binding.pnumber.text.toString().trim()
+        map["usr_country"] = binding.country.selectedCountryNameCode
+        map["usr_phone"] = binding.phone.text.toString().trim()
+        map["usr_passport_image"] = usr_img
+        map["usr_ethnicity"] =
+            resources.getStringArray(R.array.ethnicity)[binding.ethnicity.selectedItemPosition]
+        when (binding.gender.selectedItemPosition) {
+            0 -> {
+                map["usr_sex"] = "Male"
             }
-        ) {
-            override fun getParams(): MutableMap<String, String> {
-
-                val map: MutableMap<String, String> = HashMap()
-                map["usr_email"] = binding.email.text.toString().trim()
-                map["usr_pwd"] = binding.password.text.toString().trim()
-                map["usr_firstname"] = binding.fname.text.toString().trim()
-                map["usr_surname"] = binding.sname.text.toString().trim()
-                map["usr_birth"] = binding.dob.text.toString().trim()
-                map["usr_home"] = binding.address.text.toString().trim()
-                map["usr_addressLine2"] = binding.address2.text.toString().trim()
-                map["usr_city"] = binding.city.text.toString().trim()
-                map["usr_zip"] = binding.zip.text.toString().trim()
-                map["usr_passport"] = binding.pnumber.text.toString().trim()
-                map["usr_country"] = binding.country.selectedCountryNameCode
-                map["usr_phone"] = binding.phone.text.toString().trim()
-                map["usr_passport_image"] = usr_img
-                map["usr_ethnicity"] =
-                    resources.getStringArray(R.array.ethnicity)[binding.ethnicity.selectedItemPosition]
-                if (binding.gender.selectedItemPosition == 0) {
-                    map["usr_sex"] = "Male"
-                } else if (binding.gender.selectedItemPosition == 1) {
-                    map["usr_sex"] = "Female"
-                } else {
-                    map["usr_sex"] = "Other"
-                }
-                map["companyName"] = "Randox"
-
-
-                return map
+            1 -> {
+                map["usr_sex"] = "Female"
+            }
+            else -> {
+                map["usr_sex"] = "Other"
             }
         }
+        map["company_type"] = "RandoxNew"
+        sweet.show("Registering User")
+        ApiHelper.signup(map).observe(this, { signupResponse ->
+            if (signupResponse.success) {
+                sweet.dismiss()
+                Toast.makeText(this, signupResponse.message, Toast.LENGTH_LONG).show()
+                val sharedPreferences = Shared(this)
+                sharedPreferences.setString(
+                    "email",
+                    binding.email.text.trim().toString()
+                )
+                sharedPreferences.setString(
+                    "password",
+                    binding.password.text.trim().toString()
+                )
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            } else {
+                sweet.dismiss()
+                Toast.makeText(this, signupResponse.message, Toast.LENGTH_LONG).show()
+            }
 
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
-        )
-
-        val queue = Volley.newRequestQueue(this);
-        queue.cache.clear();
-        queue.add(request)
+        })
 
     }
 

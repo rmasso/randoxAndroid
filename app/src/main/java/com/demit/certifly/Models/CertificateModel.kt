@@ -10,6 +10,7 @@ data class CertificateModel(
     var cert_device_id: String = "",
     var cert_ai_pred: String = "",
     var cert_ai_approved: String = "",
+    var cert_manual_approved:String="N",
     var cert_create: String = "",
     var cert_deviceToken: String= "",
     var cert_image: String = "",
@@ -18,6 +19,7 @@ data class CertificateModel(
     var vaccine_name:String="",
     var is_fully_vaccinated_14days_uk:String="",
     var pfl_code:String="",
+    var two_day_booking_ref:String="",
     var transport_type:String="",
     var isolation_address_line1:String="",
     var isolation_address_line2:String="",
@@ -29,8 +31,9 @@ data class CertificateModel(
     var country_territory_part_journey:String="",
     var last_date_department:String="",
     var Country_of_departure:String="",
-    val companyName:String="Randox",
+    val companyName:String="RandoxNew",
     var swap_timestamp:String="",
+    var departure_date:String=""
 
 
 

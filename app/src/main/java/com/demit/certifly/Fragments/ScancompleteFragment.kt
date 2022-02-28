@@ -105,6 +105,7 @@ class ScancompleteFragment(
             cert_device_id = qrCode,
             cert_ai_pred = "AI Predicate",
             cert_ai_approved = "N",
+            cert_manual_approved = "N",
             cert_create = "",
             cert_deviceToken = qrCode,
             cert_image = deviceImageBase64
@@ -140,20 +141,23 @@ class ScancompleteFragment(
 
     private fun submitCertificate(certificateModel: CertificateModel) {
 
-        ApiHelper.isQrValid(certificateModel.token, certificateModel.cert_device_id)
+        ApiHelper.verifyQrCode(
+            Shared(requireContext()).getString("token"),
+            certificateModel.cert_device_id
+        )
             .observe(viewLifecycleOwner) { validityResponse ->
-                if (validityResponse == "0") {
-                    ApiHelper.createNewCertificate(certificateModel)
+                if (validityResponse.success) {
+                    ApiHelper.createNewCertificate( Shared(requireContext()).getString("token"),certificateModel)
                         .observe(viewLifecycleOwner) { response ->
                             // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
-                            Log.d("++res++", response)
                             sweet.dismiss()
-                            if (response != "Something went wrong" && !response.contains("100"))
+                            if (response.success)
                                 activity?.supportFragmentManager?.beginTransaction()
                                     ?.replace(R.id.fragcontainer, ScansubmitFragment())
                                     ?.addToBackStack("")?.commit()
                             else {
-                                showAlertDialog()
+                                Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG)
+                                    .show()
                             }
 
                         }
@@ -161,21 +165,14 @@ class ScancompleteFragment(
 
                 } else {
                     sweet.dismiss()
-                    if (validityResponse == "100")
-                        Toast.makeText(
-                            requireContext(),
-                            "Duplicate Test, please scan a new device",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    else
-                        Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT)
-                            .show()
+
+                    showAlertDialog(validityResponse.message)
 
                 }
             }
     }
 
-    private fun showAlertDialog() {
+    private fun showAlertDialog(message:String) {
 
         val positiveClickListener = DetachableClickListener.wrap { dialog, _ ->
             Global.should_go_home = true
@@ -184,8 +181,8 @@ class ScancompleteFragment(
 
 
         val dialog = AlertDialog.Builder(requireActivity())
-            .setTitle("Error")
-            .setMessage("Submission failed.")
+            .setTitle("Submission error")
+            .setMessage(message)
             .setPositiveButton("Ok", positiveClickListener)
             .setCancelable(false)
             .create()

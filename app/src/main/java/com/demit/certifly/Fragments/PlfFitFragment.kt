@@ -48,43 +48,34 @@ class PlfFitFragment(val selectedProfile: TProfileModel) : Fragment() {
                 val sweet = Sweet(requireContext())
                 sweet.show("Verifying")
 
-                ApiHelper.verifyPlfFitNumber(
+                ApiHelper.verifyPurchaseOrderNumber(
                     Shared(requireContext()).getString("token"),
                     binding.purchaseOrder.text.toString()
                 ).observe(viewLifecycleOwner, { validityResponse ->
-
-                    if (validityResponse == "0") {
-                        sweet.dismiss()
-
-                       /* requireActivity().supportFragmentManager.beginTransaction()
-                            .replace(
-                                R.id.fragcontainer,
-                                ScancompleteFragment(selectedProfile, null)
-                            )
-                            .addToBackStack("")
-                            .commit()*/
+                    sweet.dismiss()
+                    if (validityResponse.success) {
 
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(
                                 R.id.fragcontainer,
-                                FragmentConductTest(selectedProfile,null,binding.purchaseOrder.text.toString().trim())
+                                FragmentConductTest(
+                                    selectedProfile,
+                                    null,
+                                    binding.purchaseOrder.text.toString().trim()
+                                )
                             )
                             .addToBackStack("")
                             .commit()
 
 
-
                     } else {
-                        sweet.dismiss()
-                        if (validityResponse == "100")
-                            Toast.makeText(
-                                requireContext(),
-                                "Invalid Purchase order number",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        else
-                            Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT)
-                                .show()
+
+                        Toast.makeText(
+                            requireContext(),
+                            validityResponse.message,
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
                     }
 
                 })

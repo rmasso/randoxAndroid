@@ -42,7 +42,7 @@ class ProfileEditFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEditProfileBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -101,56 +101,40 @@ class ProfileEditFragment : Fragment() {
     private fun verifyFields(): Boolean {
         var isVerified = false
         if (binding.fname.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Firstname can't be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Firstname can't be empty", Toast.LENGTH_SHORT).show()
         } else if (binding.dob.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Date of birth can't be empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Date of birth can't be empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (binding.pnumber.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Passport Number can't be empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Passport Number can't be empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (binding.address.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Address Can't be Empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Address Can't be Empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (binding.city.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "City can't be empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "City can't be empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (binding.zip.text.trim().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Zip Code can't be empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Zip Code can't be empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (binding.phone.text.trim().toString().isEmpty()) {
-            if (context != null)
-                Toast.makeText(context, "Phone Number can't be empty", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Phone Number can't be empty", Toast.LENGTH_SHORT)
                     .show()
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.usrEmail.text.trim()).matches()) {
-            if (context != null)
-                Toast.makeText(context, "Invalid Email Address", Toast.LENGTH_SHORT).show()
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.trim())
-                .matches()
-        ) {
-            if (context != null)
-                Toast.makeText(context, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
-                    .show()
-        } else if (binding.usrEmail.text.trim() != binding.confirmEmail.text.trim()) {
-            if (context != null)
+                Toast.makeText(requireContext(), "Invalid Email Address", Toast.LENGTH_SHORT).show()
+        } else if (!binding.usrEmail.text.toString().trim().equals(binding.confirmEmail.text.toString().trim(),true)) {
                 Toast.makeText(
-                    context,
+                    requireContext(),
                     "Email and Confirm Email should match",
                     Toast.LENGTH_SHORT
                 ).show()
 
         } else if (binding.ethnicity.selectedItemPosition == 0) {
-            if (context != null)
-                Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), "Choose Ethnicity", Toast.LENGTH_SHORT)
                     .show()
         } else if (!binding.radio.isChecked) {
             Toast.makeText(
-                context,
+                requireContext(),
                 "Please Confirm that you agree with our Terms&conditions",
                 Toast.LENGTH_SHORT
             )
@@ -203,15 +187,15 @@ class ProfileEditFragment : Fragment() {
     }
 
     private fun postData(data: MutableMap<String, String>, isMainUser: Boolean) {
-        ApiHelper.updateFamilyUser(data, isMainUser).observe(viewLifecycleOwner) { response ->
-            if (response == "0") {
+        ApiHelper.updateUser(Shared(requireContext()).getString("token"),data, isMainUser).observe(viewLifecycleOwner) { response ->
+            if (response.success) {
                 sweet.dismiss()
-                Toast.makeText(requireContext(), "User updated Successfully", Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT)
                     .show()
                 requireActivity().onBackPressed()
             } else {
                 sweet.dismiss()
-                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
             }
         }
     }

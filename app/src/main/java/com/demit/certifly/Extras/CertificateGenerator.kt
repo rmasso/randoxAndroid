@@ -141,7 +141,8 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if (is_viccinated.isNotEmpty()) {
+                val isViccinated= is_viccinated?:""
+                if (isViccinated.isNotEmpty()) {
                     headerTable.addCell(
                         getCell(
                             "Booking ref Number: $pfl_code" ?: "",
@@ -163,7 +164,7 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-                val title = if (is_viccinated.isNotEmpty())
+                val title = if (isViccinated.isNotEmpty())
                     "Day 2 Lateral Flow Test Certificate"
                 else
                     "Results report / Certificate"
@@ -397,7 +398,8 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if (is_viccinated.isNotEmpty()) {
+                val isViccinated= is_viccinated?:""
+                if (isViccinated.isNotEmpty()) {
                     headerTable.addCell(
                         getCell(
                             "Booking ref Number: $pfl_code" ?: "",
@@ -418,7 +420,8 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-                val title = if (is_viccinated.isNotEmpty())
+
+                val title = if (isViccinated.isNotEmpty())
                     "Day 2 Lateral Flow Test Certificate"
                 else
                     "Results report / Certificate"

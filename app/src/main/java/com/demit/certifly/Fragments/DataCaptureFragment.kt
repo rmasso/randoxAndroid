@@ -212,18 +212,15 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
 
         val sweet = Sweet(requireContext())
         sweet.show("Verifying")
-        ApiHelper.verifyPlfNumber(
+        ApiHelper.verifyBookingReferenceNumber(
             Shared(requireContext()).getString("token"),
-            binding.bookingRefEdit.text.toString()
+            binding.bookingRefEdit.text.toString().trim()
         )
             .observe(viewLifecycleOwner) { validityResponse ->
-                if (validityResponse == "0") {
-                    sweet.dismiss()
+                sweet.dismiss()
+                if (validityResponse.success) {
 
-                    /*requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragcontainer, ScancompleteFragment(selectedProfile, dataMap))
-                        .addToBackStack("")
-                        .commit()*/
+
 
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(
@@ -234,16 +231,7 @@ class DataCaptureFragment(val selectedProfile: TProfileModel) : Fragment() {
                         .commit()
 
                 } else {
-                    sweet.dismiss()
-                    if (validityResponse == "100")
-                        Toast.makeText(
-                            requireContext(),
-                            "Invalid booking reference number",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    else
-                        Toast.makeText(requireContext(), validityResponse, Toast.LENGTH_SHORT)
-                            .show()
+                    Toast.makeText(requireContext(),validityResponse.message,Toast.LENGTH_LONG).show()
                 }
             }
 

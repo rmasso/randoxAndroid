@@ -1,5 +1,6 @@
 package com.demit.certifly.Fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -38,8 +39,14 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
 
 
         sweet = Sweet(requireContext());
-        getCertificates()
+        fetchCertificates()
         return binding.root
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if(this::sweet.isInitialized)
+            sweet.dismiss()
     }
 
     override fun dismissDialog() {
@@ -47,81 +54,37 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
         cardStack.visibility = View.VISIBLE
     }
 
-    fun getCertificates() {
+    @SuppressLint("SetTextI18n")
+    fun fetchCertificates(){
         sweet.show("Retrieving Certificates")
         if (binding.noCertificateMessage.visibility == View.VISIBLE)
             binding.noCertificateMessage.visibility = View.GONE
-        val url = Functions.concat(Constants.url, "getAllCert.php");
-        val request: StringRequest = object : StringRequest(
-            Method.POST,
-            url,
 
-            Response.Listener {
-                Log.d("sss", it.toString())
-
-                try {
-                    val obj = JSONObject(it)
-                    val s = obj.getString("ret")
-                    Log.d("++res++", s)
-                    if (s == "100") {
-                        if (context != null) {
-                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                                .show()
+        ApiHelper.fetchCertificates(Shared(requireContext()).getString("token")).observe(viewLifecycleOwner){ response->
+            if(response.count!=-1){
+                binding.pendingCount.text = "Pending: ${response.count}"
+                binding.pendingCount.visibility = View.VISIBLE
+                response.certificates?.let {
+                    if (it.isNotEmpty()) {
+                        binding.cardStack.adapter = CertificateAdapter(
+                            requireActivity(),
+                            it,
+                            this@CertificatesFragment
+                        ){ deleteCertId ->
+                            deleteCertificate(deleteCertId)
                         }
                     } else {
-                        val pendingCount = obj.getString("count")
-                        binding.pendingCount.text = "Pending: $pendingCount"
-                        binding.pendingCount.visibility = View.VISIBLE
+                        binding.noCertificateMessage.visibility = View.VISIBLE
 
-                        val gson = Gson()
-                        val listType = object : TypeToken<List<AllCertificatesModel?>?>() {}.type
-                        val sliderItem: MutableList<AllCertificatesModel> =
-                            gson.fromJson(obj.get("ret").toString(), listType)
-                        if (sliderItem.size > 0) {
-                            binding.cardStack.adapter = CertificateAdapter(
-                                requireActivity(),
-                                sliderItem,
-                                this@CertificatesFragment
-                            ) { deleteCertId ->
-                                deleteCertificate(deleteCertId)
-                            }
-                        } else {
-                            binding.noCertificateMessage.visibility = View.VISIBLE
-                            sweet.dismiss()
-                        }
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                     sweet.dismiss()
-                    if (context != null) {
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                            .show()
-                    }
                 }
-            },
-            Response.ErrorListener {
+
+
+            }else{
+                Toast.makeText(requireContext(), response.message,Toast.LENGTH_LONG).show()
                 sweet.dismiss()
-                if (context != null) {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                        .show()
-                }
-
             }
-        ) {
-            override fun getParams(): MutableMap<String, String> {
-                val map: MutableMap<String, String> = HashMap();
-                map["token"] = Shared(requireContext()).getString("token")
-                return map
-            }
-        }
-
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
-        )
-        if (context != null) {
-            Volley.newRequestQueue(context).add(request)
         }
     }
 
@@ -129,13 +92,13 @@ class CertificatesFragment : Fragment(), DialogDismissInterface {
         sweet.show("Deleting Certificate")
         ApiHelper.deleteCertificate(Shared(requireContext()).getString("token"), certId)
             .observe(viewLifecycleOwner, { response ->
-                if (response == "200") {
+                if(response.success){
                     sweet.dismiss()
                     binding.cardStack.removeAdapter()
-                    getCertificates()
-                } else {
+                    fetchCertificates()
+                }else{
                     sweet.dismiss()
-                    Toast.makeText(requireContext(), response, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), response.message, Toast.LENGTH_SHORT).show()
                 }
             })
     }

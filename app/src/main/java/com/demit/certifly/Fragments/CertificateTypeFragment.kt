@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.demit.certifly.Extras.Constants.Companion.TERMS_FIT_TO_TRAVEL
 import com.demit.certifly.Extras.Constants.Companion.TERMS_UK_DAY_2
+import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
@@ -107,9 +108,9 @@ class CertificateTypeFragment(val userProfile: TProfileModel) : Fragment(), View
     private fun checkTestAvailabilityStatus() {
         val sweet = Sweet(requireContext())
         sweet.show("Please Wait")
-        ApiHelper.getTestAvailability().observe(viewLifecycleOwner, {
-            it?.let { typeStatusList ->
-                typeStatusList.forEach { typeStatus ->
+        ApiHelper.getTestAvailability(Shared(requireContext()).getString("token")).observe(viewLifecycleOwner, { response->
+            response?.let {
+                it.testTypeStatusList?.forEach { typeStatus ->
                     if (typeStatus.type == "fit" && typeStatus.status == "1") {
                         binding.fitToTravelSwitch.isEnabled = true
                         binding.fitToTravelMessage.visibility = View.GONE

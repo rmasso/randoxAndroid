@@ -21,6 +21,7 @@ import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
+import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.FragmentTesterBinding
 import com.demit.certifly.databinding.ViewTesterBinding
 import com.google.gson.Gson
@@ -48,9 +49,6 @@ class TesterFragment : Fragment() {
 
     fun setclicks(){
         binding.gotop.setOnClickListener {
-            /*activity?.supportFragmentManager?.beginTransaction()
-               ?.replace(R.id.fragcontainer,ScancompleteFragment(currentSelectedProfile,null))?.addToBackStack("")?.commit()
-*/
             activity?.supportFragmentManager?.beginTransaction()
                 ?.replace(R.id.fragcontainer,CertificateTypeFragment(currentSelectedProfile))?.addToBackStack("")?.commit()
         }
@@ -111,76 +109,22 @@ class TesterFragment : Fragment() {
                 binding.gotop.visibility = View.VISIBLE
             }
         }
-        getProfiles()
+        fetchUserProfiles()
         super.onStart()
     }
     lateinit var sweet : Sweet
-    fun getProfiles(){
+    fun fetchUserProfiles() {
         sweet.show("Getting profiles")
-
-        val url = Functions.concat(Constants.url , "getProfile.php");
-        val request : StringRequest = object : StringRequest(
-            Method.POST,
-            url,
-            Response.Listener{
+        ApiHelper.fetchUserProfiles(Shared(requireContext()).getString("token"))
+            .observe(viewLifecycleOwner, { response ->
                 sweet.dismiss()
-                Log.d("sss" , it.toString())
-
-                try{
-                    val obj = JSONObject(it)
-                    val s = obj.getString("ret");
-                    if(s == "100"){
-                        if(context != null) {
-                            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    }else{
-                        val gson = Gson()
-                        val listType = object : TypeToken<List<TProfileModel?>?>() {}.type
-                        val sliderItem: MutableList<TProfileModel> = gson.fromJson(obj.get("ret").toString(), listType)
-                        list = sliderItem
-                        adapter.notifyDataSetChanged()
-
-                    }
-                }catch (e : Exception){
-                    e.printStackTrace()
-                    sweet.dismiss()
-                    if(context != null) {
-                        Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                response.users?.let {
+                    list = it.toMutableList()
+                    adapter.notifyDataSetChanged()
+                } ?: run {
+                    Toast.makeText(requireContext(),response.message,Toast.LENGTH_LONG).show()
                 }
-            },
-            Response.ErrorListener{
-                sweet.dismiss()
-                if(context != null) {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        ){
-            override fun getParams(): MutableMap<String, String> {
-                val map : MutableMap<String, String> = HashMap();
-                if(context != null) {
-                    map["token"] = Shared(context!!).getString("token")!!
-                }
-                return map
-            }
 
-            override fun getCacheEntry(): Cache.Entry? {
-                return super.getCacheEntry()
-            }
-        }
-
-        request.retryPolicy = DefaultRetryPolicy(
-            50000,
-            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT,
-        )
-        if(context != null) {
-            val queue = Volley.newRequestQueue(context)
-            queue.cache.clear()
-            queue.add(request)
-        }
+            })
     }
 }
