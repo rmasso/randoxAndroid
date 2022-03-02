@@ -53,7 +53,7 @@ class CertificatePreviewActivity : AppCompatActivity() {
         sweet = Sweet(this)
         sweet.show("Loading Please Wait")
         generatePdfForPreview()
-        if (PermissionUtil.isMarshMallowOrAbove()) {
+        /*if (PermissionUtil.isMarshMallowOrAbove()) {
             storageRequestLauncher =
                 registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                     if (isGranted) {
@@ -76,15 +76,15 @@ class CertificatePreviewActivity : AppCompatActivity() {
 
                         } else {
                             //Android 11 and up
-                            /*enable = true
+                            *//*enable = true
                             getSharedPreferences("app", MODE_PRIVATE).edit()
-                                .putBoolean("should_take_to_storage_settings", true).apply()*/
+                                .putBoolean("should_take_to_storage_settings", true).apply()*//*
                         }
 
                     }
 
                 }
-        }
+        }*/
 
     }
 
@@ -127,16 +127,20 @@ class CertificatePreviewActivity : AppCompatActivity() {
     }
 
     private fun saveFile() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+
+        if (this::pdfBytesArray.isInitialized) {
+            FileUtil.saveFile(this, certificate.cert_device_id.takeLast(13), pdfBytesArray)
+        }
+        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             if (this::pdfBytesArray.isInitialized) {
                 FileUtil.saveFile(this, certificate.cert_device_id.takeLast(13), pdfBytesArray)
             }
         } else {
             requestStoragePermission()
-        }
+        }*/
     }
 
-    private fun requestStoragePermission() {
+   /* private fun requestStoragePermission() {
         val hasWritePermission = hasStoragePermission(this)
         val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         val writePermissionGranted = hasWritePermission || minSdk29
@@ -193,7 +197,7 @@ class CertificatePreviewActivity : AppCompatActivity() {
 
             }
         }
-    }
+    }*/
 
 
 }

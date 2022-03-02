@@ -23,11 +23,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/storage_expandable"
         app:layout_constraintVertical_chainStyle="packed"
         />
 
-    <com.skydoves.expandablelayout.ExpandableLayout
+   <!-- <com.skydoves.expandablelayout.ExpandableLayout
         android:id="@+id/storage_expandable"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -46,7 +45,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
