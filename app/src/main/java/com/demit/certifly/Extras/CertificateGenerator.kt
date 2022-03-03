@@ -141,7 +141,7 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if (is_viccinated.isNotEmpty()) {
+                if (is_viccinated != null && is_viccinated.isNotEmpty()) {
                     headerTable.addCell(
                         getCell(
                             "Booking ref Number: $pfl_code" ?: "",
@@ -163,7 +163,7 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-                val title = if (is_viccinated.isNotEmpty())
+                val title = if (is_viccinated != null && is_viccinated.isNotEmpty())
                     "Day 2 Lateral Flow Test Certificate"
                 else
                     "Results report / Certificate"
@@ -397,7 +397,7 @@ object CertificateGenerator {
 
                 //Row6
                 headerTable.addCell(getCell("+44 (0)2894422413", FONT_SIZE_CONTENT, Font.NORMAL))
-                if (is_viccinated.isNotEmpty()) {
+                if (is_viccinated != null && is_viccinated.isNotEmpty()) {
                     headerTable.addCell(
                         getCell(
                             "Booking ref Number: $pfl_code" ?: "",
@@ -418,7 +418,7 @@ object CertificateGenerator {
                 font.color = BaseColor(64, 64, 64)
                 font.style = Font.BOLD
                 fs.addFont(font)
-                val title = if (is_viccinated.isNotEmpty())
+                val title = if (is_viccinated != null && is_viccinated.isNotEmpty())
                     "Day 2 Lateral Flow Test Certificate"
                 else
                     "Results report / Certificate"
@@ -495,8 +495,8 @@ object CertificateGenerator {
     private fun getParagraphCovidStatus(status: String): Paragraph {
         val para = Paragraph()
         para.font = FontFactory.getFont(FontFactory.TIMES_ROMAN, FONT_SIZE_CONTENT)
-        para.font.style= Font.NORMAL
-        para.font.color= BaseColor.BLACK
+        para.font.style = Font.NORMAL
+        para.font.color = BaseColor.BLACK
 
         when (status) {
             "N" -> {
@@ -579,7 +579,7 @@ object CertificateGenerator {
         return try {
             val content =
                 "Confirmation this is a genuine Randox Health Result Certificate for COVID-19 LFT Test.\n\nURN: $urn\n\nName: $name\n\nDate of Birth: $dateOfBirth\n\nDate of Report: $dateOfReport\n\nResult: $covidTestResult"
-            QRCode.from(content).withSize(40,40).bitmap()
+            QRCode.from(content).withSize(40, 40).bitmap()
         } catch (exception: Exception) {
             null
         }
