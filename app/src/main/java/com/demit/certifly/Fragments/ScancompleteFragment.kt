@@ -2,7 +2,9 @@ package com.demit.certifly.Fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
@@ -13,6 +15,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.demit.certifly.Activities.CaptureActivity
 import com.demit.certifly.Extras.DetachableClickListener
 import com.demit.certifly.Extras.Global
@@ -24,6 +28,7 @@ import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
 import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.FragmentScancompleteBinding
+import com.demit.certifly.extensions.toBase64String
 import java.util.*
 
 
@@ -58,11 +63,27 @@ class ScancompleteFragment(
                     val croppedImage = it.getStringExtra("device")
                     val qrCode = it.getStringExtra("qr")
                     croppedImage?.let { image ->
-                        val imageBytes = Base64.decode(image, Base64.DEFAULT)
+                        //val imageBytes = Base64.decode(image, Base64.DEFAULT)
+                       // val bitmap= BitmapFactory.decodeFile(image)
                         Glide.with(requireContext())
-                            .load(imageBytes)
-                            .into(binding.scannedImage)
-                        certificateModel = createNewCertificate(image, qrCode!!)
+                            .asBitmap()
+                            .load(image)
+                            .into(object :CustomTarget<Bitmap>(){
+                                override fun onResourceReady(
+                                    resource: Bitmap,
+                                    transition: Transition<in Bitmap>?
+                                ) {
+                                    binding.scannedImage.setImageBitmap(resource)
+
+                                    val base64Image= resource.toBase64String()
+                                    certificateModel = createNewCertificate(base64Image, qrCode!!)
+                                }
+
+                                override fun onLoadCleared(placeholder: Drawable?) {
+                                }
+
+                            })
+
                     }
 
                 }

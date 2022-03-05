@@ -295,59 +295,42 @@ class ProfileFragment : Fragment() {
         binding.save.setOnClickListener {
             Log.d("++index", list[index].usr_image)
             if (list[index].usr_image == "") {
-                if (context != null)
-                    Toast.makeText(context, "Please Scan Passport", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please Scan Passport", Toast.LENGTH_SHORT).show()
             } else if (binding.fname.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Firstname can't be empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Firstname can't be empty", Toast.LENGTH_SHORT).show()
             } else if (binding.dob.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Date of birth can't be empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Date of birth can't be empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.pnumber.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Passport Number can't be empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Passport Number can't be empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.address.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Address Can't be Empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Address Can't be Empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.city.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "City can't be empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "City can't be empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.zip.text.trim().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Zip Code can't be empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Zip Code can't be empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (binding.phone.text.trim().toString().isEmpty()) {
-                if (context != null)
-                    Toast.makeText(context, "Phone Number can't be empty", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Phone Number can't be empty", Toast.LENGTH_SHORT)
+                    .show()
             } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.trim()).matches()) {
-                if (context != null)
-                    Toast.makeText(context, "Invalid Email Address", Toast.LENGTH_SHORT).show()
-            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.confirmEmail.text.trim())
-                    .matches()
-            ) {
-                if (context != null)
-                    Toast.makeText(context, "Invalid Confirm Email Address", Toast.LENGTH_SHORT)
-                        .show()
-            } else if (binding.email.text.trim() != binding.confirmEmail.text.trim()) {
-                if (context != null)
-                    Toast.makeText(
-                        context,
-                        "Email and Confirm Email should match",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                Toast.makeText(requireContext(), "Invalid Email Address", Toast.LENGTH_SHORT).show()
+            } else if (!binding.email.text.toString().trim().equals(binding.confirmEmail.text.toString().trim(),true)) {
+                Toast.makeText(
+                    requireContext(),
+                    "Email and Confirm Email should match",
+                    Toast.LENGTH_SHORT
+                ).show()
 
             } else if (binding.ethnicity.selectedItemPosition == 0) {
-                if (context != null)
-                    Toast.makeText(context, "Choose Ethnicity", Toast.LENGTH_SHORT)
-                        .show()
+                Toast.makeText(requireContext(), "Choose Ethnicity", Toast.LENGTH_SHORT)
+                    .show()
             } else if (!binding.radio.isChecked) {
                 Toast.makeText(
-                    context,
+                    requireContext(),
                     "Please Confirm that you agree with our Terms&conditions",
                     Toast.LENGTH_SHORT
                 )
