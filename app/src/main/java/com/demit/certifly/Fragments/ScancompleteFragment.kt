@@ -18,10 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.demit.certifly.Activities.CaptureActivity
-import com.demit.certifly.Extras.DetachableClickListener
-import com.demit.certifly.Extras.Global
-import com.demit.certifly.Extras.Shared
-import com.demit.certifly.Extras.Sweet
+import com.demit.certifly.Extras.*
 import com.demit.certifly.Models.CertificateModel
 import com.demit.certifly.Models.TProfileModel
 //import com.demit.certify.Activities.DeviceScanActivity
@@ -71,9 +68,9 @@ class ScancompleteFragment(
                                     transition: Transition<in Bitmap>?
                                 ) {
                                     binding.scannedImage.setImageBitmap(resource)
-
                                     val base64Image= resource.toBase64String()
                                     certificateModel = createNewCertificate(base64Image, qrCode!!)
+                                    FileUtil.deleteTempFile(image)
                                 }
 
                                 override fun onLoadCleared(placeholder: Drawable?) {

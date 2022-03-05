@@ -59,7 +59,11 @@ object FileUtil {
                     fileOutputStream = FileOutputStream(pdfFile)
                     fileOutputStream.write(pdfBytes)
                     fileOutputStream.close()
-                    Toast.makeText(context, "Certificate Successfully saved\n Location: ${pdfFile.absolutePath}", Toast.LENGTH_SHORT)
+                    Toast.makeText(
+                        context,
+                        "Certificate Successfully saved\n Location: ${pdfFile.absolutePath}",
+                        Toast.LENGTH_SHORT
+                    )
                         .show()
                 } catch (ex: Exception) {
                     Toast.makeText(context, "Unable to save Certificate", Toast.LENGTH_SHORT).show()
@@ -74,7 +78,8 @@ object FileUtil {
 
     private fun getORCreateNewFolder(context: Context): File? {
 
-        val dir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS+ "/" + Constants.DEFAULT_APP_FOLDER)
+        val dir =
+            context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS + "/" + Constants.DEFAULT_APP_FOLDER)
 
         // Make sure the path directory exists.
         dir?.let {
@@ -88,5 +93,15 @@ object FileUtil {
             return null
         }
         return dir
+    }
+
+    fun deleteTempFile(path: String) {
+        try {
+            val file = File(path)
+            if (file.exists())
+                file.delete()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
     }
 }
