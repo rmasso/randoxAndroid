@@ -577,8 +577,17 @@ class ProfileFragment : Fragment() {
             resources.getStringArray(R.array.ethnicity).indexOf(list[position].ethnicity)
         )
 
+        val gender= when (list[position].usr_sex) {
+            "M" -> "Male"
+            "F" -> "Female"
+            "O" -> "Other/Dont know"
+            else -> list[position].usr_sex
+        }
+
+
+
         binding.gender.setSelection(
-            resources.getStringArray(R.array.genders).indexOf(list[position].usr_sex)
+            resources.getStringArray(R.array.genders).indexOf(gender)
         )
     }
 
