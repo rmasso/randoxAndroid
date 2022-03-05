@@ -1,23 +1,13 @@
 package com.demit.certifly.Activities
 
-import android.Manifest
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.*
-import android.provider.Settings
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.demit.certifly.Extras.*
-import com.demit.certifly.Extras.PermissionUtil.STORAGE_PERMISSION
 import com.demit.certifly.Extras.PermissionUtil.hasStoragePermission
-import com.demit.certifly.Fragments.PermissionInfoDialog
 import com.demit.certifly.Models.AllCertificatesModel
-import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityCertificatePreviewBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -53,38 +43,6 @@ class CertificatePreviewActivity : AppCompatActivity() {
         sweet = Sweet(this)
         sweet.show("Loading Please Wait")
         generatePdfForPreview()
-        if (PermissionUtil.isMarshMallowOrAbove()) {
-            storageRequestLauncher =
-                registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-                    if (isGranted) {
-                        getSharedPreferences("app", MODE_PRIVATE).edit()
-                            .putBoolean("should_take_to_storage_settings", false).apply()
-                        if (this::pdfBytesArray.isInitialized) {
-                            FileUtil.saveFile(
-                                this,
-                                certificate.cert_device_id.takeLast(13),
-                                pdfBytesArray
-                            )
-                        }
-                    } else {
-                        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
-                            if (!shouldShowRequestPermissionRationale(STORAGE_PERMISSION)) {
-                                enable = true
-                                getSharedPreferences("app", MODE_PRIVATE).edit()
-                                    .putBoolean("should_take_to_storage_settings", true).apply()
-                            }
-
-                        } else {
-                            //Android 11 and up
-                            /*enable = true
-                            getSharedPreferences("app", MODE_PRIVATE).edit()
-                                .putBoolean("should_take_to_storage_settings", true).apply()*/
-                        }
-
-                    }
-
-                }
-        }
 
     }
 
@@ -127,71 +85,9 @@ class CertificatePreviewActivity : AppCompatActivity() {
     }
 
     private fun saveFile() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            if (this::pdfBytesArray.isInitialized) {
-                FileUtil.saveFile(this, certificate.cert_device_id.takeLast(13), pdfBytesArray)
-            }
-        } else {
-            requestStoragePermission()
-        }
-    }
 
-    private fun requestStoragePermission() {
-        val hasWritePermission = hasStoragePermission(this)
-        val minSdk29 = Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
-        val writePermissionGranted = hasWritePermission || minSdk29
-        when {
-
-            writePermissionGranted -> {
-                if (this::pdfBytesArray.isInitialized) {
-                    FileUtil.saveFile(this, certificate.cert_device_id.takeLast(13), pdfBytesArray)
-                }
-            }
-            enable -> {
-                val permissionSettingsDialog =
-                    PermissionInfoDialog(
-                        true,
-                        Constants.DIALOG_TYPE_STORAGE
-                    ) { btnClickId, dialog ->
-                        when (btnClickId) {
-                            R.id.btn_settings -> {
-                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                val uri = Uri.fromParts("package", packageName, null);
-                                intent.data = uri;
-                                startActivityForResult(intent, 1002)
-                                dialog.dismiss()
-                            }
-                            R.id.btn_not_now -> {
-                                dialog.dismiss()
-                            }
-                        }
-                    }
-                permissionSettingsDialog.isCancelable = false
-                permissionSettingsDialog.show(supportFragmentManager, "permission_dialog")
-
-
-            }
-            else -> {
-                //Show some cool ui to the user explaining why we use this permission
-                val permissionDialog =
-                    PermissionInfoDialog(
-                        false,
-                        Constants.DIALOG_TYPE_STORAGE
-                    ) { btnClickId, dialog ->
-                        when (btnClickId) {
-                            R.id.btn_allow -> {
-                                storageRequestLauncher.launch(STORAGE_PERMISSION)
-                                dialog.dismiss()
-                            }
-                            R.id.btn_not_now -> {
-                                dialog.dismiss()
-                            }
-                        }
-                    }
-                permissionDialog.isCancelable = false
-                permissionDialog.show(supportFragmentManager, "permission_dialog")
-
-            }
+        if (this::pdfBytesArray.isInitialized) {
+            FileUtil.saveFile(this, certificate.cert_device_id.takeLast(13), pdfBytesArray)
         }
     }
 

@@ -440,7 +440,7 @@ class ProfileFragment : Fragment() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                list[index].usr_home = s.toString();
+                list[index].usr_home = s.toString()
             }
 
         })

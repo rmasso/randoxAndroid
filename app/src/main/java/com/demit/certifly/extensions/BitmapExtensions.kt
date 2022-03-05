@@ -85,7 +85,7 @@ fun Bitmap.rotateImage(angle: Float): Bitmap {
     )
 }
 
-const val OUTPUT_IMAGE_QUALITY = 70
+const val OUTPUT_IMAGE_QUALITY = 55
 //Extension function to
 fun Bitmap.toBase64String(): String {
     ByteArrayOutputStream().apply {

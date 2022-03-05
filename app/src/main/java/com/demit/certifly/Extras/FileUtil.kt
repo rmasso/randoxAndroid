@@ -50,7 +50,7 @@ object FileUtil {
             }
 
         } else {
-            val folder = getORCreateNewFolder()
+            val folder = getORCreateNewFolder(context)
             folder?.let {
                 var fileOutputStream: FileOutputStream?
                 try {
@@ -59,7 +59,7 @@ object FileUtil {
                     fileOutputStream = FileOutputStream(pdfFile)
                     fileOutputStream.write(pdfBytes)
                     fileOutputStream.close()
-                    Toast.makeText(context, "Certificate Successfully saved", Toast.LENGTH_SHORT)
+                    Toast.makeText(context, "Certificate Successfully saved\n Location: ${pdfFile.absolutePath}", Toast.LENGTH_SHORT)
                         .show()
                 } catch (ex: Exception) {
                     Toast.makeText(context, "Unable to save Certificate", Toast.LENGTH_SHORT).show()
@@ -72,20 +72,20 @@ object FileUtil {
 
     }
 
-    private fun getORCreateNewFolder(): File? {
+    private fun getORCreateNewFolder(context: Context): File? {
 
-        var dir = File(
-            Environment.getExternalStorageDirectory()
-                .toString() + "/" + Constants.DEFAULT_APP_FOLDER
-        )
+        val dir = context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS+ "/" + Constants.DEFAULT_APP_FOLDER)
 
         // Make sure the path directory exists.
-        if (!dir.exists()) {
-            // Make it, if it doesn't exit
-            val success = dir.mkdirs()
-            if (!success) {
-                return null
+        dir?.let {
+            if (!it.exists()) {
+                val success = it.mkdirs()
+                if (!success) {
+                    return null
+                }
             }
+        } ?: run {
+            return null
         }
         return dir
     }

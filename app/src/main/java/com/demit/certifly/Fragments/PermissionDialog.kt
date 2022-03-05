@@ -63,10 +63,6 @@ class PermissionDialog(val onButtonClick: (id: Int) -> Unit) : DialogFragment(),
             cameraExpandable.parentLayout.data_heading.text= getString(R.string.camera)
             cameraExpandable.parentLayout.data_heading.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_camera,0,0,0)
             cameraExpandable.secondLayout.data_content.text= getText(R.string.camera_permission)
-
-            storageExpandable.parentLayout.data_heading.text= getString(R.string.storage)
-            storageExpandable.parentLayout.data_heading.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_storage,0,0,0)
-            storageExpandable.secondLayout.data_content.text= getText(R.string.storage_permission)
             }
 
 
@@ -82,13 +78,6 @@ class PermissionDialog(val onButtonClick: (id: Int) -> Unit) : DialogFragment(),
                     cameraExpandable.expand()
                 else
                     cameraExpandable.collapse()
-            }
-
-            storageExpandable.parentLayout.setOnClickListener {
-                if (!storageExpandable.isExpanded)
-                    storageExpandable.expand()
-                else
-                    storageExpandable.collapse()
             }
         }
 

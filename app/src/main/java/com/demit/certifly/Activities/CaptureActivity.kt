@@ -297,13 +297,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val bitmap = getCapturedImage()
-                    try {
+                   /* try {
                         val file = File(currentPhotoPath)
                         if (file.exists())
                             file.delete()
                     }catch(ex:Exception){
                         ex.printStackTrace()
-                    }
+                    }*/
                     showOrHideBottomSheet(true)
                     binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
                     binding.sheetContainer.qrText.text =
@@ -525,7 +525,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
         val imgWithResult = bitmap.drawDetectionResult(bitmap, resultToDisplay)
         runOnUiThread {
             if (resultToDisplay.isNotEmpty()) {
-                croppedDevice = bitmap.toBase64String()
+                croppedDevice = currentPhotoPath
                 val cropImage = bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
              Glide.with(this@CaptureActivity)
                  .load(cropImage)
