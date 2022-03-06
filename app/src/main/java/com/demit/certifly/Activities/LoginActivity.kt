@@ -10,6 +10,7 @@ import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.demit.certifly.BuildConfig
+import com.demit.certifly.Extras.Constants
 import com.demit.certifly.Extras.Shared
 import com.demit.certifly.Extras.Sweet
 import com.demit.certifly.Fragments.PermissionDialog
@@ -96,6 +97,9 @@ class LoginActivity : AppCompatActivity() {
         binding.btnForgot.setOnClickListener {
             if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
                 Toast.makeText(this, "Invalid Email.", Toast.LENGTH_SHORT).show()
+            }else if (binding.email.text.toString().equals(Constants.TEST_EMAIL, true)) {
+                Toast.makeText(this, "Test credentials can't be reset", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 sweet.show("Please Wait")
                 ApiHelper.forgetPassword(
