@@ -74,7 +74,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     private var isQrFound = false
     private var qrValue = ""
     lateinit var originalImage: Bitmap
-    lateinit var croppedDevice: String
+    var croppedDevice: String = ""
 
     //Camera Permission Variables
     lateinit var cameraRequestLauncher: ActivityResultLauncher<String>
@@ -124,12 +124,12 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode==CAMERA_REQUEST_CODE){
-            if(PermissionUtil.hasCameraPermission(this)){
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            if (PermissionUtil.hasCameraPermission(this)) {
                 getSharedPreferences("app", MODE_PRIVATE).edit()
                     .putBoolean("should_take_to_settings", false).apply()
                 startCamera()
-            }else{
+            } else {
                 finish()
             }
         }
@@ -146,29 +146,24 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                     showOrHideBottomSheet(false)
                     isQrFound = false
                     qrValue = ""
+                    croppedDevice= ""
                 }
 
                 R.id.submit_btn -> {
-                    if (qrValue == "" || !this::croppedDevice.isInitialized) {
+                    if (qrValue == "" || croppedDevice == "") {
                         Toast.makeText(
                             this,
                             "Cannot proceed because device or qr not found",
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        if(TextUtils.isEmpty(croppedDevice)){
-                            Toast.makeText(
-                                this,
-                                "Image quality is poor. Rescan the device",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }else {
+
                             val result = Intent()
                             result.putExtra("device", croppedDevice)
                             result.putExtra("qr", qrValue)
                             setResult(SCAN_RESULT, result)
                             finish()
-                        }
+
                     }
                 }
 
@@ -191,10 +186,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
             }
             enable -> {
                 val permissionSettingsDialog =
-                    PermissionInfoDialog(true, Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN) { btnClickId, dialog ->
+                    PermissionInfoDialog(
+                        true,
+                        Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN
+                    ) { btnClickId, dialog ->
                         when (btnClickId) {
                             R.id.btn_settings -> {
-                                val intent =  Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
                                 val uri = Uri.fromParts("package", packageName, null);
                                 intent.data = uri;
                                 startActivityForResult(intent, 1001)
@@ -206,15 +204,18 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                     }
-                permissionSettingsDialog.isCancelable=false
-                permissionSettingsDialog.show(supportFragmentManager,"permission_dialog")
+                permissionSettingsDialog.isCancelable = false
+                permissionSettingsDialog.show(supportFragmentManager, "permission_dialog")
 
 
             }
             else -> {
                 //Show some cool ui to the user explaining why we use this permission
                 val permissionDialog =
-                    PermissionInfoDialog(false, Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN) { btnClickId, dialog ->
+                    PermissionInfoDialog(
+                        false,
+                        Constants.DIALOG_TYPE_CAMERA_DEVICE_SCAN
+                    ) { btnClickId, dialog ->
                         when (btnClickId) {
                             R.id.btn_allow -> {
                                 cameraRequestLauncher.launch(PermissionUtil.CAMERA_PERMISSION)
@@ -226,8 +227,8 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                             }
                         }
                     }
-                permissionDialog.isCancelable=false
-                permissionDialog.show(supportFragmentManager,"permission_dialog")
+                permissionDialog.isCancelable = false
+                permissionDialog.show(supportFragmentManager, "permission_dialog")
 
             }
         }
@@ -297,13 +298,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val bitmap = getCapturedImage()
-                   /* try {
-                        val file = File(currentPhotoPath)
-                        if (file.exists())
-                            file.delete()
-                    }catch(ex:Exception){
-                        ex.printStackTrace()
-                    }*/
+                    /* try {
+                         val file = File(currentPhotoPath)
+                         if (file.exists())
+                             file.delete()
+                     }catch(ex:Exception){
+                         ex.printStackTrace()
+                     }*/
                     showOrHideBottomSheet(true)
                     binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
                     binding.sheetContainer.qrText.text =
@@ -445,8 +446,6 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     }
 
 
-
-
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
@@ -526,10 +525,11 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
         runOnUiThread {
             if (resultToDisplay.isNotEmpty()) {
                 croppedDevice = currentPhotoPath
-                val cropImage = bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
-             Glide.with(this@CaptureActivity)
-                 .load(cropImage)
-                 .into(binding.sheetContainer.scannedImage)
+                val cropImage =
+                    bitmap.cropImageInsideBoundingBox(bitmap, resultToDisplay[0].boundingBox)
+                Glide.with(this@CaptureActivity)
+                    .load(cropImage)
+                    .into(binding.sheetContainer.scannedImage)
 
             } else {
 
