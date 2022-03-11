@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Base64
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -26,6 +28,7 @@ import com.demit.certifly.R
 import com.demit.certifly.data.ApiHelper
 import com.demit.certifly.databinding.FragmentScancompleteBinding
 import com.demit.certifly.extensions.toBase64String
+import com.google.gson.Gson
 import java.util.*
 
 
@@ -149,42 +152,61 @@ class ScancompleteFragment(
         plfCode?.let {
             certificateModel.pfl_code = plfCode
         }
-
+        Log.d("++obj++", Gson().toJson(certificateModel).toString())
 
         return certificateModel
     }
 
     private fun submitCertificate(certificateModel: CertificateModel) {
 
-        ApiHelper.verifyQrCode(
-            Shared(requireContext()).getString("token"),
-            certificateModel.cert_device_id
-        )
-            .observe(viewLifecycleOwner) { validityResponse ->
-                if (validityResponse.success) {
-                    ApiHelper.createNewCertificate( Shared(requireContext()).getString("token"),certificateModel)
-                        .observe(viewLifecycleOwner) { response ->
-                            // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
-                            sweet.dismiss()
-                            if (response.success)
-                                activity?.supportFragmentManager?.beginTransaction()
-                                    ?.replace(R.id.fragcontainer, ScansubmitFragment())
-                                    ?.addToBackStack("")?.commit()
-                            else {
-                                Toast.makeText(requireContext(), response.message, Toast.LENGTH_LONG)
-                                    .show()
+      /*  if (Shared(requireContext()).getString("email").trim()
+                .equals(Constants.TEST_EMAIL, true)
+        ){
+            Handler(Looper.getMainLooper()).postDelayed({
+                sweet.dismiss()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragcontainer, ScansubmitFragment())
+                    .addToBackStack("").commit()
+            },1500)
+
+        }else {*/
+            ApiHelper.verifyQrCode(
+                Shared(requireContext()).getString("token"),
+                certificateModel.cert_device_id
+            )
+                .observe(viewLifecycleOwner) { validityResponse ->
+                    if (validityResponse.success) {
+                        ApiHelper.createNewCertificate(
+                            Shared(requireContext()).getString("token"),
+                            certificateModel
+                        )
+                            .observe(viewLifecycleOwner) { response ->
+                                // Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show()
+                                sweet.dismiss()
+                                if (response.success)
+                                    activity?.supportFragmentManager?.beginTransaction()
+                                        ?.replace(R.id.fragcontainer, ScansubmitFragment())
+                                        ?.addToBackStack("")?.commit()
+                                else {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        response.message,
+                                        Toast.LENGTH_LONG
+                                    )
+                                        .show()
+                                }
+
                             }
 
-                        }
 
+                    } else {
+                        sweet.dismiss()
 
-                } else {
-                    sweet.dismiss()
+                        showAlertDialog(validityResponse.message)
 
-                    showAlertDialog(validityResponse.message)
+                    }
 
-                }
-            }
+        }
     }
 
     private fun showAlertDialog(message:String) {

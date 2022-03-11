@@ -14,11 +14,12 @@
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/rescan_btn"
+            android:id="@+id/cancel_btn"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rescan"
+            android:textAllCaps="false"
+            android:text="@string/cancel"
             android:textColor="#d72027"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,7 +30,8 @@
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ready"
+            android:text="@string/ready"
+            android:textAllCaps="false"
             android:textColor="#d72027"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +49,7 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rescan_btn">
+            app:layout_constraintTop_toBottomOf="@id/cancel_btn">
 
 
             <LinearLayout

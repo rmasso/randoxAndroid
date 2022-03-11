@@ -10,9 +10,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.net.Uri
-import android.os.Build
-import android.os.Bundle
-import android.os.Environment
+import android.os.*
 import android.provider.Settings
 import android.text.TextUtils
 import android.util.DisplayMetrics
@@ -25,6 +23,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -35,8 +34,7 @@ import androidx.exifinterface.media.ExifInterface
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.demit.certifly.Extras.Constants
-import com.demit.certifly.Extras.PermissionUtil
+import com.demit.certifly.Extras.*
 import com.demit.certifly.Fragments.PermissionInfoDialog
 import com.demit.certifly.R
 import com.demit.certifly.databinding.ActivityCaptureBinding
@@ -47,6 +45,7 @@ import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
 import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
+import kotlinx.android.synthetic.main.activity_capture.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.tensorflow.lite.support.image.TensorImage
@@ -141,12 +140,12 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                 R.id.camera_capture_button -> {
                     takePhoto()
                 }
-                R.id.rescan_btn -> {
-                    binding.sheetContainer.submitBtn.visibility = View.VISIBLE
-                    showOrHideBottomSheet(false)
-                    isQrFound = false
-                    qrValue = ""
-                    croppedDevice= ""
+                R.id.cancel_btn -> {
+                    showAlertDialog()
+                }
+
+                R.id.close -> {
+                    finish()
                 }
 
                 R.id.submit_btn -> {
@@ -158,11 +157,11 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                         ).show()
                     } else {
 
-                            val result = Intent()
-                            result.putExtra("device", croppedDevice)
-                            result.putExtra("qr", qrValue)
-                            setResult(SCAN_RESULT, result)
-                            finish()
+                        val result = Intent()
+                        result.putExtra("device", croppedDevice)
+                        result.putExtra("qr", qrValue)
+                        setResult(SCAN_RESULT, result)
+                        finish()
 
                     }
                 }
@@ -297,24 +296,27 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                 }
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                    val bitmap = getCapturedImage()
-                    /* try {
-                         val file = File(currentPhotoPath)
-                         if (file.exists())
-                             file.delete()
-                     }catch(ex:Exception){
-                         ex.printStackTrace()
-                     }*/
-                    showOrHideBottomSheet(true)
-                    binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
-                    binding.sheetContainer.qrText.text =
-                        if (qrValue != "") "Success" else "Unknown: Contact Supplier"
-                    with(binding.sheetContainer.animator) {
-                        visibility = View.VISIBLE
-                        playAnimation()
-                    }
+                   /* if (Shared(this@CaptureActivity).getString("email").trim()
+                            .equals(Constants.TEST_EMAIL, true)
+                    ) {
+                        val result = Intent()
+                        result.putExtra("device", currentPhotoPath)
+                        result.putExtra("qr", "")
+                        setResult(SCAN_RESULT, result)
+                        finish()
+                    } else {*/
+                        val bitmap = getCapturedImage()
+                        showOrHideBottomSheet(true)
+                        binding.sheetContainer.scannedImage.setImageBitmap(bitmap)
+                        binding.sheetContainer.qrText.text =
+                            if (qrValue != "") "Success" else "Unknown: Contact Supplier"
+                        with(binding.sheetContainer.animator) {
+                            visibility = View.VISIBLE
+                            playAnimation()
+                        }
+                        detectDevice(bitmap)
+                  //  }
 
-                    detectDevice(bitmap)
 
                 }
             })
@@ -476,11 +478,13 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun attachClickListener() {
         binding.cameraCaptureButton.setOnClickListener(this)
+        binding.close.setOnClickListener { finish() }
         with(binding.sheetContainer) {
-            rescanBtn.setOnClickListener(this@CaptureActivity)
+            cancelBtn.setOnClickListener(this@CaptureActivity)
             submitBtn.setOnClickListener(this@CaptureActivity)
 
         }
+
     }
 
     //Object Detection Part
@@ -606,6 +610,34 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
             display.getMetrics(metrics)
             Point(metrics.widthPixels, metrics.heightPixels)
         }
+    }
+
+    private fun showAlertDialog() {
+
+        val positiveClickListener = DetachableClickListener.wrap { dialog, _ ->
+            binding.sheetContainer.submitBtn.visibility = View.VISIBLE
+            showOrHideBottomSheet(false)
+            isQrFound = false
+            qrValue = ""
+            croppedDevice = ""
+        }
+
+        val negativeClickListener = DetachableClickListener.wrap { dialog, _ ->
+            finish()
+        }
+
+
+        val dialog = AlertDialog.Builder(this)
+            .setMessage("Do you want to rescan the device?")
+            .setPositiveButton("Yes", positiveClickListener)
+            .setNegativeButton("Not now", negativeClickListener)
+            .setCancelable(false)
+            .create()
+
+        //avoid memory leaks
+        positiveClickListener.clearOnDetach(dialog)
+
+        dialog.show()
     }
 
 

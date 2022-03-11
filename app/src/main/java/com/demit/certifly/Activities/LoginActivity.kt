@@ -80,7 +80,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun clicks() {
         binding.signin.setOnClickListener {
-            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString().trim()).matches()) {
                 Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show()
             } else if (binding.password.text.toString().isEmpty()) {
                 Toast.makeText(this, "Password can't be empty", Toast.LENGTH_SHORT).show()
@@ -95,15 +95,15 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.btnForgot.setOnClickListener {
-            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()) {
+            if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString().trim()).matches()) {
                 Toast.makeText(this, "Invalid Email.", Toast.LENGTH_SHORT).show()
-            }else if (binding.email.text.toString().equals(Constants.TEST_EMAIL, true)) {
+            }else if (binding.email.text.toString().trim().equals(Constants.TEST_EMAIL, true)) {
                 Toast.makeText(this, "Test credentials can't be reset", Toast.LENGTH_SHORT)
                     .show()
             } else {
                 sweet.show("Please Wait")
                 ApiHelper.forgetPassword(
-                    binding.email.text.toString()
+                    binding.email.text.toString().trim()
                 )
                     .observe(this, { response ->
                         sweet.dismiss()
@@ -124,7 +124,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         sweet.show("Logging In")
-        ApiHelper.login(binding.email.text.toString(), binding.password.text.toString())
+        ApiHelper.login(binding.email.text.toString().trim(), binding.password.text.toString())
             .observe(this, { response ->
 
                 if (response.errorMessage.isNotEmpty()) {
@@ -135,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
                     sweet.dismiss()
                     val sharedPreferences = Shared(this)
                     sharedPreferences.setString("token", response.accessToken)
-                    sharedPreferences.setString("email", binding.email.text.toString())
+                    sharedPreferences.setString("email", binding.email.text.toString().trim())
                     sharedPreferences.setString("password", binding.password.text.toString())
                     startActivity(Intent(this, DashboardActivity::class.java))
                     finish()

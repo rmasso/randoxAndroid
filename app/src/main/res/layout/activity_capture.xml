@@ -81,6 +81,19 @@
             app:barrierDirection="bottom"
             />
 
+        <ImageButton
+            android:id="@+id/close"
+            android:layout_width="@dimen/_34sdp"
+            android:layout_height="@dimen/_34sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:src="@drawable/ic_baseline_close_24"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
 
 
 
