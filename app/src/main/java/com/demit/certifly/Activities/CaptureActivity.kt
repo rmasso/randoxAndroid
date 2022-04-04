@@ -1,18 +1,15 @@
 package com.demit.certifly.Activities
 
-import android.Manifest
 import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Point
 import android.net.Uri
 import android.os.*
 import android.provider.Settings
-import android.text.TextUtils
 import android.util.DisplayMetrics
 import android.util.Log
 import android.util.Size
@@ -27,7 +24,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.exifinterface.media.ExifInterface
@@ -72,8 +68,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var imageAnalysis: ImageAnalysis
     private var isQrFound = false
     private var qrValue = ""
-    lateinit var originalImage: Bitmap
-    var croppedDevice: String = ""
+    private var croppedDevice: String = ""
 
     //Camera Permission Variables
     lateinit var cameraRequestLauncher: ActivityResultLauncher<String>
@@ -191,8 +186,8 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
                     ) { btnClickId, dialog ->
                         when (btnClickId) {
                             R.id.btn_settings -> {
-                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                val uri = Uri.fromParts("package", packageName, null);
+                                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                                val uri = Uri.fromParts("package", packageName, null)
                                 intent.data = uri;
                                 startActivityForResult(intent, 1001)
                                 dialog.dismiss()
@@ -322,6 +317,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
             })
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun enableTapToFocus(camera: Camera) {
         binding.viewFinder.afterMeasured {
             binding.viewFinder.setOnTouchListener { _, event ->
@@ -356,7 +352,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
         }
     }
 
-    inline fun View.afterMeasured(crossinline block: () -> Unit) {
+    private inline fun View.afterMeasured(crossinline block: () -> Unit) {
         viewTreeObserver.addOnGlobalLayoutListener(object :
             ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -451,7 +447,7 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
@@ -525,7 +521,6 @@ class CaptureActivity : AppCompatActivity(), View.OnClickListener {
             DetectionResult(it.boundingBox, text)
         }
         // Draw the detection result on the bitmap and show it.
-        val imgWithResult = bitmap.drawDetectionResult(bitmap, resultToDisplay)
         runOnUiThread {
             if (resultToDisplay.isNotEmpty()) {
                 croppedDevice = currentPhotoPath
