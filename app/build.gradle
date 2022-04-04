@@ -59,24 +59,22 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.github.f0ris.sweetalert:library:1.6.2'
-    implementation 'com.hbb20:ccp:2.5.4'
+    implementation 'com.hbb20:ccp:2.6.0'
     implementation 'com.google.code.gson:gson:2.8.8'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     //BlinkId Sdk
-    implementation('com.microblink:blinkid:5.15.1@aar') {
+    implementation('com.microblink:blinkid:5.16.0@aar') {
         transitive = true
     }
 
     //CameraX Api's
-    implementation "androidx.camera:camera-camera2:1.1.0-alpha12"
-    implementation "androidx.camera:camera-lifecycle:1.1.0-alpha12"
-    implementation "androidx.camera:camera-view:1.0.0-alpha32"
+    implementation "androidx.camera:camera-camera2:1.1.0-beta02"
+    implementation "androidx.camera:camera-lifecycle:1.1.0-beta02"
+    implementation "androidx.camera:camera-view:1.1.0-beta02"
 
     //Ml Kit Qr Api
-    implementation 'com.google.mlkit:barcode-scanning:17.0.1'
-    implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:17.0.0'
+    implementation 'com.google.mlkit:barcode-scanning:17.0.2'
+    implementation 'com.google.android.gms:play-services-mlkit-barcode-scanning:18.0.0'
 
     //TensorFlow
     implementation("org.tensorflow:tensorflow-lite-task-vision:0.3.1")
@@ -96,7 +94,7 @@ dependencies {
     implementation 'com.mutualmobile.android:cardstack:0.5.3'
 
     //Glide ImageLoader
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.0'
 
     //Circular Progress
     implementation 'com.ramijemli.percentagechartview:percentagechartview:0.3.1'
