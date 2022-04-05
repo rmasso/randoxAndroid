@@ -18,5 +18,5 @@ task clean(type: Delete) {
     delete rootProject.buildDir
 }
 project.ext {
-    blinkIdVersion = '5.13.0'
+    blinkIdVersion = '5.16.0'
 }

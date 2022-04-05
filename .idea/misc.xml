@@ -63,6 +63,7 @@
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/faq_parent_bg.xml" value="0.1" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/ic_arrow.xml" value="0.1" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/ic_camera.xml" value="0.17685185185185184" />
+        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/ic_storage.xml" value="0.10364583333333334" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/pending_bg.xml" value="0.20925925925925926" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/rectangle.xml" value="0.19791666666666666" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/drawable/round_dialog.xml" value="0.19722222222222222" />
@@ -79,7 +80,7 @@
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/activity_profile.xml" value="0.14" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/activity_scan.xml" value="0.20018115942028986" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/certificate_row.xml" value="0.18" />
-        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/dialog_permission.xml" value="0.18" />
+        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/dialog_permission.xml" value="0.12" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/dialog_permission_info.xml" value="0.18" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/fragment_certificates.xml" value="0.22" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/fragment_certificatetype.xml" value="0.1" />
@@ -99,10 +100,10 @@
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/fragment_traveldestination.xml" value="0.2" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/fragment_video_slider.xml" value="0.2" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/fragment_ytest.xml" value="0.14" />
-        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/permission_content.xml" value="0.2" />
+        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/permission_content.xml" value="0.16" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/permission_detail.xml" value="0.4393063583815029" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/permission_heading.xml" value="0.2" />
-        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/view_bottomsheet.xml" value="0.20416666666666666" />
+        <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/view_bottomsheet.xml" value="0.16" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/view_certificates.xml" value="0.33" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/view_data_content.xml" value="0.1" />
         <entry key="..\:/RANDOX_Certifly/certiflyAndriod/app/src/main/res/layout/view_data_heading.xml" value="0.1" />
