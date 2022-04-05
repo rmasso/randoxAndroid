@@ -111,7 +111,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("23 Finsbury Circus,", FONT_SIZE_CONTENT, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        "Swab Date: " + "$cert_timestamp GMT" ?: "",
+                        "Swab Date: " + "$cert_timestamp GMT+1" ?: "",
                         FONT_SIZE_CONTENT,
                         Font.NORMAL
                     )
@@ -121,7 +121,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("London,", FONT_SIZE_CONTENT, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        "Date of Report: " + "$cert_proc_stop GMT" ?: "",
+                        "Date of Report: " + "$cert_proc_stop GMT+1" ?: "",
                         FONT_SIZE_CONTENT,
                         Font.NORMAL
                     )
@@ -368,7 +368,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("23 Finsbury Circus,", FONT_SIZE_CONTENT, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        "Swab Date: " + "$cert_timestamp GMT" ?: "",
+                        "Swab Date: " + "$cert_timestamp GMT+1" ?: "",
                         FONT_SIZE_CONTENT,
                         Font.NORMAL
                     )
@@ -378,7 +378,7 @@ object CertificateGenerator {
                 headerTable.addCell(getCell("London,", FONT_SIZE_CONTENT, Font.NORMAL))
                 headerTable.addCell(
                     getCell(
-                        "Date of Report: " + "$cert_proc_stop GMT" ?: "",
+                        "Date of Report: " + "$cert_proc_stop GMT+1" ?: "",
                         FONT_SIZE_CONTENT,
                         Font.NORMAL
                     )
