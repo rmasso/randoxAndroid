@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,7 +12,6 @@ import com.demit.certifly.Extras.Timer
 import com.demit.certifly.Models.TProfileModel
 import com.demit.certifly.R
 import com.demit.certifly.databinding.FragmentTimerBinding
-import kotlinx.android.synthetic.main.fragment_confirmation.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +21,7 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(layoutInflater, R.layout.fragment_timer, container, false)
         return binding.root
     }
@@ -40,8 +38,8 @@ class TimerFragment(val selectedProfile: TProfileModel,val additionalData: Map<S
                     with(binding) {
                         timeText.text = String.format("%02d:%02d", 0, 0)
                         timeProgress.setProgress(100f, true)
-                        val dateFormatGmt =  SimpleDateFormat("HH:mm:ss")
-                        dateFormatGmt.timeZone = TimeZone.getTimeZone("GMT")
+                        val dateFormatGmt =  SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                        dateFormatGmt.timeZone = TimeZone.getTimeZone("GMT+1")
                         val gmtTimeString= dateFormatGmt.format(timeOnWhichTimerStarted)
 
                         requireActivity().supportFragmentManager.beginTransaction()
