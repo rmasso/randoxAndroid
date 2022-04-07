@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.demit.certifly.Activities.CaptureActivity
+import com.demit.certifly.BuildConfig
 import com.demit.certifly.Extras.*
 import com.demit.certifly.Models.CertificateModel
 import com.demit.certifly.Models.TProfileModel
@@ -121,7 +122,7 @@ class ScancompleteFragment(
             cert_passport = selectedProfile.usr_passport,
             cert_country = selectedProfile.usr_country,
             cert_device_id = qrCode,
-            cert_ai_pred = "AI Predicate",
+            cert_ai_pred = "android/randoxNew/v${BuildConfig.VERSION_NAME}",
             cert_ai_approved = "N",
             cert_manual_approved = "N",
             cert_create = "",
